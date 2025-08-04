@@ -14,4 +14,12 @@
 /edu-track/yarn-debug.log*
 /edu-track/yarn-error.log*
 
-/edu_tack/*/__pycache__
+# Python cache files
+/edu_track/*/__pycache__
+/edu_track/*/*/__pycache__
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.py[cod]
+*$py.class
