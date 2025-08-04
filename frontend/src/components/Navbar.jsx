@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/navbar.css';
+import psuLogo from '../assets/psu-logo.svg';
 
 function Navbar() {
   const location = useLocation();
@@ -13,7 +14,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-brand">
         <Link to="/" className="navbar-logo">
-          جامعة بورسعيد
+          <img src={psuLogo} alt="جامعة بورسعيد" className="navbar-logo-img" />
         </Link>
       </div>
       

@@ -1,8 +1,8 @@
 /* Footer Styles */
 
 .footer {
-  background: rgba(255, 255, 255, 0.05);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #282c4e;
+  /* border-top: 1px solid rgba(255, 255, 255, 0.1); */
   padding: 2rem 0 1rem;
   margin-top: auto;
   backdrop-filter: blur(10px);
