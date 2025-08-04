@@ -159,13 +159,15 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'SET_PASSWORD_RETYPE': True,
-    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_ACTIVATION_EMAIL': False,  # Disabled for development
     'ACTIVATION_URL': 'activation/{uid}-{token}',
-    'SEND_CONFIRMATION_EMAIL': True,   
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True, 
+    'SEND_CONFIRMATION_EMAIL': False,  # Disabled for development
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': False,  # Disabled for development
     'PASSWORD_RESET_CONFIRM_URL': 'resetpassword/{uid}-{token}', 
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True, 
     'PASSWORD_RESET_CONFIRM_RETYPE': True, 
+    'DOMAIN': 'edutrack.com',
+    'SITE_NAME': 'Edu Track',
     'SERIALIZERS': {
         "current_user": "user.serializers.UserSerializer",
     },
@@ -174,6 +176,8 @@ DJOSER = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -182,7 +186,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'alaaelgharably1@gmail.com'
 EMAIL_HOST_PASSWORD = 'lmos nsjm fbau yfsn'  
-DEFAULT_FROM_EMAIL = 'admin@edutrack.com'
+DEFAULT_FROM_EMAIL = 'alaaelgharably1@gmail.com'
 
     	
      
