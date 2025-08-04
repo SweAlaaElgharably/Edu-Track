@@ -1,0 +1,60 @@
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import '../styles/navbar.css';
+
+function Navbar() {
+  const location = useLocation();
+  const { isAuthenticated, logout, user } = useAuth();
+  
+
+
+  return (
+    <nav className="navbar">
+      <div className="navbar-brand">
+        <Link to="/" className="navbar-logo">
+          جامعة بورسعيد
+        </Link>
+      </div>
+      
+      <div className="navbar-menu">
+        {!isAuthenticated ? (
+          // Public navigation
+          <>
+            <Link to="/about" className="nav-link">حول</Link>
+            <Link to="/features" className="nav-link">المميزات</Link>
+            <Link to="/" className="nav-link">الرئيسية</Link>
+          </>
+        ) : (
+          // Authenticated navigation
+          <>
+            <Link to="/schedule" className="nav-link">الجدول</Link>
+            <Link to="/courses" className="nav-link">المقررات</Link>
+            <Link to="/dashboard" className="nav-link">لوحة التحكم</Link>
+            <Link to="/" className="nav-link">الصفحة الرئيسية</Link>
+          </>
+        )}
+      </div>
+      
+      <div className="navbar-auth">
+        {!isAuthenticated ? (
+          <>
+            <Link to="/login" className="btn btn-outline">تسجيل الدخول</Link>
+            <Link to="/register" className="btn btn-primary">إنشاء حساب</Link>
+          </>
+        ) : (
+          <div className="user-section">
+            <Link to="/profile" className="profile-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+              </svg>
+            </Link>
+            <button className="btn btn-outline" onClick={logout}>تسجيل الخروج</button>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}
+
+export default Navbar; 

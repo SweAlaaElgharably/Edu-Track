@@ -159,10 +159,10 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'SET_PASSWORD_RETYPE': True,
-    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_ACTIVATION_EMAIL': False,  # Disabled for development
     'ACTIVATION_URL': 'activation/{uid}-{token}',
-    'SEND_CONFIRMATION_EMAIL': True,   
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True, 
+    'SEND_CONFIRMATION_EMAIL': False,  # Disabled for development
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': False,  # Disabled for development
     'PASSWORD_RESET_CONFIRM_URL': 'resetpassword/{uid}-{token}', 
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True, 
     'PASSWORD_RESET_CONFIRM_RETYPE': True, 
@@ -176,6 +176,8 @@ DJOSER = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
