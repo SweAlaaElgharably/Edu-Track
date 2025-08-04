@@ -14,14 +14,15 @@
   align-items: center;
   margin-bottom: 2rem;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(100, 108, 255, 0.2);
   backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-header h1 {
-  color: #646cff;
+  color: rgba(255, 255, 255, 0.9);
   margin: 0;
   font-size: 2.5rem;
   font-weight: 600;
@@ -30,55 +31,43 @@
   text-align: right;
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.user-info span {
-  color: #888;
-  font-size: 1rem;
-  font-family: 'Cairo', sans-serif;
-  direction: rtl;
-}
-
+/* Dashboard Navigation */
 .dashboard-nav {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   margin-bottom: 2rem;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
+  border: 2px solid rgba(100, 108, 255, 0.2);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .nav-tab {
-  padding: 1rem 1.5rem;
-  background: none;
+  padding: 0.8rem 1.5rem;
   border: none;
+  background: transparent;
   color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
   border-radius: 8px;
-  transition: all 0.2s;
-  font-weight: 500;
-  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
   font-family: 'Cairo', sans-serif;
-  direction: rtl;
 }
 
 .nav-tab:hover {
-  color: rgba(255, 255, 255, 0.87);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(100, 108, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
 }
 
 .nav-tab.active {
-  color: #646cff;
-  background: rgba(100, 108, 255, 0.2);
-  box-shadow: 0 0 0 1px rgba(100, 108, 255, 0.3);
+  background: linear-gradient(135deg, rgba(100, 108, 255, 0.2) 0%, rgba(83, 91, 242, 0.2) 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(100, 108, 255, 0.3);
 }
 
+/* Dashboard Content Sections */
 .overview-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -87,13 +76,14 @@
 }
 
 .stats-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   border-radius: 12px;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(100, 108, 255, 0.2);
   text-align: center;
   backdrop-filter: blur(10px);
   transition: transform 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .stats-card:hover {
@@ -101,7 +91,7 @@
 }
 
 .stats-card h3 {
-  color: #888;
+  color: rgba(255, 255, 255, 0.7);
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
   font-family: 'Cairo', sans-serif;
@@ -111,27 +101,35 @@
 .stat-number {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #646cff;
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 0.5rem;
 }
 
 .stats-card p {
-  color: #888;
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
   font-size: 0.9rem;
   font-family: 'Cairo', sans-serif;
   direction: rtl;
 }
 
-.courses-section h2,
-.schedule-section h2,
-.progress-section h2 {
-  color: #646cff;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
+.courses-section, .schedule-section, .progress-section {
+  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
+  border: 2px solid rgba(100, 108, 255, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.courses-section h2, .schedule-section h2, .progress-section h2 {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
   font-weight: 600;
-  font-family: 'Cairo', sans-serif;
-  direction: rtl;
+}
+
+.courses-section p, .schedule-section p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.5rem;
 }
 
 .courses-grid {
@@ -141,12 +139,13 @@
 }
 
 .course-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   border-radius: 12px;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(100, 108, 255, 0.2);
   backdrop-filter: blur(10px);
   transition: transform 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .course-card:hover {
@@ -154,7 +153,7 @@
 }
 
 .course-card h3 {
-  color: #646cff;
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 1rem;
   font-size: 1.2rem;
   font-weight: 600;
@@ -178,7 +177,7 @@
 }
 
 .course-card p {
-  color: #888;
+  color: rgba(255, 255, 255, 0.7);
   margin: 0.5rem 0;
   font-size: 0.9rem;
   font-family: 'Cairo', sans-serif;
@@ -196,11 +195,12 @@
   align-items: center;
   gap: 1rem;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(100, 108, 255, 0.2);
   backdrop-filter: blur(10px);
   transition: transform 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .schedule-item:hover {
@@ -209,7 +209,7 @@
 
 .time {
   font-weight: bold;
-  color: #646cff;
+  color: rgba(255, 255, 255, 0.9);
   min-width: 80px;
   font-size: 1.1rem;
 }
@@ -225,27 +225,40 @@
 
 .class-info p {
   margin: 0;
-  color: #888;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
   font-family: 'Cairo', sans-serif;
   direction: rtl;
 }
 
 .chart-placeholder {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   border-radius: 12px;
   padding: 3rem;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(100, 108, 255, 0.2);
   backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .chart-placeholder p {
-  color: #888;
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
   font-size: 1.1rem;
   font-family: 'Cairo', sans-serif;
   direction: rtl;
+}
+
+/* User Info Section */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-info span {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
 }
 
 /* Mobile Dashboard */

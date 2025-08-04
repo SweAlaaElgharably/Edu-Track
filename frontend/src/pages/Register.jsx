@@ -60,30 +60,32 @@ function Register() {
             />
           </div>
           
-          <div className="form-group">
-            <label htmlFor="first_name">الاسم الأول</label>
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              value={formData.first_name}
-              onChange={handleChange}
-              required
-              placeholder="أدخل اسمك الأول"
-            />
-          </div>
-          
-          <div className="form-group">
-            <label htmlFor="last_name">اسم العائلة</label>
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              value={formData.last_name}
-              onChange={handleChange}
-              required
-              placeholder="أدخل اسم العائلة"
-            />
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="first_name">الاسم الأول</label>
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                value={formData.first_name}
+                onChange={handleChange}
+                required
+                placeholder="أدخل اسمك الأول"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="last_name">اسم العائلة</label>
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                value={formData.last_name}
+                onChange={handleChange}
+                required
+                placeholder="أدخل اسم العائلة"
+              />
+            </div>
           </div>
           
           <div className="form-group">
@@ -99,30 +101,32 @@ function Register() {
             />
           </div>
           
-          <div className="form-group">
-            <label htmlFor="password">كلمة المرور</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              placeholder="أنشئ كلمة مرور"
-            />
-          </div>
-          
-          <div className="form-group">
-            <label htmlFor="re_password">تأكيد كلمة المرور</label>
-            <input
-              type="password"
-              id="re_password"
-              name="re_password"
-              value={formData.re_password}
-              onChange={handleChange}
-              required
-              placeholder="أكد كلمة المرور"
-            />
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="password">كلمة المرور</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                placeholder="أنشئ كلمة مرور"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="re_password">تأكيد كلمة المرور</label>
+              <input
+                type="password"
+                id="re_password"
+                name="re_password"
+                value={formData.re_password}
+                onChange={handleChange}
+                required
+                placeholder="أكد كلمة المرور"
+              />
+            </div>
           </div>
           
           <button type="submit" className="btn btn-primary" disabled={loading}>
