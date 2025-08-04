@@ -159,13 +159,13 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'SET_PASSWORD_RETYPE': True,
-    'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_URL': 'activation/{uid}-{token}',
     'SEND_CONFIRMATION_EMAIL': True,   
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True, 
     'PASSWORD_RESET_CONFIRM_URL': 'resetpassword/{uid}-{token}', 
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True, 
     'PASSWORD_RESET_CONFIRM_RETYPE': True, 
+    'DOMAIN': 'edutrack.com',
+    'SITE_NAME': 'Edu Track',
     'SERIALIZERS': {
         "current_user": "user.serializers.UserSerializer",
     },
@@ -182,7 +182,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'alaaelgharably1@gmail.com'
 EMAIL_HOST_PASSWORD = 'lmos nsjm fbau yfsn'  
-DEFAULT_FROM_EMAIL = 'admin@edutrack.com'
+DEFAULT_FROM_EMAIL = 'alaaelgharably1@gmail.com'
 
     	
      
