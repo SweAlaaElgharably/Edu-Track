@@ -15,7 +15,7 @@ function Home() {
           {isAuthenticated && user?.first_name && user?.last_name 
             ? `مرحباً بك ${user.first_name} ${user.last_name} فى جامعة بورسعيد`
             : isAuthenticated && user?.email
-            ? `مرحباً بك ${user.email} فى جامعة بورسعيد`
+            ? `مرحباً بك ${user.first_name} فى جامعة بورسعيد`
             : 'مرحباً بك في جامعة بورسعيد'
           }
         </h1>
