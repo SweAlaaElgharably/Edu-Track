@@ -14,14 +14,15 @@
   align-items: center;
   margin-bottom: 2rem;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(100, 108, 255, 0.2);
   backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .courses-header h1 {
-  color: #646cff;
+  color: rgba(255, 255, 255, 0.9);
   margin: 0;
   font-size: 2.5rem;
   font-weight: 600;
@@ -37,27 +38,27 @@
 }
 
 .user-info span {
-  color: #888;
-  font-size: 1rem;
-  font-family: 'Cairo', sans-serif;
-  direction: rtl;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
 }
 
+/* Courses Stats - Horizontal Layout */
 .courses-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
 .stat-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
+  border: 2px solid rgba(100, 108, 255, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
   backdrop-filter: blur(10px);
   transition: transform 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .stat-card:hover {
@@ -65,7 +66,7 @@
 }
 
 .stat-card h3 {
-  color: #888;
+  color: rgba(255, 255, 255, 0.7);
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
   font-family: 'Cairo', sans-serif;
@@ -75,12 +76,12 @@
 .stat-number {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #646cff;
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 0.5rem;
 }
 
 .stat-card p {
-  color: #888;
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
   font-size: 0.9rem;
   font-family: 'Cairo', sans-serif;
@@ -91,62 +92,64 @@
   margin-top: 2rem;
 }
 
-.courses-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 1.5rem;
-}
-
+/* Course Cards - Dark Theme for Better Visibility */
 .course-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
+  border: 2px solid rgba(100, 108, 255, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .course-card:hover {
-  transform: translateY(-4px);
+  background: linear-gradient(135deg, #282c4e 0%, #1e1e2e 50%, #2d3748 100%);
+  border-color: rgba(100, 108, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(100, 108, 255, 0.2);
 }
 
 .course-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 1rem;
 }
 
 .course-header h3 {
-  color: #646cff;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
   margin: 0;
   font-size: 1.2rem;
-  font-weight: 600;
-  font-family: 'Cairo', sans-serif;
-  direction: rtl;
 }
 
 .course-credits {
-  background: rgba(100, 108, 255, 0.2);
-  color: #646cff;
-  padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, rgba(100, 108, 255, 0.3) 0%, rgba(83, 91, 242, 0.3) 100%);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.3rem 0.8rem;
   border-radius: 6px;
   font-size: 0.8rem;
-  font-family: 'Cairo', sans-serif;
+  font-weight: 600;
 }
 
 .course-info {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .course-info p {
-  color: #888;
-  margin: 0.5rem 0;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.5rem;
   font-size: 0.9rem;
-  font-family: 'Cairo', sans-serif;
-  direction: rtl;
 }
 
+.course-info strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+/* Progress Section */
 .progress-section {
   margin-bottom: 1.5rem;
 }
@@ -156,43 +159,83 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
-  font-family: 'Cairo', sans-serif;
-  direction: rtl;
 }
 
 .progress-label span {
-  color: #888;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .progress-bar {
   width: 100%;
   height: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #646cff, #535bf2);
+  background: linear-gradient(90deg, #646cff 0%, #535bf2 100%);
+  border-radius: 4px;
   transition: width 0.3s ease;
 }
 
+/* Course Actions - Two Different Colors */
 .course-actions {
   display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .course-actions .btn {
   flex: 1;
-  min-width: 120px;
   text-align: center;
-  font-family: 'Cairo', sans-serif;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
 }
 
-/* Mobile Courses */
+/* First button - With Gradient (عرض التفاصيل) */
+.course-actions .btn:first-child {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+  border-color: rgba(52, 73, 94, 0.3);
+}
+
+.course-actions .btn:first-child:hover {
+  background: linear-gradient(135deg, #34495e 0%, #2c3e50 50%, #34495e 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(52, 73, 94, 0.3);
+  border-color: rgba(52, 73, 94, 0.5);
+}
+
+/* Second button - Solid Color (الواجبات) */
+.course-actions .btn:last-child {
+  background: #3b82f6;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.course-actions .btn:last-child:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+/* Courses Grid Layout */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .courses-page {
     padding: 1rem;
