@@ -1,0 +1,120 @@
+/* الخطوط والتصميم العام */
+.features-page {
+  background-color: white;
+  color: #222;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  line-height: 1.8;
+  scroll-behavior: smooth;
+}
+
+/* عنوان رئيسي */
+.main-title {
+  font-size: 2.5rem;
+  color: #3182ce;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInDown 1s ease-in-out forwards;
+}
+
+/* نص المقدمة */
+.intro-text {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 2.5rem;
+  color: #333;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.2s ease-in-out forwards;
+  animation-delay: 0.2s;
+}
+
+/* أقسام الميزات */
+.feature-section {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background-color: #f5faff;
+  border-right: 6px solid #3182ce;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(49, 130, 206, 0.1);
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInScroll 1s ease-out forwards;
+}
+
+/* عناوين الأقسام */
+.feature-section h2 {
+  font-size: 1.6rem;
+  color: #3182ce;
+  margin-bottom: 1rem;
+}
+
+/* القوائم */
+.feature-section ul {
+  list-style-type: disc;
+  padding-right: 1.5rem;
+  color: #333;
+}
+
+/* مجموعات المستخدمين */
+.user-group {
+  margin-bottom: 2rem;
+}
+
+.user-group h3 {
+  font-size: 1.3rem;
+  color: #2b6cb0;
+  margin-bottom: 0.5rem;
+}
+
+/* أنميشن عند التمرير */
+@keyframes fadeInScroll {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* أنميشن العنوان والمقدمة */
+@keyframes fadeInDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* تفعيل الأنميشن عند ظهور العنصر */
+.feature-section {
+  will-change: transform, opacity;
+}
+
+/* ميديا كويري لتجاوب الشاشة */
+@media (max-width: 600px) {
+  .features-page {
+    padding: 1rem;
+  }
+
+  .main-title {
+    font-size: 2rem;
+  }
+
+  .feature-section h2 {
+    font-size: 1.3rem;
+  }
+
+  .user-group h3 {
+    font-size: 1.1rem;
+  }
+}
