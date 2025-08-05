@@ -4,16 +4,26 @@ import PlexusBackground from "./components/PlexusBackground.jsx";
 import RoutesList from "../routes/RoutesList.jsx";
 import Footer from "./components/Footer.jsx";
 import Navbar from "./components/Navbar.jsx";
+import { useLocation } from "react-router-dom";
+
+function AppContent() {
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+
+  return (
+    <div className="App">
+      {!isAuthPage && <PlexusBackground />}
+      <Navbar />
+      <RoutesList />
+      <Footer />
+    </div>
+  );
+}
 
 function App() {
   return (
     <AuthProvider>
-      <div className="App">
-        <PlexusBackground />
-        <Navbar />
-          <RoutesList />
-        <Footer />
-      </div>
+      <AppContent />
     </AuthProvider>
   );
 }
