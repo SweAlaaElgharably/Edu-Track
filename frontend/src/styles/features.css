@@ -1,4 +1,3 @@
-/* الخطوط والتصميم العام */
 .features-page {
   background-color: white;
   color: #222;
@@ -10,7 +9,6 @@
   scroll-behavior: smooth;
 }
 
-/* عنوان رئيسي */
 .main-title {
   font-size: 2.5rem;
   color: #3182ce;
@@ -22,7 +20,6 @@
   animation: fadeInDown 1s ease-in-out forwards;
 }
 
-/* نص المقدمة */
 .intro-text {
   text-align: center;
   font-size: 1.2rem;
@@ -34,7 +31,6 @@
   animation-delay: 0.2s;
 }
 
-/* أقسام الميزات */
 .feature-section {
   margin-bottom: 3rem;
   padding: 1.5rem;
@@ -47,21 +43,18 @@
   animation: fadeInScroll 1s ease-out forwards;
 }
 
-/* عناوين الأقسام */
 .feature-section h2 {
   font-size: 1.6rem;
   color: #3182ce;
   margin-bottom: 1rem;
 }
 
-/* القوائم */
 .feature-section ul {
   list-style-type: disc;
   padding-right: 1.5rem;
   color: #333;
 }
 
-/* مجموعات المستخدمين */
 .user-group {
   margin-bottom: 2rem;
 }
@@ -72,7 +65,45 @@
   margin-bottom: 0.5rem;
 }
 
-/* أنميشن عند التمرير */
+.features-page {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  color: #222;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  line-height: 1.8;
+  scroll-behavior: smooth;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.full-width-section {
+  width: 100%;
+  margin-bottom: 3rem;
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .user-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 @keyframes fadeInScroll {
   to {
     opacity: 1;
@@ -80,7 +111,6 @@
   }
 }
 
-/* أنميشن العنوان والمقدمة */
 @keyframes fadeInDown {
   to {
     opacity: 1;
@@ -95,12 +125,10 @@
   }
 }
 
-/* تفعيل الأنميشن عند ظهور العنصر */
 .feature-section {
   will-change: transform, opacity;
 }
 
-/* ميديا كويري لتجاوب الشاشة */
 @media (max-width: 600px) {
   .features-page {
     padding: 1rem;
