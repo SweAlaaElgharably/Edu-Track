@@ -43,8 +43,8 @@ function App() {
                 <Profile />
               </ProtectedRoute>
             } />
+            <Route path="/features" element={<Features />} />
           </Routes>
-          <Features />
         </main>
         <Footer />
       </div>
