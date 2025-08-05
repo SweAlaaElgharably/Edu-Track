@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard.jsx';
 import Courses from './pages/Courses.jsx';
 import Schedule from './pages/Schedule.jsx';
 import Profile from './pages/Profile.jsx';
+import Features from './pages/Features.jsx';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
               </ProtectedRoute>
             } />
           </Routes>
+          <Features />
         </main>
         <Footer />
       </div>
