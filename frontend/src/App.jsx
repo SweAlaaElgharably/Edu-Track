@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import PlexusBackground from './components/PlexusBackground.jsx';
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
@@ -17,6 +18,7 @@ function App() {
   return (
     <AuthProvider>
       <div className="App">
+        <PlexusBackground />
         <Navbar />
         <main className="main-content">
           <Routes>
