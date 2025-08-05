@@ -40,11 +40,9 @@ class ProgramCreateView(APIView):
 class ProgramRetrieveView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, pk):
-        if not str(pk).isdigit():
-            return Response({'detail': 'Invalid program ID.'}, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request, slug):
         try:
-            program = Program.objects.get(pk=pk)
+            program = Program.objects.get(slug=slug)
         except Program.DoesNotExist:
             return Response({'detail': 'Program not found.'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
@@ -57,11 +55,9 @@ class ProgramRetrieveView(APIView):
 class ProgramUpdateView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def put(self, request, pk):
-        if not str(pk).isdigit():
-            return Response({'detail': 'Invalid program ID.'}, status=status.HTTP_400_BAD_REQUEST)
+    def put(self, request, slug):
         try:
-            program = Program.objects.get(pk=pk)
+            program = Program.objects.get(slug=slug)
         except Program.DoesNotExist:
             return Response({'detail': 'Program not found.'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
@@ -75,11 +71,9 @@ class ProgramUpdateView(APIView):
                 return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def patch(self, request, pk):
-        if not str(pk).isdigit():
-            return Response({'detail': 'Invalid program ID.'}, status=status.HTTP_400_BAD_REQUEST)
+    def patch(self, request, slug):
         try:
-            program = Program.objects.get(pk=pk)
+            program = Program.objects.get(slug=slug)
         except Program.DoesNotExist:
             return Response({'detail': 'Program not found.'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
@@ -98,11 +92,9 @@ class ProgramUpdateView(APIView):
 class ProgramDeleteView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def delete(self, request, pk):
-        if not str(pk).isdigit():
-            return Response({'detail': 'Invalid program ID.'}, status=status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, slug):
         try:
-            program = Program.objects.get(pk=pk)
+            program = Program.objects.get(slug=slug)
         except Program.DoesNotExist:
             return Response({'detail': 'Program not found.'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
