@@ -20,8 +20,6 @@ class Program(models.Model):
     'faculty.Faculty',
     on_delete=models.CASCADE,
     related_name='programs',
-    null=True,  
-    blank=True  
 )
 
     def __str__(self):
