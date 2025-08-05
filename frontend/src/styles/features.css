@@ -85,6 +85,12 @@
   margin-bottom: 3rem;
 }
 
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .full-width-section {
   width: 100%;
   margin-bottom: 3rem;
