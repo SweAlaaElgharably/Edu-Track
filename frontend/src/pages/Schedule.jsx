@@ -86,14 +86,14 @@ function Schedule() {
         </div>
       </div>
 
-      <main className="schedule-content">
+      <main className="schedule-content schedule-columns">
         <section className="today-schedule">
           <h2>جدول اليوم</h2>
           <div className="schedule-list">
             {mockData.todaySchedule.map(class_ => (
               <div key={class_.id} className="schedule-item">
                 <div className="time-section">
-                  <div className="time">{class_.time}</div>
+                  <div className="time">🕒{class_.time}</div>
                   <div className="duration">{class_.duration}</div>
                 </div>
                 <div className="class-info">
