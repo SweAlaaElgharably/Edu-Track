@@ -1,14 +1,10 @@
-# faculty/urls.py
 from django.urls import path
-from . import views
-
-app_name = 'faculty'
+from .views import *
 
 urlpatterns = [
-    # List all faculties
-    path('', views.FacultyListAPIView.as_view(), name='faculty-list'),
-    # Create new faculty
-    path('create/', views.FacultyCreateAPIView.as_view(), name='faculty-create'),
-    # Detail, Update, Delete
-    path('<slug:slug>/', views.FacultyDetailAPIView.as_view(), name='faculty-detail'),
+    path('', ListFaculty.as_view(), name='Faculty-list'),
+    path('create/', CreateFaculty.as_view(), name='Faculty-create'),
+    path('<slug:slug>/', RetrieveFaculty.as_view(), name='Faculty-retrieve'),
+    path('<slug:slug>/update/', UpdateFaculty.as_view(), name='Faculty-update'),
+    path('<slug:slug>/delete/', DestoryFaculty.as_view(), name='Faculty-destroy'),
 ]
