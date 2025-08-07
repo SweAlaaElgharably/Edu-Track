@@ -9,9 +9,10 @@ import Schedule from '../src/pages/Schedule';
 import Profile from '../src/pages/Profile';
 import ProtectedRoute from '../src/components/ProtectedRoute';
 import Features from '../src/pages/Features';
+import Contact from '../src/pages/Contact';
 import UniversityManage from '../src/pages/UniversityManage';
 import FacultyManage from '../src/pages/FacultyManage';
-import Contact from '../src/pages/Contact';
+
 
 const RoutesList = () => {
     return (
@@ -24,12 +25,9 @@ const RoutesList = () => {
             <Route path="/schedule" element={<ProtectedRoute><Schedule /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/features" element={<Features />} />
-            <Route path="/university" element={<ProtectedRoute><UniversityManage /></ProtectedRoute>} />
-            <Route path="/faculty" element={<ProtectedRoute><FacultyManage /></ProtectedRoute>} />
-            <Route path="/university/:slug/faculties" element={<ProtectedRoute><FacultyManage /></ProtectedRoute>} />
-            <Route path= "/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
-            <Route path= "/about" element={<ProtectedRoute><Features /></ProtectedRoute>} />
-            
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/universities" element={<ProtectedRoute><UniversityManage /></ProtectedRoute>} />
+            <Route path="/universities/:slug/faculties" element={<ProtectedRoute><FacultyManage /></ProtectedRoute>} />
         </Routes>
     )
 }

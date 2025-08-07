@@ -69,19 +69,26 @@
     padding: 20px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     display: grid;
-    grid-template-columns: 60px 1fr;
-    gap: 20px;
+    grid-template-areas:
+        "logo title title"
+        "logo slug slug"
+        "logo actions actions";
+    grid-template-columns: 60px 1fr auto;
+    grid-template-rows: auto auto 1fr;
+    gap: 5px 20px;
     width: 100%;
     max-width: 550px;
-    align-items: center;
+    min-height: 130px;
 }
 
 .ufm-card-logo {
+    grid-area: logo;
     width: 60px;
     height: 60px;
     border-radius: 10px;
     overflow: hidden;
     background-color: #fff;
+    align-self: center;
 }
 
 .ufm-card-logo img {
@@ -90,36 +97,29 @@
     object-fit: cover;
 }
 
-.ufm-card-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 5px;
-}
-
 .ufm-card-title {
+    grid-area: title;
     font-size: 1.6rem;
     font-weight: bold;
     color: #4facfe;
     margin: 0;
+    align-self: end;
 }
 
-.ufm-card-detail-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.ufm-card-slug,
-.ufm-card-university-name {
+.ufm-card-slug {
+    grid-area: slug;
     font-size: 1rem;
     color: #8d99ae;
     margin: 0;
+    align-self: start;
 }
 
 .ufm-card-actions {
+    grid-area: actions;
     display: flex;
     gap: 10px;
+    align-self: end;
+    justify-self: start;
 }
 
 /* Buttons */

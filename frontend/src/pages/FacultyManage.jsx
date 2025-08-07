@@ -5,7 +5,7 @@ import { fetchFaculties, createFaculty, updateFaculty, deleteFaculty } from '../
 import { fetchUniversities } from '../services/universityApi';
 import '../styles/university-faculty-manage.css';
 
-const initialForm = { name: '', logo: null, university: '' };
+const initialForm = { name: '', slug: '', logo: null, university: '' };
 
 const FacultyManage = () => {
   const { slug: universitySlug } = useParams();
@@ -67,7 +67,7 @@ const FacultyManage = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('name', form.name);
-    
+    formData.append('slug', form.slug);
     formData.append('university', form.university);
     if (form.logo) formData.append('logo', form.logo);
     
@@ -81,6 +81,7 @@ const FacultyManage = () => {
     const handleEdit = (fac) => {
     setForm({ 
       name: fac.name, 
+      slug: fac.slug, 
       logo: null, 
       university: fac.university?.id || fac.university 
     });
@@ -121,7 +122,10 @@ const FacultyManage = () => {
                 <label className="form-label">اسم الكلية</label>
                 <input type="text" name="name" value={form.name} onChange={handleChange} required className="form-control" />
               </div>
-
+              <div className="form-group">
+                <label className="form-label">الاسم المختصر (slug)</label>
+                <input type="text" name="slug" value={form.slug} onChange={handleChange} required className="form-control" disabled={!!editSlug} />
+              </div>
               <div className="form-group">
                 <label className="form-label">شعار الكلية</label>
                 <input type="file" name="logo" accept="image/*" onChange={handleChange} className="form-control" />
@@ -159,13 +163,8 @@ const FacultyManage = () => {
                         <img src={fac.logo} alt="logo" />
                       </div>
                     )}
-                    <div className="ufm-card-info">
-                      <div className="ufm-card-title">{fac.name}</div>
-                      <div className="ufm-card-detail-row">
-                        <span className="ufm-card-slug">{fac.slug}</span>
-                        <span className="ufm-card-university-name">{fac.university_name || 'N/A'}</span>
-                      </div>
-                    </div>
+                    <div className="ufm-card-title">{fac.name}</div>
+                    <div className="ufm-card-slug">{fac.university?.name || 'N/A'}</div>
                     <div className="ufm-card-actions">
                       <button className="ufm-btn" title="تعديل" onClick={() => handleEdit(fac)}>
                         تعديل

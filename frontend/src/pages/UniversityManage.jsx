@@ -123,7 +123,7 @@ const UniversityManage = () => {
                     <div className="ufm-card-title">{uni.name}</div>
                     <div className="ufm-card-slug">{uni.slug}</div>
                     <div className="ufm-card-actions">
-                      <button className="ufm-btn faculties" title="عرض الكليات" onClick={() => navigate(`/university/${uni.slug}/faculties`)}>
+                      <button className="ufm-btn faculties" title="عرض الكليات" onClick={() => navigate(`/universities/${uni.slug}/faculties`)}>
                         الكليات
                       </button>
                       <button className="ufm-btn" title="تعديل" onClick={() => { handleEdit(uni); setFormOpen(true); }}>
