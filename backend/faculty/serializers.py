@@ -1,9 +1,13 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from .models import Faculty
 
-class FacultySerializer(ModelSerializer):
-
+class FacultySerializer(serializers.ModelSerializer):
+    university_name = serializers.CharField(source='university.name', read_only=True)
+    
     class Meta:
         model = Faculty
-        fields = '__all__'
-        depth = 1
+        fields = ['id', 'name', 'slug', 'logo', 'university', 'university_name']
+
+        extra_kwargs = {
+            'logo': {'required': False}
+        }

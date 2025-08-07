@@ -6,5 +6,5 @@ urlpatterns = [
     path('create/', CreateFaculty.as_view(), name='Faculty-create'),
     path('<slug:slug>/', RetrieveFaculty.as_view(), name='Faculty-retrieve'),
     path('<slug:slug>/update/', UpdateFaculty.as_view(), name='Faculty-update'),
-    path('<slug:slug>/delete/', DestoryFaculty.as_view(), name='Faculty-destroy'),
+        path('<slug:slug>/delete/', DestroyFaculty.as_view(), name='Faculty-destroy'),
 ]

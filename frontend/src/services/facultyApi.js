@@ -10,14 +10,34 @@ export const fetchFaculties = async (universitySlug) => {
 };
 
 export const createFaculty = async (formData) => {
+  // Don't set Content-Type header - let the browser set it with the correct boundary
+  const headers = {
+    ...api.getAuthHeaders(),
+  };
+  
+  // Remove Content-Type header if it exists to let the browser set it with the correct boundary
+  if (headers['Content-Type']) {
+    delete headers['Content-Type'];
+  }
+
   const res = await fetch(`${api.baseURL}/faculty/create/`, {
     method: 'POST',
-    headers: {
-      ...api.getAuthHeaders(),
-    },
-    body: formData,
+    headers: headers,
+    body: formData, // Send the original formData directly
   });
-  if (!res.ok) throw new Error('فشل في إنشاء الكلية');
+  
+  if (!res.ok) {
+    const errorText = await res.text();
+    let errorData;
+    try {
+      errorData = JSON.parse(errorText);
+    } catch (e) {
+      console.error('Failed to parse error response:', errorText);
+      throw new Error('فشل في إنشاء الكلية: استجابة غير صالحة من الخادم');
+    }
+    throw new Error(errorData.detail || 'فشل في إنشاء الكلية');
+  }
+  
   return res.json();
 };
 

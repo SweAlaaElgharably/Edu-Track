@@ -99,13 +99,20 @@ function Dashboard() {
               <div className="stat-number">2</div>
               <p>المحاضرة القادمة خلال 30 دقيقة</p>
             </div>
-            {/* University/Faculty Management Card */}
-            <div className="stats-card" style={{ cursor: 'pointer' }} onClick={() => window.location.href='/universities'}>
-              <h3>إدارة الجامعات والكليات</h3>
-              <div className="stat-number" style={{ fontSize: 32 }}>🔗</div>
-              <p>انتقل لإدارة الجامعات والكليات</p>
-              <a href="/universities" className="btn btn-secondary" style={{ marginTop: 12, color: '#fff', background: '#1976d2', border: 'none' }}>الذهاب للإدارة</a>
-            </div>
+            <Link to="/university" className="stats-card-link">
+              <div className="stats-card">
+                <h3>إدارة الجامعات</h3>
+                <div className="stat-number" style={{ fontSize: 32 }}>🎓</div>
+                <p>انتقل لإدارة الجامعات</p>
+              </div>
+            </Link>
+            <Link to="/faculty" className="stats-card-link">
+              <div className="stats-card">
+                <h3>إدارة الكليات</h3>
+                <div className="stat-number" style={{ fontSize: 32 }}>🏫</div>
+                <p>انتقل لإدارة الكليات</p>
+              </div>
+            </Link>
           </div>
         )}
 
