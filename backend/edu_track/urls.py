@@ -23,6 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
-    path('university/', include('university.urls')),
     path('', include('user.urls')),
+    path('university/', include('university.urls')),
+    path('faculty/', include('faculty.urls')),
+    path('program/', include('program.urls')),
+    path('location/', include('location.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
