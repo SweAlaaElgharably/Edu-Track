@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
@@ -13,34 +12,11 @@ import Courses from './pages/Courses.jsx';
 import Schedule from './pages/Schedule.jsx';
 import Profile from './pages/Profile.jsx';
 import Contact from './pages/Contact.jsx';
-=======
-import React from "react";
-import { AuthProvider } from "./context/AuthContext";
-import PlexusBackground from "./components/PlexusBackground.jsx";
-import RoutesList from "../routes/RoutesList.jsx";
-import Footer from "./components/Footer.jsx";
-import Navbar from "./components/Navbar.jsx";
-import { useLocation } from "react-router-dom";
-
-function AppContent() {
-  const location = useLocation();
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
-
-  return (
-    <div className="App">
-      {!isAuthPage && <PlexusBackground />}
-      <Navbar />
-      <RoutesList />
-      <Footer />
-    </div>
-  );
-}
->>>>>>> be439f8696bec3da3c21746abf070980497f0ee3
+import Features from './pages/Features.jsx';
 
 function App() {
   return (
     <AuthProvider>
-<<<<<<< HEAD
       <div className="App">
         <Navbar />
         <main className="main-content">
@@ -49,6 +25,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/features" element={<Features />} />
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
@@ -73,9 +50,6 @@ function App() {
         </main>
         <Footer />
       </div>
-=======
-      <AppContent />
->>>>>>> be439f8696bec3da3c21746abf070980497f0ee3
     </AuthProvider>
   );
 }
