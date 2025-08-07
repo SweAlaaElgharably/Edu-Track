@@ -1,10 +1,16 @@
 from django.urls import path
-from .views import *
+from .views import (
+    ProgramListView,
+    ProgramCreateView,
+    ProgramRetrieveView,
+    ProgramUpdateView,
+    ProgramDeleteView
+)
 
 urlpatterns = [
-    path('', ListProgram.as_view(), name='Program-list'),
-    path('create/', CreateProgram.as_view(), name='Program-create'),
-    path('<slug:slug>/', RetrieveProgram.as_view(), name='Program-retrieve'),
-    path('<slug:slug>/update/', UpdateProgram.as_view(), name='Program-update'),
-    path('<slug:slug>/delete/', DestoryProgram.as_view(), name='Program-destroy'),
+    path('', ProgramListView.as_view(), name='program-list'),
+    path('create/', ProgramCreateView.as_view(), name='program-create'),
+    path('<slug:slug>/', ProgramRetrieveView.as_view(), name='program-detail'),
+    path('<slug:slug>/update/', ProgramUpdateView.as_view(), name='program-update'), # Handles PUT and PATCH
+    path('<slug:slug>/delete/', ProgramDeleteView.as_view(), name='program-delete'),
 ]

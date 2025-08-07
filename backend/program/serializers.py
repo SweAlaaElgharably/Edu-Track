@@ -1,9 +1,10 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from .models import Program
 
-class ProgramSerializer(ModelSerializer):
+class ProgramSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Program
-        fields = '__all__'
-        depth = 2
+        fields = ['id', 'name', 'slug', 'owner', 'faculty']
+        read_only_fields = ['owner']
