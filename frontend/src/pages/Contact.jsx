@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/contact.css";
 import { useForm } from "@formspree/react";
 import { useNavigate } from "react-router-dom";
+import PlexusBackground from "../components/PlexusBackground";
 
 export default function Contact() {
   const [state, handleSubmit] = useForm("mzzvjlqy");
@@ -67,6 +68,7 @@ export default function Contact() {
 
   return (
     <div className="contact">
+      <PlexusBackground />
       <div className="row">
         {/* Contact Form Section */}
         <div className="col-lg-6 d-flex align-items-center">

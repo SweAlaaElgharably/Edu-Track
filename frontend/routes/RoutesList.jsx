@@ -9,6 +9,7 @@ import Schedule from '../src/pages/Schedule';
 import Profile from '../src/pages/Profile';
 import ProtectedRoute from '../src/components/ProtectedRoute';
 import Features from '../src/pages/Features';
+import Contact from '../src/pages/Contact';
 
 
 const RoutesList = () => {
@@ -22,6 +23,8 @@ const RoutesList = () => {
             <Route path="/schedule" element={<ProtectedRoute><Schedule /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/features" element={<Features />} />
+            <Route path="/contact" element={<Contact />} />
+            
         </Routes>
     )
 }
