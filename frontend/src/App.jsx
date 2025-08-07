@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard.jsx';
 import Courses from './pages/Courses.jsx';
 import Schedule from './pages/Schedule.jsx';
 import Profile from './pages/Profile.jsx';
+import Contact from './pages/Contact.jsx';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
