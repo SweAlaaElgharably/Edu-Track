@@ -4,7 +4,7 @@ from university.models import University
 
 class Faculty(models.Model):
     name = models.CharField(max_length=30)
-    slug = models.SlugField(max_length=30, unique=True, blank=True)
+    slug = models.SlugField(max_length=30, unique=True, blank=True, allow_unicode=True)
     logo = models.ImageField(upload_to='faculties')
     university = models.ForeignKey(University, on_delete=models.CASCADE, related_name='faculties')
 
@@ -13,7 +13,7 @@ class Faculty(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name, allow_unicode=True)
 
         original_slug = self.slug
         counter = 1

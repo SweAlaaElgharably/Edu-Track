@@ -99,20 +99,12 @@ function Dashboard() {
               <div className="stat-number">2</div>
               <p>المحاضرة القادمة خلال 30 دقيقة</p>
             </div>
-            <Link to="/university" className="stats-card-link">
-              <div className="stats-card">
-                <h3>إدارة الجامعات</h3>
-                <div className="stat-number" style={{ fontSize: 32 }}>🎓</div>
-                <p>انتقل لإدارة الجامعات</p>
-              </div>
+            <Link to="/university" className="stats-card stats-card-link">
+              <h3>إدارة الجامعات</h3>
+              <div className="stat-number" style={{ fontSize: 32 }}>🎓</div>
+              <p>انتقل لإدارة الجامعات</p>
             </Link>
-            <Link to="/faculty" className="stats-card-link">
-              <div className="stats-card">
-                <h3>إدارة الكليات</h3>
-                <div className="stat-number" style={{ fontSize: 32 }}>🏫</div>
-                <p>انتقل لإدارة الكليات</p>
-              </div>
-            </Link>
+           
           </div>
         )}
 

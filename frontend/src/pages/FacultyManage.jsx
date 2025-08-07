@@ -159,9 +159,13 @@ const FacultyManage = () => {
                         <img src={fac.logo} alt="logo" />
                       </div>
                     )}
-                    <div className="ufm-card-title">{fac.name}</div>
-                    <div className="ufm-card-slug">{fac.slug}</div>
-                    <div className="ufm-card-slug">{fac.university_name || 'N/A'}</div>
+                    <div className="ufm-card-info">
+                      <div className="ufm-card-title">{fac.name}</div>
+                      <div className="ufm-card-detail-row">
+                        <span className="ufm-card-slug">{fac.slug}</span>
+                        <span className="ufm-card-university-name">{fac.university_name || 'N/A'}</span>
+                      </div>
+                    </div>
                     <div className="ufm-card-actions">
                       <button className="ufm-btn" title="تعديل" onClick={() => handleEdit(fac)}>
                         تعديل
