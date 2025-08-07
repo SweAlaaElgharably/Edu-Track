@@ -9,9 +9,6 @@ import Schedule from '../src/pages/Schedule';
 import Profile from '../src/pages/Profile';
 import ProtectedRoute from '../src/components/ProtectedRoute';
 import Features from '../src/pages/Features';
-import Contact from '../src/pages/Contact';
-import UniversityManage from '../src/pages/UniversityManage';
-import FacultyManage from '../src/pages/FacultyManage';
 
 
 const RoutesList = () => {
@@ -25,9 +22,6 @@ const RoutesList = () => {
             <Route path="/schedule" element={<ProtectedRoute><Schedule /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/features" element={<Features />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/universities" element={<ProtectedRoute><UniversityManage /></ProtectedRoute>} />
-            <Route path="/universities/:slug/faculties" element={<ProtectedRoute><FacultyManage /></ProtectedRoute>} />
         </Routes>
     )
 }
