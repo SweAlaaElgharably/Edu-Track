@@ -43,7 +43,11 @@ function Schedule() {
       'الخميس': [
         { time: '08:00 ص', course: 'الأدب الإنجليزي', room: 'القاعة 301' },
         { time: '10:30 ص', course: 'البرمجة المتقدمة', room: 'معمل الحاسوب 1' }
-      ]
+      ],
+      'السبت': [
+        { time: '09:00 ص', course: 'قواعد البيانات', room: 'القاعة 401' },
+        { time: '11:30 ص', course: 'شبكات الحاسوب', room: 'معمل الشبكات' }
+      ],
     }
   };
 
@@ -86,14 +90,14 @@ function Schedule() {
         </div>
       </div>
 
-      <main className="schedule-content">
+      <main className="schedule-content schedule-columns">
         <section className="today-schedule">
           <h2>جدول اليوم</h2>
           <div className="schedule-list">
             {mockData.todaySchedule.map(class_ => (
               <div key={class_.id} className="schedule-item">
                 <div className="time-section">
-                  <div className="time">{class_.time}</div>
+                  <div className="time">🕒{class_.time}</div>
                   <div className="duration">{class_.duration}</div>
                 </div>
                 <div className="class-info">

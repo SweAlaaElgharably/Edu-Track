@@ -1,9 +1,7 @@
-# faculty/serializers.py
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from .models import Faculty
 
-class FacultySerializer(serializers.ModelSerializer):
-    university_name = serializers.ReadOnlyField(source='university.name')
+class FacultySerializer(ModelSerializer):
 
     class Meta:
         model = Faculty
@@ -11,5 +9,4 @@ class FacultySerializer(serializers.ModelSerializer):
             'id', 'name', 'slug', 'logo', 
             'university', 'university_name', 'owner',
         ]
-        read_only_fields = ['slug', 'owner']
-        
+        read_only_fields = ['slug', 'owner', 'created_at', 'updated_at']
