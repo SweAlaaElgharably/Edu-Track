@@ -384,9 +384,11 @@ function Help() {
 						<div className="quick-help-card">
 							<h4>📚 المقررات</h4>
 							<p>إدارة مقرراتك الدراسية والواجبات</p>
+							<br />
 							<Link to="/courses" className="quick-link">
 								المقررات
 							</Link>
+
 						</div>
 
 						<div className="quick-help-card">
