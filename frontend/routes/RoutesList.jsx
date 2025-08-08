@@ -12,6 +12,7 @@ import Features from '../src/pages/Features';
 import Contact from '../src/pages/Contact';
 import UniversityManage from '../src/pages/UniversityManage';
 import FacultyManage from '../src/pages/FacultyManage';
+import Help from '../src/pages/Help';
 
 
 const RoutesList = () => {
@@ -28,6 +29,7 @@ const RoutesList = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/universities" element={<ProtectedRoute><UniversityManage /></ProtectedRoute>} />
             <Route path="/universities/:slug/faculties" element={<ProtectedRoute><FacultyManage /></ProtectedRoute>} />
+            <Route path="/help" element={<Help />} />
         </Routes>
     )
 }
