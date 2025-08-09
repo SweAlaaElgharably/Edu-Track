@@ -11,11 +11,12 @@ class Program(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name=models.CharField(max_length=100)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='owned_programs'
-    )
+    # owner = models.ForeignKey(
+    #     settings.AUTH_USER_MODEL,
+    #     on_delete=models.CASCADE,
+    #     related_name='owned_programs',
+    #     null=True
+    # )  # Temporarily removed to break migration cycle
     faculty = models.ForeignKey(
     'faculty.Faculty',
     on_delete=models.CASCADE,

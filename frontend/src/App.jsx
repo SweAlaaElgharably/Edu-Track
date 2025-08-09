@@ -6,7 +6,7 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import PlexusBackground from './components/PlexusBackground.jsx';
 import RoutesList from '../routes/RoutesList.jsx';
-
+import ScrollToTop from './components/ScrollToTop'; //
 const queryClient = new QueryClient();
 
 function AppContent() {

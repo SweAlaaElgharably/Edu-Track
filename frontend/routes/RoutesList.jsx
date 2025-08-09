@@ -12,6 +12,7 @@ import Features from '../src/pages/Features';
 import Contact from '../src/pages/Contact';
 import UniversityManage from '../src/pages/UniversityManage';
 import FacultyManage from '../src/pages/FacultyManage';
+import HelpCenter from '../src/pages/HelpCenter';
 import PageNotFound from '../src/pages/PageNotFound';
 
 
@@ -27,6 +28,7 @@ const RoutesList = () => {
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/features" element={<Features />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/help" element={<HelpCenter />} />
             <Route path="/universities" element={<ProtectedRoute><UniversityManage /></ProtectedRoute>} />
             <Route path="/universities/:slug/faculties" element={<ProtectedRoute><FacultyManage /></ProtectedRoute>} />
             <Route path="*" element={<PageNotFound />} />

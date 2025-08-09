@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Program
 
 class ProgramSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
+    # owner = serializers.ReadOnlyField(source='owner.username')  # Temporarily commented to break migration cycle
 
     class Meta:
         model = Program

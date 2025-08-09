@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from university.models import University
-from faculty.models import Faculty
-from program.models import Program
+
 
 # Create your models here.
 class User(AbstractUser):
@@ -18,9 +16,9 @@ class User(AbstractUser):
     gender = models.CharField(max_length=4, choices=[('ذكر', 'ذكر'), ('أنثى', 'أنثى')], blank=True, null=True)
     maritalstatus = models.CharField(max_length=6, choices=[('أعزب', 'أعزب'), ('عزباء', 'عزباء'), ('متزوج', 'متزوج'), ('متزوجة', 'متزوجة'), ('مطلق', 'مطلق'), ('مطلقة', 'مطلقة'), ('أرمل', 'أرمل'), ('أرملة', 'أرملة')], blank=True, null=True)
     religion = models.CharField(max_length=20, choices=[('مسلم', 'مسلم'), ('مسيحي', 'مسيحي')], blank=True, null=True)
-    university = models.ForeignKey(University, on_delete=models.CASCADE, related_name='universities', null=True, blank=True)
-    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='faculties', null=True, blank=True)
-    program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='programs', null=True, blank=True)
+    university = models.ForeignKey('university.University', on_delete=models.CASCADE, related_name='universities', null=True, blank=True)
+    faculty = models.ForeignKey('faculty.Faculty', on_delete=models.CASCADE, related_name='faculties', null=True, blank=True)
+    program = models.ForeignKey('program.Program', on_delete=models.CASCADE, related_name='programs', null=True, blank=True)
 
     def __str__(self):
         return self.username

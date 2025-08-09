@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',    
     'university.apps.UniversityConfig',
     'faculty.apps.FacultyConfig',
+    
+    
 ]
 
 MIDDLEWARE = [
