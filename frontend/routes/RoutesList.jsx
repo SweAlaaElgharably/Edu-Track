@@ -14,12 +14,14 @@ import Contact from "../src/pages/Contact";
 import UniversityManage from "../src/pages/UniversityManage";
 import FacultyManage from "../src/pages/FacultyManage";
 import PageNotFound from "../src/pages/PageNotFound";
+import ForgotPassword from "../src/pages/ForgotPassword";
 
 const RoutesList = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/register" element={<Register />} />
       <Route
         path="/dashboard"
