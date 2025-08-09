@@ -30,6 +30,16 @@
   max-width: 100%;
 }
 
+.col-lg-6.contact-form-wrapper {
+  flex: 0 0 50%;
+  max-width: 100%;
+}
+
+.col-lg-6.contact-info-wrapper {
+  flex: 0 0 50%;
+  max-width: 100%;
+}
+
 .col-lg-6 {
   flex: 0 0 50%;
   max-width: 50%;
@@ -246,18 +256,21 @@
 }
 
 .contact-form {
-  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
-  padding: 40px;
+  background-color: #ffffff;
+  padding: 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   width: 100%;
   min-height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-form:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
 }
 
 .contact-form::before {
@@ -293,14 +306,13 @@
 }
 
 .form-group label {
+  color: #2d3748;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+  font-family: 'Cairo', sans-serif;
   display: block;
-  margin-bottom: 10px;
-  color: #ffffff;
-  font-weight: 500;
-  font-size: 14px;
   text-align: right;
-  transition: all 0.3s ease;
-  position: relative;
 }
 
 .form-group:focus-within label {
@@ -309,19 +321,24 @@
 }
 
 .form-control {
-  display: block;
   width: 100%;
-  padding: 16px 20px;
-  font-size: 16px;
-  line-height: 1.5;
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #f7fafc;
+  color: #2d3748;
+  font-size: 1rem;
+  font-family: 'Cairo', sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+  background-color: #ffffff;
+  color: #2d3748;
 }
 
 .form-control::before {
@@ -333,14 +350,6 @@
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   transition: left 0.5s ease;
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: #3182ce;
-  box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.15);
-  background-color: rgba(255, 255, 255, 0.12);
-  transform: translateY(-2px);
 }
 
 .form-control:focus::before {
@@ -361,6 +370,7 @@ textarea.form-control {
   resize: vertical;
   min-height: 120px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #ffffff;
 }
 
 textarea.form-control:focus {
@@ -369,16 +379,16 @@ textarea.form-control:focus {
 
 .contact-btn {
   margin-top: 1.5rem;
-  padding: 16px 32px;
-  font-size: 16px;
-  font-weight: 600;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%) !important;
-  color: white !important;
-  border: none !important;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #2b6cb0 0%, #1a365d 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -387,6 +397,7 @@ textarea.form-control:focus {
   width: 100%;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
 }
 
 .contact-btn::before {

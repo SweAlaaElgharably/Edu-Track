@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/auth.css';
 import image2 from '../assets/2.jpeg';
-import PlexusBackground from '../components/PlexusBackground';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -42,7 +41,6 @@ function Register() {
   };
   return (
     <div className="auth-split-page">
-      <PlexusBackground />
       <div className="auth-image-section">
         <img src={image2} alt="Port Said University" className="auth-bg-image" />
         <div className="university-logo"></div>

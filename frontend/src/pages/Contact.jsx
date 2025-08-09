@@ -69,80 +69,84 @@ export default function Contact() {
     <div className="contact">
       <div className="row">
         {/* Contact Form Section */}
-        <div className="col-lg-6 d-flex align-items-center">
-          <div className="contact-form">
+        <div className="col-lg-6 d-flex align-items-center contact-form-wrapper">
+          <div className="contact-form auth-container">
             {state.succeeded ? (
               <p className="success-msg">تم إرسال الرسالة بنجاح! ✅</p>
             ) : (
-              <form id="contact-form" onSubmit={onSubmit}>
-                <div className="col-md-12">
-                  <div className="form-group">
-                    <label htmlFor="name">اسم المستخدم</label>
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      className="form-control"
-                      placeholder="ادخل الاسم *"
-                      value={formData.name}
-                      onChange={handleChange}
-                      autoComplete="name"
-                    />
-                    {errors.name && <p className="error">{errors.name}</p>}
+              <React.Fragment>
+                <h2>تواصل معنا</h2>
+                <p>نحن هنا لمساعدتك، أرسل لنا رسالة وسنرد عليك في أقرب وقت</p>
+                <form id="contact-form" onSubmit={onSubmit} className="auth-form">
+                  <div className="col-md-12">
+                    <div className="form-group">
+                      <label htmlFor="name">اسم المستخدم</label>
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        className="form-control"
+                        placeholder="ادخل الاسم *"
+                        value={formData.name}
+                        onChange={handleChange}
+                        autoComplete="name"
+                      />
+                      {errors.name && <p className="error">{errors.name}</p>}
+                    </div>
                   </div>
-                </div>
 
-                <div className="col-md-12">
-                  <div className="form-group">
-                    <label htmlFor="email">البريد الإلكتروني</label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      className="form-control"
-                      placeholder="ادخل البريد الالكتروني *"
-                      value={formData.email}
-                      onChange={handleChange}
-                      autoComplete="email"
-                    />
-                    {errors.email && <p className="error">{errors.email}</p>}
+                  <div className="col-md-12">
+                    <div className="form-group">
+                      <label htmlFor="email">البريد الإلكتروني</label>
+                      <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        className="form-control"
+                        placeholder="ادخل البريد الالكتروني *"
+                        value={formData.email}
+                        onChange={handleChange}
+                        autoComplete="email"
+                      />
+                      {errors.email && <p className="error">{errors.email}</p>}
+                    </div>
                   </div>
-                </div>
 
-                <div className="col-md-12">
-                  <div className="form-group">
-                    <label htmlFor="message">الرسالة</label>
-                    <textarea
-                      rows="4"
-                      name="message"
-                      id="message"
-                      className="form-control"
-                      placeholder="اكتب رسالتك *"
-                      value={formData.message}
-                      onChange={handleChange}
-                    ></textarea>
-                    {errors.message && (
-                      <p className="error">{errors.message}</p>
-                    )}
+                  <div className="col-md-12">
+                    <div className="form-group">
+                      <label htmlFor="message">الرسالة</label>
+                      <textarea
+                        rows="4"
+                        name="message"
+                        id="message"
+                        className="form-control"
+                        placeholder="اكتب رسالتك *"
+                        value={formData.message}
+                        onChange={handleChange}
+                      ></textarea>
+                      {errors.message && (
+                        <p className="error">{errors.message}</p>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <div className="col-md-12">
-                  <button
-                    type="submit"
-                    className="btn-big contact-btn btn-bg"
-                    disabled={state.submitting}
-                  >
-                    <i className="fas fa-arrow-right"></i> ارسل
-                  </button>
-                </div>
-              </form>
+                  <div className="col-md-12">
+                    <button
+                      type="submit"
+                      className="btn-big contact-btn btn-bg"
+                      disabled={state.submitting}
+                    >
+                      <i className="fas fa-arrow-right"></i> ارسل
+                    </button>
+                  </div>
+                </form>
+              </React.Fragment>
             )}
           </div>
         </div>
 
         {/* Contact Info Section */}
-        <div className="col-lg-6 d-flex align-items-center">
+        <div className="col-lg-6 d-flex align-items-center contact-info-wrapper">
           <div className="contact-info">
             <div className="overlay"></div>
             <div className="contact-info-content">
