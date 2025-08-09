@@ -47,32 +47,6 @@
   color: #ffffff !important; /* Ensure visibility */
 }
 
-.search-bar {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-}
-
-.search-bar input {
-  width: 50%;
-  padding: 1rem;
-  border: 1px solid #333;
-  border-radius: 8px 0 0 8px;
-  background-color: #1e1e2e;
-  color: #ffffff;
-  font-size: 1rem;
-}
-
-.search-bar button {
-  padding: 1rem 2rem;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 0 8px 8px 0;
-  cursor: pointer;
-  font-weight: bold;
-}
-
 .help-content {
   max-width: 1200px;
   margin: 0 auto;

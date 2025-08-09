@@ -8,10 +8,6 @@ function HelpCenter() {
       <header className="help-header">
         <h1>مركز المساعدة</h1>
         <p>كيف يمكننا مساعدتك اليوم؟</p>
-        <div className="search-bar">
-          <input type="text" placeholder="ابحث في مركز المساعدة..." />
-          <button>بحث</button>
-        </div>
       </header>
   
       <main style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', padding: '2rem' }}>
