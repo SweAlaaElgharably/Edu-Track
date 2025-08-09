@@ -5,8 +5,5 @@ class FacultySerializer(ModelSerializer):
 
     class Meta:
         model = Faculty
-        fields = [
-            'id', 'name', 'slug', 'logo', 
-            'university', 'university_name', 'owner',
-        ]
-        read_only_fields = ['slug', 'owner', 'created_at', 'updated_at']
+        fields = '__all__'
+        depth = 1
