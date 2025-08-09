@@ -1,0 +1,83 @@
+/* Modern 404 Page Not Found Styles */
+.page-not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+  color: #111;
+  font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modern-fade-in {
+  animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notfound-circle {
+  width: 160px;
+  height: 160px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 1.5px 6px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  border: 4px solid #222;
+  transition: box-shadow 0.3s;
+}
+.notfound-circle:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.notfound-404 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  color: #111;
+  letter-spacing: 2px;
+  text-shadow: 2px 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.notfound-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: #111;
+}
+
+.notfound-desc {
+  font-size: 1.1rem;
+  color: #222;
+  margin-bottom: 32px;
+}
+
+.notfound-home-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: #111;
+  color: #fff;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.notfound-home-btn:hover {
+  background: #222;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
