@@ -15,6 +15,7 @@ import UniversityManage from "../src/pages/UniversityManage";
 import FacultyManage from "../src/pages/FacultyManage";
 import PageNotFound from "../src/pages/PageNotFound";
 import ForgotPassword from "../src/pages/ForgotPassword";
+import HelpCenter from "../src/pages/HelpCenter";
 
 const RoutesList = () => {
   return (
@@ -73,6 +74,8 @@ const RoutesList = () => {
           </ProtectedRoute>
         }
       />
+      <Route path="/help" element={<HelpCenter />} />
+
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

@@ -220,7 +220,7 @@
 }
 
 /* Content Sections */
-.courses-section, .schedule-section, .progress-section {
+.courses-section, .schedule-section{
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid rgba(100, 108, 255, 0.1);
   border-radius: 16px;
@@ -229,7 +229,7 @@
   backdrop-filter: blur(10px);
 }
 
-.courses-section h2, .schedule-section h2, .progress-section h2 {
+.courses-section h2, .schedule-section h2 {
   color: #1f2937;
   margin-bottom: 1rem;
   font-weight: 600;
