@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/dashboard.css';
-import PlexusBackground from '../components/PlexusBackground';
-import Courses from './Courses';
-import Schedule from "./Schedule";
+import Courses from '../components/Courses';
+import Schedule from "../components/Schedule";
 import FacultyManage from './FacultyManage';
 import Department from './Department';
 
@@ -77,7 +76,7 @@ function Dashboard() {
   }
 
   return (
-    
+
     <div className="dashboard-container">
       {/* <PlexusBackground /> */}
       {/* Sidebar */}
@@ -85,9 +84,8 @@ function Dashboard() {
         <nav className="sidebar-nav">
           <h3 style={{ marginBottom: "10px" }}>لوحة التحكم</h3>
           <button
-            className={`sidebar-tab ${
-              activeTab === "overview" ? "active" : ""
-            }`}
+            className={`sidebar-tab ${activeTab === "overview" ? "active" : ""
+              }`}
             onClick={() => setActiveTab("overview")}
           >
             <span className="tab-icon">📊</span>
@@ -101,36 +99,32 @@ function Dashboard() {
             <span className="tab-text">المقررات</span>
           </button>
           <button
-            className={`sidebar-tab ${
-              activeTab === "schedule" ? "active" : ""
-            }`}
+            className={`sidebar-tab ${activeTab === "schedule" ? "active" : ""
+              }`}
             onClick={() => setActiveTab("schedule")}
           >
             <span className="tab-icon">📅</span>
             <span className="tab-text">الجدول</span>
           </button>
           <button
-            className={`sidebar-tab ${
-              activeTab === "progress" ? "active" : ""
-            }`}
+            className={`sidebar-tab ${activeTab === "progress" ? "active" : ""
+              }`}
             onClick={() => setActiveTab("progress")}
           >
             <span className="tab-icon">📈</span>
             <span className="tab-text">التقدم</span>
           </button>
           <button
-            className={`sidebar-tab ${
-              activeTab === "facultyManagement" ? "active" : ""
-            }`}
+            className={`sidebar-tab ${activeTab === "facultyManagement" ? "active" : ""
+              }`}
             onClick={() => setActiveTab("facultyManagement")}
           >
             <span className="tab-icon">📈</span>
             <span className="tab-text"> الكليات</span>
           </button>
           <button
-            className={`sidebar-tab ${
-              activeTab === "department" ? "active" : ""
-            }`}
+            className={`sidebar-tab ${activeTab === "department" ? "active" : ""
+              }`}
             onClick={() => setActiveTab("department")}
           >
             <span className="tab-icon">📈</span>
@@ -150,9 +144,9 @@ function Dashboard() {
       </aside>
 
       {/* Main Content */}
-      
+
       <main className="dashboard-main">
-        
+
         <div className="dashboard-content">
           {activeTab === "overview" && (
             <div className="overview-grid">
@@ -210,8 +204,8 @@ function Dashboard() {
             </div>
           )}
 
-          {activeTab === "courses" && <Courses/>}
-          {activeTab === "facultyManagement" && <FacultyManage/>}
+          {activeTab === "courses" && <Courses />}
+          {activeTab === "facultyManagement" && <FacultyManage />}
 
           {activeTab === "schedule" && <Schedule />}
           {activeTab === "department" && <Department />}

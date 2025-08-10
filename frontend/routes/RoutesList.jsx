@@ -4,13 +4,10 @@ import Home from "../src/pages/Home";
 import Login from "../src/pages/Login";
 import Register from "../src/pages/Register";
 import Dashboard from "../src/pages/Dashboard";
-import Courses from "../src/pages/Courses";
-import Schedule from "../src/pages/Schedule";
 import Profile from "../src/pages/Profile";
 import ProtectedRoute from "../src/components/ProtectedRoute";
 import Features from "../src/pages/Features";
 import Contact from "../src/pages/Contact";
-
 import UniversityManage from "../src/pages/UniversityManage";
 import FacultyManage from "../src/pages/FacultyManage";
 import PageNotFound from "../src/pages/PageNotFound";
@@ -32,22 +29,6 @@ const RoutesList = () => {
           </ProtectedRoute>
         }
       />
-      {/* <Route
-        path="/courses"
-        element={
-          <ProtectedRoute>
-            <Courses />
-          </ProtectedRoute>
-        }
-      /> */}
-      {/* <Route
-        path="/schedule"
-        element={
-          <ProtectedRoute>
-            <Schedule />
-          </ProtectedRoute>
-        }
-      /> */}
       <Route
         path="/profile"
         element={

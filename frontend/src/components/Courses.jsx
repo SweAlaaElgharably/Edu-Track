@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/courses.css';
-import PlexusBackground from '../components/PlexusBackground';
 
 function Courses() {
   const { isAuthenticated, user } = useAuth();
