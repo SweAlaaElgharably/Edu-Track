@@ -19,16 +19,20 @@ class RetrieveUniversity(RetrieveAPIView):
     queryset =  University.objects.all()
     serializer_class = UniversitySerializer
     lookup_field = "slug"
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'university.get_university'})]
 
 class UpdateUniversity(UpdateAPIView):
     queryset =  University.objects.all()
     serializer_class = UniversitySerializer
     lookup_field = "slug"
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'university.change_university'})]
 
 class DestoryUniversity(DestroyAPIView):
     queryset =  University.objects.all()
     serializer_class = UniversitySerializer
     lookup_field = "slug"
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'university.delete_university'})]
+
 
 
 

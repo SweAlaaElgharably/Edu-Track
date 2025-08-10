@@ -5,6 +5,7 @@ from faculty.models import Faculty
 class Location(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(unique=True)
+    capacity = models.PositiveIntegerField(default=1)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='locations')
 
     def __str__(self):
