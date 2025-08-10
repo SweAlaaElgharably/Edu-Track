@@ -31,22 +31,22 @@ const RoutesList = () => {
           </ProtectedRoute>
         }
       />
-      <Route
+      {/* <Route
         path="/courses"
         element={
           <ProtectedRoute>
             <Courses />
           </ProtectedRoute>
         }
-      />
-      <Route
+      /> */}
+      {/* <Route
         path="/schedule"
         element={
           <ProtectedRoute>
             <Schedule />
           </ProtectedRoute>
         }
-      />
+      /> */}
       <Route
         path="/profile"
         element={

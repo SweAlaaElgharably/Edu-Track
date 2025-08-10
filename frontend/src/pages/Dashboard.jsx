@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import "../styles/dashboard.css";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import '../styles/dashboard.css';
+import PlexusBackground from '../components/PlexusBackground';
+import Courses from './Courses';
 import Schedule from "./Schedule";
+import FacultyManage from './FacultyManage';
+import Department from './Department';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -73,7 +77,9 @@ function Dashboard() {
   }
 
   return (
+    
     <div className="dashboard-container">
+      {/* <PlexusBackground /> */}
       {/* Sidebar */}
       <aside className="dashboard-sidebar">
         <nav className="sidebar-nav">
@@ -112,6 +118,24 @@ function Dashboard() {
             <span className="tab-icon">📈</span>
             <span className="tab-text">التقدم</span>
           </button>
+          <button
+            className={`sidebar-tab ${
+              activeTab === "facultyManagement" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("facultyManagement")}
+          >
+            <span className="tab-icon">📈</span>
+            <span className="tab-text"> الكليات</span>
+          </button>
+          <button
+            className={`sidebar-tab ${
+              activeTab === "department" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("department")}
+          >
+            <span className="tab-icon">📈</span>
+            <span className="tab-text"> الأقسام</span>
+          </button>
         </nav>
         <div className="sidebar-header">
           <div className="user-info">
@@ -126,7 +150,9 @@ function Dashboard() {
       </aside>
 
       {/* Main Content */}
+      
       <main className="dashboard-main">
+        
         <div className="dashboard-content">
           {activeTab === "overview" && (
             <div className="overview-grid">
@@ -158,7 +184,7 @@ function Dashboard() {
                 <p>المحاضرة القادمة خلال 30 دقيقة</p>
               </div>
               {/* University/Faculty Management Card */}
-              <div
+              {/* <div
                 className="stats-card"
                 style={{ cursor: "pointer" }}
                 onClick={() => (window.location.href = "/universities")}
@@ -180,21 +206,15 @@ function Dashboard() {
                 >
                   الذهاب للإدارة
                 </a>
-              </div>
+              </div> */}
             </div>
           )}
 
-          {activeTab === "courses" && (
-            <div className="courses-section">
-              <h2>مقرراتي</h2>
-              <p>انقر على "المقررات" في شريط التنقل لعرض جميع مقرراتك</p>
-              <Link to="/courses" className="btn btn-primary">
-                عرض جميع المقررات
-              </Link>
-            </div>
-          )}
+          {activeTab === "courses" && <Courses/>}
+          {activeTab === "facultyManagement" && <FacultyManage/>}
 
           {activeTab === "schedule" && <Schedule />}
+          {activeTab === "department" && <Department />}
 
           {activeTab === "progress" && (
             <div className="progress-section">
