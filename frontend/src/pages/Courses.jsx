@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/courses.css';
+import PlexusBackground from '../components/PlexusBackground';
 
 function Courses() {
   const { isAuthenticated, user } = useAuth();
@@ -33,12 +34,10 @@ function Courses() {
 
   return (
     <div className="courses-page">
+      {/* <PlexusBackground /> */}
       <header className="courses-header">
         <h1>مقرراتي</h1>
-        <div className="user-info">
-          <span>مرحباً بك، {user?.first_name || 'طالب'}!</span>
-          <Link to="/profile" className="btn btn-secondary">الملف الشخصي</Link>
-        </div>
+      
       </header>
 
       <div className="courses-stats">

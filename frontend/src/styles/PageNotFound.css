@@ -1,18 +1,51 @@
-/* Modern 404 Page Not Found Styles */
-.page-not-found {
+/* PageNotFound.css */
+
+.pnf-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
-  color: #111;
-  font-family: "Segoe UI", "Roboto", Arial, sans-serif;
-  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  animation: fadeIn 1s ease;
+  padding: 2rem;
 }
 
-.modern-fade-in {
-  animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1);
+.pnf-title {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5em;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  animation: bounce 1.2s infinite alternate;
+}
+
+.pnf-message {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  margin-bottom: 2em;
+  text-align: center;
+  max-width: 500px;
+  line-height: 1.5;
+}
+
+.pnf-home-btn {
+  background: #fff;
+  color: #764ba2;
+  border: none;
+  border-radius: 30px;
+  padding: 0.8em 2.2em;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  margin-top: 1em;
+}
+.pnf-home-btn:hover {
+  background: #764ba2;
+  color: #fff;
+  transform: translateY(-2px) scale(1.04);
 }
 
 @keyframes fadeIn {
@@ -26,58 +59,23 @@
   }
 }
 
-.notfound-circle {
-  width: 160px;
-  height: 160px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 1.5px 6px rgba(0, 0, 0, 0.04);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
-  border: 4px solid #222;
-  transition: box-shadow 0.3s;
-}
-.notfound-circle:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-12px);
+  }
 }
 
-.notfound-404 {
-  font-size: 4.5rem;
-  font-weight: 800;
-  color: #111;
-  letter-spacing: 2px;
-  text-shadow: 2px 4px 16px rgba(0, 0, 0, 0.08);
-}
-
-.notfound-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin: 0 0 10px 0;
-  color: #111;
-}
-
-.notfound-desc {
-  font-size: 1.1rem;
-  color: #222;
-  margin-bottom: 32px;
-}
-
-.notfound-home-btn {
-  display: inline-block;
-  padding: 12px 32px;
-  background: #111;
-  color: #fff;
-  border-radius: 30px;
-  font-size: 1rem;
-  font-weight: 600;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-}
-.notfound-home-btn:hover {
-  background: #222;
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+@media (max-width: 600px) {
+  .pnf-title {
+    font-size: 3rem;
+  }
+  .pnf-message {
+    font-size: 1rem;
+  }
+  .pnf-container {
+    padding: 1rem;
+  }
 }

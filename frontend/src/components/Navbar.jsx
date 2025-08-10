@@ -47,9 +47,8 @@ function Navbar() {
         ) : (
           // Authenticated navigation
           <>
-            <Link to="/features" className="nav-link" onClick={closeMenu}>المميزات</Link>
-            <Link to="/schedule" className="nav-link" onClick={closeMenu}>الجدول</Link>
-            <Link to="/courses" className="nav-link" onClick={closeMenu}>المقررات</Link>
+            {/* <Link to="/schedule" className="nav-link" onClick={closeMenu}>الجدول</Link> */}
+            {/* <Link to="/courses" className="nav-link" onClick={closeMenu}>المقررات</Link> */}
             <Link to="/dashboard" className="nav-link" onClick={closeMenu}>لوحة التحكم</Link>
             <Link to="/" className="nav-link" onClick={closeMenu}>الصفحة الرئيسية</Link>
           </>

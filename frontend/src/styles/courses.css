@@ -163,6 +163,7 @@ backdrop-filter: blur(10px);
 }
 
 .progress-label {
+  color: rgba(83, 91, 242, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -170,7 +171,7 @@ backdrop-filter: blur(10px);
 }
 
 .progress-label span {
-  color: rgba(255, 255, 255, 0.9);
+   color: rgb(83, 91, 242);
   font-size: 0.85rem;
   font-weight: 500;
 }

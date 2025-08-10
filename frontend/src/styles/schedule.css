@@ -1,8 +1,8 @@
 /* Schedule Page Styles */
 
 .schedule-page {
-  padding: 2rem;
-  max-width: 1200px;
+  padding: 1rem;
+  max-width: 1100px;
   margin: 0 auto;
   direction: rtl;
   text-align: right;
@@ -24,9 +24,9 @@
 .schedule-header h1 {
   color: rgba(255, 255, 255, 0.9);
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   direction: rtl;
   text-align: right;
 }
@@ -53,7 +53,7 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
 }
 
 .schedule-nav button:hover {
@@ -63,38 +63,57 @@
 }
 
 .schedule-nav button.active {
-  background: linear-gradient(135deg, rgba(100, 108, 255, 0.2) 0%, rgba(83, 91, 242, 0.2) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(100, 108, 255, 0.2) 0%,
+    rgba(83, 91, 242, 0.2) 100%
+  );
   color: white;
   box-shadow: 0 2px 8px rgba(100, 108, 255, 0.3);
 }
 
 /* Schedule Content Sections */
-.today-schedule, .week-schedule {
+.today-schedule,
+.week-schedule {
   background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   border: 2px solid rgba(100, 108, 255, 0.2);
   border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  transition: all 0.3s ease;
 }
 
-.today-schedule h2, .week-schedule h2 {
+.today-schedule h2,
+.week-schedule h2 {
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.7rem;
   font-weight: 600;
+  font-size: 1rem;
 }
 
 /* Schedule Items */
 .schedule-item {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 10px;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.3rem;
 }
 
 .schedule-item:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
   border-color: rgba(100, 108, 255, 0.3);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -108,36 +127,42 @@
 }
 
 .time {
-  font-size: 1.2rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.9);
 }
 
 .duration {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.6);
 }
 
 .class-info h4 {
   color: rgba(255, 255, 255, 0.9);
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
+  font-size: 0.85rem;
 }
 
 .class-info p {
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.1rem;
+  font-size: 0.7rem;
 }
 
 .class-type {
   display: inline-block;
-  padding: 0.3rem 0.8rem;
-  background: linear-gradient(135deg, rgba(100, 108, 255, 0.2) 0%, rgba(83, 91, 242, 0.2) 100%);
+  padding: 0.15rem 0.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(100, 108, 255, 0.2) 0%,
+    rgba(83, 91, 242, 0.2) 100%
+  );
   color: rgba(255, 255, 255, 0.9);
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  margin-top: 0.5rem;
+  margin-top: 0.2rem;
 }
 
 .class-actions {
@@ -146,7 +171,9 @@
 }
 
 .class-actions .btn {
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
+  font-size: 0.7rem;
+  padding: 0.3rem 0.7rem;
 }
 
 /* Week Schedule */
@@ -157,16 +184,25 @@
 }
 
 .day-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 10px;
+  padding: 0.7rem;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  font-size: 0.8rem;
 }
 
 .day-card:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
   border-color: rgba(100, 108, 255, 0.3);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -175,8 +211,9 @@
 .day-card h3 {
   color: rgba(255, 255, 255, 0.9);
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-align: center;
+  font-size: 0.9rem;
 }
 
 .day-classes {
@@ -196,21 +233,22 @@
 .class-time {
   color: rgba(255, 255, 255, 0.8);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   display: block;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.1rem;
 }
 
 .class-name {
   color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   display: block;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.1rem;
+  font-size: 0.7rem;
 }
 
 .class-room {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   display: block;
 }
 
@@ -230,15 +268,15 @@
 .schedule-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .stat-card {
   background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
-  border: 2px solid rgba(100, 108, 255, 0.2);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border: 1px solid rgba(100, 108, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.8rem;
   text-align: center;
   backdrop-filter: blur(10px);
   transition: transform 0.2s ease;
@@ -251,66 +289,79 @@
 
 .stat-card h3 {
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  font-family: 'Cairo', sans-serif;
+  margin-bottom: 0.3rem;
+  font-size: 0.7rem;
+  font-family: "Cairo", sans-serif;
   direction: rtl;
 }
 
 .stat-number {
-  font-size: 2.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
 }
 
 .stat-card p {
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
-  font-size: 0.9rem;
-  font-family: 'Cairo', sans-serif;
+  font-size: 0.7rem;
+  font-family: "Cairo", sans-serif;
   direction: rtl;
 }
 
 /* 2-column layout for schedule page */
 .schedule-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
-  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
 }
 
-.today-schedule, .week-schedule {
+.today-schedule,
+.week-schedule {
   margin-bottom: 0;
 }
 
 .week-grid {
   display: grid;
-  grid-template-columns: repeat(6 , 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 1.2rem;
   width: 100%;
 }
 
 @media (max-width: 1024px) {
   .schedule-columns {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    flex-direction: column;
+    gap: 1.5rem;
   }
-  .today-schedule, .week-schedule {
-    margin-bottom: 2rem;
+  .today-schedule,
+  .week-schedule {
+    margin-bottom: 1.5rem;
   }
   .week-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
+  .schedule-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* Improve section headers and card spacing */
-.today-schedule h2, .week-schedule h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+.today-schedule h2 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: right;
+}
+
+.week-schedule h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
   font-weight: 700;
-  color: rgba(255,255,255,0.95);
+  color: rgba(255, 255, 255, 0.95);
   text-align: right;
 }
 
@@ -323,15 +374,22 @@
 
 .week-grid {
   gap: 1.2rem;
+  margin-top: 1rem;
 }
 
 .day-card {
   margin-bottom: 0.5rem;
+  height: 100%;
 }
 
 /* Add more padding for better readability */
-.schedule-item, .day-card {
-  padding: 2rem 1.2rem;
+.schedule-item,
+.day-card {
+  padding: 1.2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Responsive tweaks for mobile readability */
@@ -340,10 +398,12 @@
     grid-template-columns: 1fr;
     gap: 1.2rem;
   }
-  .schedule-item, .day-card {
+  .schedule-item,
+  .day-card {
     padding: 1.2rem 0.7rem;
   }
-  .today-schedule h2, .week-schedule h2 {
+  .today-schedule h2,
+  .week-schedule h2 {
     font-size: 1.1rem;
   }
 }
@@ -351,257 +411,376 @@
 /* Mobile Schedule */
 @media (max-width: 768px) {
   .schedule-page {
-    padding: 0.5rem;
-  }
-  
-  .schedule-header {
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .schedule-header h1 {
-    font-size: 1.5rem;
-  }
-  
-  .schedule-stats {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .stat-card {
-    padding: 0.8rem 0.5rem;
-  }
-  
-  .stat-card h3 {
-    font-size: 0.7rem;
-    margin-bottom: 0.3rem;
-  }
-  
-  .stat-number {
-    font-size: 1.5rem;
-    margin-bottom: 0.2rem;
-  }
-  
-  .stat-card p {
-    font-size: 0.7rem;
-  }
-  
-  .schedule-columns {
-    display: block;
-  }
-  
-  .today-schedule, .week-schedule {
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .today-schedule h2, .week-schedule h2 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .today-schedule .schedule-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
-  }
-  
-  .today-schedule .schedule-item {
-    padding: 0.8rem 0.5rem;
-    font-size: 0.8rem;
-    min-height: auto;
-  }
-  
-  .today-schedule .time {
-    font-size: 0.9rem;
-  }
-  
-  .today-schedule .duration {
-    font-size: 0.7rem;
-  }
-  
-  .today-schedule .class-info h4 {
-    font-size: 0.8rem;
-    margin-bottom: 0.3rem;
-  }
-  
-  .today-schedule .class-info p {
-    font-size: 0.7rem;
-    margin-bottom: 0.2rem;
-  }
-  
-  .today-schedule .class-type {
-    font-size: 0.6rem;
-    padding: 0.2rem 0.4rem;
-  }
-  
-  .today-schedule .class-actions .btn {
-    font-size: 0.7rem;
-    padding: 0.3rem 0.5rem;
-  }
-  
-  .week-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 0.5rem;
-  }
-  
-  .day-card {
     padding: 0.8rem;
   }
-  
-  .day-card h3 {
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
+
+  .schedule-header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
   }
-  
+
+  .schedule-header h1 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  .user-info {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.8rem;
+  }
+
+  .schedule-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .stat-card {
+    padding: 0.8rem;
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .today-schedule .schedule-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  .today-schedule .schedule-item {
+    padding: 1rem;
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+  }
+
+  .week-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+  }
+
+  .day-card {
+    padding: 0.8rem;
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+  }
+
   .day-class {
-    padding: 0.5rem;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.8rem;
+    padding: 0.8rem;
+    border-radius: 6px;
   }
-  
-  .class-time {
-    font-size: 0.8rem;
-    margin-bottom: 0.2rem;
-  }
-  
-  .class-name {
-    font-size: 0.8rem;
-    margin-bottom: 0.1rem;
-  }
-  
-  .class-room {
-    font-size: 0.7rem;
-  }
+}
+
+.stat-card h3 {
+  font-size: 0.7rem;
+  margin-bottom: 0.3rem;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.stat-card p {
+  font-size: 0.7rem;
+}
+
+.schedule-columns {
+  display: block;
+}
+
+.today-schedule,
+.week-schedule {
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.today-schedule h2,
+.week-schedule h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.today-schedule .schedule-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.today-schedule .schedule-item {
+  padding: 0.8rem 0.5rem;
+  font-size: 0.8rem;
+  min-height: auto;
+}
+
+.today-schedule .time {
+  font-size: 0.9rem;
+}
+
+.today-schedule .duration {
+  font-size: 0.7rem;
+}
+
+.today-schedule .class-info h4 {
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.today-schedule .class-info p {
+  font-size: 0.7rem;
+  margin-bottom: 0.2rem;
+}
+
+.today-schedule .class-type {
+  font-size: 0.6rem;
+  padding: 0.2rem 0.4rem;
+}
+
+.today-schedule .class-actions .btn {
+  font-size: 0.7rem;
+  padding: 0.3rem 0.5rem;
+}
+
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+}
+
+.day-card {
+  padding: 0.8rem;
+}
+
+.day-card h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.day-class {
+  padding: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.class-time {
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+
+.class-name {
+  font-size: 0.8rem;
+  margin-bottom: 0.1rem;
+}
+
+.class-room {
+  font-size: 0.7rem;
 }
 
 /* Extra small mobile devices */
 @media (max-width: 480px) {
   .schedule-page {
-    padding: 0.3rem;
-  }
-  
-  .schedule-header {
-    padding: 0.8rem;
-    margin-bottom: 0.8rem;
-  }
-  
-  .schedule-header h1 {
-    font-size: 1.3rem;
-  }
-  
-  .schedule-stats {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.3rem;
-    margin-bottom: 0.8rem;
-  }
-  
-  .stat-card {
-    padding: 0.5rem 0.3rem;
-  }
-  
-  .stat-card h3 {
-    font-size: 0.6rem;
-  }
-  
-  .stat-number {
-    font-size: 1.2rem;
-  }
-  
-  .stat-card p {
-    font-size: 0.6rem;
-  }
-  
-  .today-schedule, .week-schedule {
-    padding: 0.8rem;
-    margin-bottom: 0.8rem;
-  }
-  
-  .today-schedule h2, .week-schedule h2 {
-    font-size: 1rem;
-    margin-bottom: 0.8rem;
-  }
-  
-  .today-schedule .schedule-item {
-    padding: 0.6rem 0.4rem;
-  }
-  
-  .week-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.4rem;
-  }
-  
-  .day-card {
     padding: 0.6rem;
   }
-  
-  .day-card h3 {
-    font-size: 0.8rem;
-    margin-bottom: 0.4rem;
+
+  .schedule-header {
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  
-  .day-class {
-    padding: 0.4rem;
+
+  .schedule-header h1 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .user-info {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .schedule-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .stat-card {
+    padding: 0.8rem 0.5rem;
+    border-radius: 8px;
+  }
+
+  .stat-card h3 {
+    font-size: 0.7rem;
     margin-bottom: 0.2rem;
   }
-} 
+
+  .stat-number {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .today-schedule,
+  .week-schedule {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+  }
+
+  .today-schedule h2,
+  .week-schedule h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .today-schedule .schedule-list {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .today-schedule .schedule-item {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .today-schedule .time-section {
+    align-items: flex-start;
+  }
+
+  .week-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  .day-card {
+    padding: 0.8rem;
+    border-radius: 8px;
+  }
+
+  .day-card h3 {
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+    text-align: center;
+    background: rgba(100, 108, 255, 0.1);
+    padding: 0.4rem;
+    border-radius: 6px;
+  }
+
+  .day-class {
+    padding: 0.8rem;
+    margin-bottom: 0.6rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .day-class:last-child {
+    margin-bottom: 0;
+  }
+
+  .class-info {
+    margin-top: 0.5rem;
+  }
+}
 
 .today-schedule .schedule-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.6rem;
   width: 100%;
-  justify-items: center;
+  margin: 0 auto;
 }
 
 .today-schedule .schedule-item {
-  padding: 0.3rem 0.2rem;
-  min-width: 110px;
-  max-width: 140px;
-  font-size: 0.8rem;
-  border-radius: 9px;
+  padding: 0.8rem;
+  width: 100%;
+  font-size: 0.75rem;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: right;
   height: 100%;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
 .today-schedule .time {
   font-size: 0.95rem;
-  margin-bottom: 0.05rem;
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .today-schedule .duration {
-  font-size: 0.7rem;
-  margin-bottom: 0.05rem;
+  font-size: 0.75rem;
+  margin-bottom: 0.2rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.today-schedule .class-info {
+  width: 100%;
 }
 
 .today-schedule .class-info h4 {
-  font-size: 0.85rem;
-  margin-bottom: 0.05rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  color: rgba(255, 255, 255, 0.95);
 }
 
-.today-schedule .class-info p,
+.today-schedule .class-info p {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .today-schedule .class-type {
-  font-size: 0.7rem;
-  margin-bottom: 0.03rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(100, 108, 255, 0.2);
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.today-schedule .class-actions {
+  width: 100%;
+  margin-top: 0.3rem;
 }
 
 .today-schedule .class-actions .btn {
-  font-size: 0.7rem;
-  padding: 0.2rem 0.4rem;
-  margin-top: 0.1rem;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(100, 108, 255, 0.1);
+  border: 1px solid rgba(100, 108, 255, 0.3);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.today-schedule .class-actions .btn:hover {
+  background: rgba(100, 108, 255, 0.2);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 900px) {
-  .today-schedule, .week-schedule {
+  .today-schedule,
+  .week-schedule {
     max-width: 100%;
   }
 }
