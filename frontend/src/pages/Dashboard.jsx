@@ -1,35 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import '../styles/dashboard.css';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import "../styles/dashboard.css";
+import Schedule from "./Schedule";
 
 function Dashboard() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState("overview");
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   // Redirect to home if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/');
+      navigate("/");
     }
   }, [isAuthenticated, navigate]);
 
   // Mock data - replace with real data from backend
   const mockData = {
     courses: [
-      { id: 1, name: 'الرياضيات 101', progress: 75, nextClass: '2024-01-15 10:00' },
-      { id: 2, name: 'معمل الفيزياء', progress: 60, nextClass: '2024-01-16 14:00' },
-      { id: 3, name: 'الأدب الإنجليزي', progress: 90, nextClass: '2024-01-17 09:00' }
+      {
+        id: 1,
+        name: "الرياضيات 101",
+        progress: 75,
+        nextClass: "2024-01-15 10:00",
+      },
+      {
+        id: 2,
+        name: "معمل الفيزياء",
+        progress: 60,
+        nextClass: "2024-01-16 14:00",
+      },
+      {
+        id: 3,
+        name: "الأدب الإنجليزي",
+        progress: 90,
+        nextClass: "2024-01-17 09:00",
+      },
     ],
     upcomingDeadlines: [
-      { id: 1, title: 'واجب الرياضيات', course: 'الرياضيات 101', dueDate: '2024-01-20' },
-      { id: 2, title: 'تقرير الفيزياء', course: 'معمل الفيزياء', dueDate: '2024-01-22' }
+      {
+        id: 1,
+        title: "واجب الرياضيات",
+        course: "الرياضيات 101",
+        dueDate: "2024-01-20",
+      },
+      {
+        id: 2,
+        title: "تقرير الفيزياء",
+        course: "معمل الفيزياء",
+        dueDate: "2024-01-22",
+      },
     ],
     recentActivity: [
-      { id: 1, action: 'تم إكمال الواجب', course: 'الأدب الإنجليزي', time: 'قبل ساعتين' },
-      { id: 2, action: 'حضور المحاضرة', course: 'الرياضيات 101', time: 'قبل يوم واحد' }
-    ]
+      {
+        id: 1,
+        action: "تم إكمال الواجب",
+        course: "الأدب الإنجليزي",
+        time: "قبل ساعتين",
+      },
+      {
+        id: 2,
+        action: "حضور المحاضرة",
+        course: "الرياضيات 101",
+        time: "قبل يوم واحد",
+      },
+    ],
   };
 
   if (!isAuthenticated) {
@@ -40,104 +76,127 @@ function Dashboard() {
     <div className="dashboard-container">
       {/* Sidebar */}
       <aside className="dashboard-sidebar">
-
         <nav className="sidebar-nav">
-        <h3 style={{marginBottom:'10px'}}>لوحة التحكم</h3>
-          <button 
-            className={`sidebar-tab ${activeTab === 'overview' ? 'active' : ''}`}
-            onClick={() => setActiveTab('overview')}
+          <h3 style={{ marginBottom: "10px" }}>لوحة التحكم</h3>
+          <button
+            className={`sidebar-tab ${
+              activeTab === "overview" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("overview")}
           >
             <span className="tab-icon">📊</span>
             <span className="tab-text">نظرة عامة</span>
           </button>
-          <button 
-            className={`sidebar-tab ${activeTab === 'courses' ? 'active' : ''}`}
-            onClick={() => setActiveTab('courses')}
+          <button
+            className={`sidebar-tab ${activeTab === "courses" ? "active" : ""}`}
+            onClick={() => setActiveTab("courses")}
           >
             <span className="tab-icon">📚</span>
             <span className="tab-text">المقررات</span>
           </button>
-          <button 
-            className={`sidebar-tab ${activeTab === 'schedule' ? 'active' : ''}`}
-            onClick={() => setActiveTab('schedule')}
+          <button
+            className={`sidebar-tab ${
+              activeTab === "schedule" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("schedule")}
           >
             <span className="tab-icon">📅</span>
             <span className="tab-text">الجدول</span>
           </button>
-          <button 
-            className={`sidebar-tab ${activeTab === 'progress' ? 'active' : ''}`}
-            onClick={() => setActiveTab('progress')}
+          <button
+            className={`sidebar-tab ${
+              activeTab === "progress" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("progress")}
           >
             <span className="tab-icon">📈</span>
             <span className="tab-text">التقدم</span>
           </button>
         </nav>
         <div className="sidebar-header">
-          
           <div className="user-info">
-            <span>مرحباً بك، {user?.first_name || 'طالب'}!</span>
+            <span>مرحباً بك، {user?.first_name || "طالب"}!</span>
           </div>
         </div>
         <div className="sidebar-footer">
-          <Link to="/profile" className="btn btn-secondary">الملف الشخصي</Link>
+          <Link to="/profile" className="btn btn-secondary">
+            الملف الشخصي
+          </Link>
         </div>
       </aside>
 
       {/* Main Content */}
       <main className="dashboard-main">
         <div className="dashboard-content">
-          {activeTab === 'overview' && (
+          {activeTab === "overview" && (
             <div className="overview-grid">
               <div className="stats-card">
                 <h3>المقررات الحالية</h3>
-                <div className="stat-number-dashboard">{mockData.courses.length}</div>
+                <div className="stat-number-dashboard">
+                  {mockData.courses.length}
+                </div>
                 <p>المقررات النشطة هذا الفصل الدراسي</p>
               </div>
-              
+
               <div className="stats-card">
                 <h3>متوسط التقدم</h3>
                 <div className="stat-number-dashboard">75%</div>
                 <p>في جميع المقررات</p>
               </div>
-              
+
               <div className="stats-card">
                 <h3>المواعيد القادمة</h3>
-                <div className="stat-number-dashboard">{mockData.upcomingDeadlines.length}</div>
+                <div className="stat-number-dashboard">
+                  {mockData.upcomingDeadlines.length}
+                </div>
                 <p>الواجبات المستحقة قريباً</p>
               </div>
-              
+
               <div className="stats-card">
                 <h3>المحاضرات اليوم</h3>
                 <div className="stat-number-dashboard">2</div>
                 <p>المحاضرة القادمة خلال 30 دقيقة</p>
               </div>
               {/* University/Faculty Management Card */}
-              <div className="stats-card" style={{ cursor: 'pointer' }} onClick={() => window.location.href='/universities'}>
+              <div
+                className="stats-card"
+                style={{ cursor: "pointer" }}
+                onClick={() => (window.location.href = "/universities")}
+              >
                 <h3>إدارة الجامعات والكليات</h3>
-                <div className="stat-number-dashboard" style={{ fontSize: 32 }}>🔗</div>
+                <div className="stat-number-dashboard" style={{ fontSize: 32 }}>
+                  🔗
+                </div>
                 <p>انتقل لإدارة الجامعات والكليات</p>
-                <a href="/universities" className="btn btn-secondary" style={{ marginTop: 12, color: '#fff', background: '#1976d2', border: 'none' }}>الذهاب للإدارة</a>
+                <a
+                  href="/universities"
+                  className="btn btn-secondary"
+                  style={{
+                    marginTop: 12,
+                    color: "#fff",
+                    background: "#1976d2",
+                    border: "none",
+                  }}
+                >
+                  الذهاب للإدارة
+                </a>
               </div>
             </div>
           )}
 
-          {activeTab === 'courses' && (
+          {activeTab === "courses" && (
             <div className="courses-section">
               <h2>مقرراتي</h2>
               <p>انقر على "المقررات" في شريط التنقل لعرض جميع مقرراتك</p>
-              <Link to="/courses" className="btn btn-primary">عرض جميع المقررات</Link>
+              <Link to="/courses" className="btn btn-primary">
+                عرض جميع المقررات
+              </Link>
             </div>
           )}
 
-          {activeTab === 'schedule' && (
-            <div className="schedule-section">
-              <h2>جدول المحاضرات</h2>
-              <p>انقر على "الجدول" في شريط التنقل لعرض جدول محاضراتك</p>
-              <Link to="/schedule" className="btn btn-primary">عرض الجدول الكامل</Link>
-            </div>
-          )}
+          {activeTab === "schedule" && <Schedule />}
 
-          {activeTab === 'progress' && (
+          {activeTab === "progress" && (
             <div className="progress-section">
               <h2>التقدم الأكاديمي</h2>
               <div className="progress-chart">
@@ -153,4 +212,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard; 
+export default Dashboard;
