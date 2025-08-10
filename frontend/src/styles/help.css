@@ -37,8 +37,9 @@
 }
 
 .help-header {
+
   text-align: center;
-  margin-bottom: 3rem;
+  margin: 3rem;
 }
 
 .help-header h1 {
