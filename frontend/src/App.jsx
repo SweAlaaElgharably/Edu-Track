@@ -20,8 +20,8 @@ function AppContent() {
       <main className="main-content">
         <ScrollToTop />
         <RoutesList />
-      </main>
       <Footer />
+      </main>
     </div>
   );
 }
