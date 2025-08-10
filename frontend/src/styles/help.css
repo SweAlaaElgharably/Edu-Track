@@ -1,4 +1,15 @@
 /* Help Center Styles */
+.help-center-page {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.help-center-page.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .help-center {
   padding: 1rem 2rem;
   color: #ffffff; /* White text */
@@ -7,7 +18,7 @@
   z-index: 2;
 }
 
-.help-center h1, .help-center h2,.help-header p,
+.help-header h1,.help-center h2,.help-header p,
 .faq-section h1, .faq-section h2, .faq-section h3,
 .faq-item h1, .faq-item h2{
   color: #0d3d6e !important;

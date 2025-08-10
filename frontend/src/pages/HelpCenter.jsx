@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Chatbot from '../components/Chatbot';
 import '../styles/help.css';
 
 function HelpCenter() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setVisible(true);
+  }, []);
+
   return (
-    <div className="help-center">
+    <div className={`help-center-page ${visible ? 'fade-in' : ''}`}>
       <header className="help-header">
         <h1>مركز المساعدة</h1>
         <p>كيف يمكننا مساعدتك اليوم؟</p>

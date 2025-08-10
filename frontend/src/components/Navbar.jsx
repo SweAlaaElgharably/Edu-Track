@@ -42,7 +42,6 @@ function Navbar() {
           <>
             <Link to="/about" className="nav-link" onClick={closeMenu}>حول</Link>
             <Link to="/features" className="nav-link" onClick={closeMenu}>المميزات</Link>
-            <Link to="/help" className="nav-link" onClick={closeMenu}>مركز المساعدة</Link>
             <Link to="/" className="nav-link" onClick={closeMenu}>الرئيسية</Link>
           </>
         ) : (
@@ -51,7 +50,6 @@ function Navbar() {
             <Link to="/schedule" className="nav-link" onClick={closeMenu}>الجدول</Link>
             <Link to="/courses" className="nav-link" onClick={closeMenu}>المقررات</Link>
             <Link to="/dashboard" className="nav-link" onClick={closeMenu}>لوحة التحكم</Link>
-            <Link to="/help" className="nav-link" onClick={closeMenu}>مركز المساعدة</Link>
             <Link to="/" className="nav-link" onClick={closeMenu}>الصفحة الرئيسية</Link>
           </>
         )}

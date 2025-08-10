@@ -14,7 +14,7 @@ import UniversityManage from '../src/pages/UniversityManage';
 import FacultyManage from '../src/pages/FacultyManage';
 import HelpCenter from '../src/pages/HelpCenter';
 import PageNotFound from '../src/pages/PageNotFound';
-
+import ForgotPassword from "../src/pages/ForgotPassword";
 
 const RoutesList = () => {
     return (
@@ -32,6 +32,7 @@ const RoutesList = () => {
             <Route path="/universities" element={<ProtectedRoute><UniversityManage /></ProtectedRoute>} />
             <Route path="/universities/:slug/faculties" element={<ProtectedRoute><FacultyManage /></ProtectedRoute>} />
             <Route path="*" element={<PageNotFound />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
     )
 }
