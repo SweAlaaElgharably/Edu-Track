@@ -1,8 +1,14 @@
 /* Courses Page Styles */
-
+.progress-section{
+border: 1px solid rgba(100, 108, 255, 0.1);
+border-radius: 16px;
+padding: 2rem;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+backdrop-filter: blur(10px);
+}
 .courses-page {
   padding: 2rem;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   direction: rtl;
   text-align: right;
@@ -97,7 +103,9 @@
   background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   border: 2px solid rgba(100, 108, 255, 0.2);
   border-radius: 12px;
-  padding: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
   margin-bottom: 1rem;
@@ -234,7 +242,7 @@
 /* Courses Grid Layout */
 .courses-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin-top: 2rem;
 }
