@@ -13,6 +13,8 @@ import FacultyManage from "../src/pages/FacultyManage";
 import PageNotFound from "../src/pages/PageNotFound";
 import ForgotPassword from "../src/pages/ForgotPassword";
 import HelpCenter from "../src/pages/HelpCenter";
+import ChangePassword from "../src/pages/ChangePassword";
+
 const RoutesList = () => {
   return (
     <Routes>
@@ -33,6 +35,14 @@ const RoutesList = () => {
         element={
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/change-password"
+        element={
+          <ProtectedRoute>
+            <ChangePassword />
           </ProtectedRoute>
         }
       />
