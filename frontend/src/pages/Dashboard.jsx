@@ -125,7 +125,7 @@ function Dashboard() {
             }`}
             onClick={() => setActiveTab("facultyManagement")}
           >
-            <span className="tab-icon">📈</span>
+            <span className="tab-icon">🏫</span>
             <span className="tab-text"> الكليات</span>
           </button>
           <button
@@ -134,7 +134,7 @@ function Dashboard() {
             }`}
             onClick={() => setActiveTab("department")}
           >
-            <span className="tab-icon">📈</span>
+            <span className="tab-icon"> 🗂️ </span>
             <span className="tab-text"> الأقسام</span>
           </button>
           <button
@@ -143,7 +143,7 @@ function Dashboard() {
             }`}
             onClick={() => setActiveTab("hall")}
           >
-            <span className="tab-icon">📈</span>
+            <span className="tab-icon">🏛️</span>
             <span className="tab-text"> القاعات</span>
           </button>
         </nav>
