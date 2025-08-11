@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-
+import logo from '../assets/logo.png';
 import '../styles/chatbot.css';
 
 function Chatbot() {
@@ -99,7 +99,9 @@ function Chatbot() {
             </div>
           );
 
-          const avatar = <div className="avatar">{isUser ? 'U' : 'A'}</div>;
+          const avatar = isUser
+            ? <div className="avatar">U</div>
+            : <img className="avatar avatar-img" src={logo} alt="Bot" />;
 
           return (
             <div
@@ -113,7 +115,7 @@ function Chatbot() {
         })}
         {loading && (
           <div className="chat-message-wrapper bot">
-            <div className="avatar">A</div>
+            <img className="avatar avatar-img" src={logo} alt="Bot" />
             <div className="chat-message ltr">Thinking...</div>
           </div>
         )}

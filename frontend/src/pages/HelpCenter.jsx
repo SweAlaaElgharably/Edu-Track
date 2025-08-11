@@ -75,12 +75,12 @@ function HelpCenter() {
         </section>
 
         <section className="faq-section">
-          <h2 style={{ color: '#0f172a', fontWeight: 800, marginBottom: '1.5rem' }}>الأسئلة الشائعة</h2>
+          <h2>الأسئلة الشائعة</h2>
           <div className={`faq-grid ${faqFade ? 'fade-in' : 'fade-out'}`}>
             {displayFaqs.map(faq => (
               <div key={faq.id} className="faq-item">
-                <h3 style={{ color: '#0f172a', fontWeight: 800, fontSize: 18 }}>{faq.question}</h3>
-                <p style={{ color: '#334155', fontWeight: 500, fontSize: 14, marginTop: 10 }}>{faq.answer}</p>
+                <h3>{faq.question}</h3>
+                <p >{faq.answer}</p>
               </div>
             ))}
             {displayFaqs.length === 0 && (
