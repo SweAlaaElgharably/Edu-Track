@@ -359,6 +359,8 @@
 	color: white;
 }
 
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
 	.help-page {
@@ -537,22 +539,14 @@
   z-index: 2;
 }
 
-.help-header h1,.help-center h2,.help-header p,
-.faq-section h1, .faq-section h2, .faq-section h3,
-.faq-item h1, .faq-item h2{
-  color: #0d3d6e !important;
-  font-weight: bold !important;
-  text-shadow: 0 1px 6px #fff8, 0 0 1px #fff8; /* Subtle white glow for contrast */
-}
 
 .faq-item {
   background: rgba(255,255,255,0.87);
   border-radius: 18px;
   box-shadow: 0 6px 32px rgba(0,0,0,0.10);
-  padding: 2rem;
   border: none;
   transition: box-shadow 0.3s, transform 0.2s;
-  margin-bottom: 1.5rem;
+ margin-top: 1vh;  
 }
 
 .help-header {
@@ -565,7 +559,7 @@
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #ffffff;
+  color: #3271b1 ;
 }
 
 
@@ -574,8 +568,9 @@
 .help-center h3,
 .faq-section p,
 .chatbot-section p {
-  font-size: 1.2rem;
-  color: #ffffff !important; /* Ensure visibility */
+  font-size: 1.2rem !important;
+  color: #ffffff !important; 
+
 }
 
 .help-content {
@@ -640,10 +635,10 @@
 }
 
 .faq-item h3 {
-  font-size: 1.5rem;
+  font-size: 1.3rem !important;
   font-weight: 800;
   margin-bottom: 1rem;
-  color: #fff !important;
+  color: #3271b1 !important;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -667,7 +662,7 @@
 
 .faq-item p {
   color: #5e5e5e;
-  font-size: 1.rem;
+  font-size: 1rem;
   line-height: 2;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -702,9 +697,212 @@
   box-shadow: none;
 }
 
+/* Overrides for HelpCenter light theme */
+.help-center-page .faq-item {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.06) !important;
+  padding: 1.25rem 1rem !important;
+  color: #0f172a !important;
+}
+.help-center-page {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
+}
+.help-center-page .faq-item h3::after {
+  color: #3b82f6 !important;
+}
+.help-center-page .faq-item p {
+  color: #334155 !important;
+  text-shadow: none !important;
+}
+
+/* Ensure section-level text isn't forced white inside HelpCenter */
+.help-center-page .faq-section p {
+  color: #334155 !important;
+  text-shadow: none !important;
+}
+.help-center-page .faq-section h2,
+.help-center-page {
+  color: #0f172a !important;
+  text-shadow: none !important;
+ 
+}
+
+/* Neutralize dark gradient block inside HelpCenter */
+.help-center-page .faq-item {
+  background-image: none !important;
+  border-color: #e5e7eb !important;
+}
+
+.help-center-page .chatbot-side,
+.help-center-page .chatbot-container {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.08) !important;
+  border-radius: 20px !important;
+}
+.help-center-page* {
+  color: #0f172a;
+}
+
+/* Optional: style common chatbot parts if present */
+.help-center-page .chatbot-container .chat-header {
+  background: linear-gradient(90deg, #3b82f6 0%, #1e40af 100%);
+  color: #ffffff !important;
+  border-bottom: 1px solid #e5e7eb;
+}
+.help-center-page .chatbot-container .message-input,
+.help-center-page .chatbot-container input[type="text"],
+.help-center-page .chatbot-container textarea {
+  background: #f8fafc !important;
+  border: 1px solid #e5e7eb !important;
+  color: #0f172a !important;
+}
+.help-center-page .chatbot-container .send-button,
+.help-center-page .chatbot-container button[type="submit"] {
+  background: linear-gradient(90deg, #3b82f6 0%, #1e40af 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
 .chatbot-placeholder {
   text-align: center;
   color: #bbbbbb;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+/* Responsive HelpCenter main grid */
+.help-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  padding: 2rem 1rem;
+  align-items: start;
+}
+@media (max-width: 1100px) {
+  .help-main-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0.75rem;
+  }
+}
+
+/* Chatbot white card theme */
+.chatbot-card {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 20px !important;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.08) !important;
+  overflow: hidden;
+}
+
+/* Smooth appear animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up { animation: fadeInUp 420ms cubic-bezier(.4,0,.2,1) both; }
+
+.fade-in { opacity: 1; transform: scale(1); }
+.fade-out { opacity: 0; transform: scale(0.97); }
+
+/* Smooth text appearance inside chatbot */
+.chatbot-container * {
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+.chatbot-container p,
+.chatbot-container li,
+.chatbot-container h1,
+.chatbot-container h2,
+.chatbot-container h3,
+.chatbot-container h4 {
+  opacity: 1;
+}
+
+/* Additional mobile tweaks */
+@media (max-width: 600px) {
+  .help-header { margin: 1.5rem 0.75rem; }
+  .faq-section h2, .chatbot-section h2 { font-size: 1.4rem; }
+}
+
+/* Modern Category Pills */
+.helpcenter-category-row.modern {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 18px auto 8px;
+}
+
+.category-pill {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 86px;
+  min-height: 86px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 800;
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.06);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 180ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+
+.category-pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120px 120px at var(--mx, 50%) var(--my, 50%), rgba(59,130,246,0.14), transparent 60%);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.category-pill:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.12);
+  border-color: #dbe3ef;
+}
+.category-pill:hover::before { opacity: 1; }
+
+.category-pill:active { transform: translateY(-1px) scale(1.01); }
+
+.category-pill-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+.category-pill-label {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.category-pill.active {
+  background: linear-gradient(90deg, #3b82f6 0%, #1e40af 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.14);
+}
+
+/* Responsive sizes */
+@media (max-width: 1024px) {
+  .category-pill { min-width: 80px; min-height: 80px; }
+  .category-pill-icon { font-size: 28px; }
+}
+@media (max-width: 768px) {
+  .category-pill { min-width: 74px; min-height: 74px; }
+  .category-pill-icon { font-size: 26px; }
+}
+@media (max-width: 520px) {
+  .category-pill { min-width: 70px; min-height: 70px; border-radius: 14px; }
+  .category-pill-icon { font-size: 24px; }
+  .category-pill-label { font-size: 11px; }
 }
