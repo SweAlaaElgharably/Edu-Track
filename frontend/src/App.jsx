@@ -6,7 +6,7 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import PlexusBackground from './components/PlexusBackground.jsx';
 import RoutesList from '../routes/RoutesList.jsx';
-
+import ScrollToTop from './components/ScrollToTop'; //
 const queryClient = new QueryClient();
 
 function AppContent() {
@@ -15,12 +15,13 @@ function AppContent() {
 
   return (
     <div className="App">
-      {!isAuthPage && <PlexusBackground />}
+      <PlexusBackground />
       <Navbar />
       <main className="main-content">
+        <ScrollToTop />
         <RoutesList />
+      <Footer />
       </main>
-        {!isAuthPage && <Footer />}
     </div>
   );
 }
@@ -34,5 +35,6 @@ function App() {
     </QueryClientProvider>
   );
 }
+
 
 export default App;
