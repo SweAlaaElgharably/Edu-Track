@@ -211,7 +211,7 @@ function Dashboard() {
           {activeTab === "department" && <Department />}
 
           {activeTab === "progress" && (
-            <div className="progress-section">
+            <div className="progress-section-applying">
               <h2>التقدم الأكاديمي</h2>
               <div className="progress-chart">
                 <div className="chart-placeholder">
