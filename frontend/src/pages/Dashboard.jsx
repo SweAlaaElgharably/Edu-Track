@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/dashboard.css';
-import PlexusBackground from '../components/PlexusBackground';
+// import PlexusBackground from '../components/PlexusBackground';
 import Courses from './Courses';
 import Schedule from "./Schedule";
+import FacultyManage from "./FacultyManage";
+import Department from "./Department";
+import Hall from "./Hall";
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
