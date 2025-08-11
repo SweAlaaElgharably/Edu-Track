@@ -25,23 +25,40 @@ export default function Department() {
     loadFaculties();
   }, []);
 
+
+  // Mock data for style testing
+  const mockFaculties = [
+    { id: 1, name: 'كلية الهندسة' },
+    { id: 2, name: 'كلية العلوم' },
+    { id: 3, name: 'كلية التجارة' },
+  ];
+  const mockDepartments = [
+    { slug: 'cs', name: 'قسم الحاسبات', faculty: mockFaculties[0] },
+    { slug: 'physics', name: 'قسم الفيزياء', faculty: mockFaculties[1] },
+    { slug: 'chemistry', name: 'قسم الكيمياء', faculty: mockFaculties[1] },
+    { slug: 'business', name: 'قسم إدارة الأعمال', faculty: mockFaculties[2] },
+  ];
+
   const loadDepartments = async () => {
     setLoading(true);
     try {
       const data = await fetchPrograms();
-      setDepartments(data);
+      setDepartments(data.length ? data : mockDepartments);
       setError(null);
     } catch (err) {
+      setDepartments(mockDepartments);
       setError(err.message);
     }
     setLoading(false);
   };
 
+
   const loadFaculties = async () => {
     try {
       const data = await fetchFaculties();
-      setFaculties(data);
+      setFaculties(data.length ? data : mockFaculties);
     } catch (err) {
+      setFaculties(mockFaculties);
       setError(err.message);
     }
   };
@@ -93,13 +110,15 @@ export default function Department() {
     <div className="department-page">
       <h2 className="department-header">الأقسام</h2>
       {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
-      <div className="department-grid">
-        {/* Add Department Card */}
-        <div className="add-department-card" onClick={handleCreate}>
-          <span style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>+</span>
-          <span style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>اضافه قسم</span>
+      <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'flex-start' }}>
+        <div className="add-department-card" onClick={handleCreate} style={{
+          minWidth: '140px', minHeight: '80px', padding: '1rem 0.7rem', flexDirection: 'row', alignItems: 'center', gap: '0.5rem', boxSizing: 'border-box'
+        }}>
+          <span style={{ fontSize: '1.5rem', marginBottom: 0, marginLeft: '0.5rem' }}>+</span>
+          <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>اضافه قسم</span>
         </div>
-
+      </div>
+      <div className="department-grid">
         {/* Department Cards */}
         {loading ? (
           <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#646cff' }}>جاري التحميل...</div>

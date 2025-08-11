@@ -1,16 +1,14 @@
-
-/* Department Page Styles - Courses Pattern */
-.department-page {
+/* Hall Page Styles - Department Pattern */
+.hall-page {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
   direction: rtl;
   text-align: right;
   min-height: 100vh;
-  
 }
 
-.department-header {
+.hall-header {
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 2rem;
   text-align: center;
@@ -19,14 +17,7 @@
   font-family: 'Cairo', sans-serif;
 }
 
-.department-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-  justify-items: center;
-}
-
-.add-department-card {
+.add-hall-btn {
   background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -35,67 +26,60 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 180px;
+  min-height: 80px;
   color: #646cff;
   cursor: pointer;
   border: 2px dashed #646cff;
   transition: box-shadow 0.3s, background 0.3s, transform 0.3s;
   will-change: transform, box-shadow, background;
 }
-.add-department-card:hover {
+.add-hall-btn:hover {
   box-shadow: 0 6px 25px rgba(100, 108, 255, 0.2);
   background: linear-gradient(135deg, #282c4e 0%, #1e1e2e 50%, #2d3748 100%);
   transform: translateY(-4px) scale(1.03);
 }
 
-.department-card {
+.hall-table-wrapper {
   background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
-  border: 2px solid rgba(100, 108, 255, 0.2);
   border-radius: 16px;
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-height: 180px;
-  position: relative;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 2rem;
+  overflow-x: auto;
+}
+
+.hall-table {
   width: 100%;
-  max-width: 340px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s, border-color 0.3s, background 0.3s, transform 0.3s;
-  will-change: transform, box-shadow, background;
+  border-collapse: collapse;
+  font-family: 'Cairo', sans-serif;
 }
-.department-card:hover {
-  box-shadow: 0 6px 25px rgba(100, 108, 255, 0.2);
-  border-color: rgba(100, 108, 255, 0.4);
-  background: linear-gradient(135deg, #282c4e 0%, #1e1e2e 50%, #2d3748 100%);
-  transform: translateY(-4px) scale(1.03);
-}
-
-.department-info {
-  margin-bottom: 1rem;
-}
-.department-info .department-name {
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.9);
-}
-.department-info .department-name span {
-  color: #646cff;
-}
-.department-info .faculty-name {
+.hall-table th, .hall-table td {
+  padding: 1rem 0.7rem;
+  text-align: center;
+  color: rgba(255,255,255,0.9);
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(100, 108, 255, 0.1);
 }
-.department-info .faculty-name span {
-  color: #646cff;
+.hall-table th {
+
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.hall-row {
+    overflow: hidden;
+  transition: background 0.3s, transform 0.3s;
+  will-change: transform, background;
+}
+.hall-row:hover {
+  background: rgba(100, 108, 255, 0.08);
+  transform: translateY(-2px) scale(1.03);
 }
 
-.department-actions {
+.hall-actions {
   display: flex;
   gap: 0.5rem;
   margin-top: auto;
 }
-.department-actions .btn {
+.hall-actions .btn {
   flex: 1;
   text-align: center;
   padding: 0.7rem 1rem;
@@ -109,85 +93,33 @@
   cursor: pointer;
   transition: background 0.3s, box-shadow 0.3s, border-color 0.3s, transform 0.3s;
   will-change: transform, box-shadow, background;
+  
 }
-.department-actions .btn.update {
+.hall-row .btn.update {
+    color: #fff;
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
   border-color: rgba(52, 73, 94, 0.3);
 }
-.department-actions .btn.update:hover {
+.hall-row .btn.update:hover {
   background: linear-gradient(135deg, #34495e 0%, #2c3e50 50%, #34495e 100%);
   box-shadow: 0 6px 25px rgba(52, 73, 94, 0.3);
   border-color: rgba(52, 73, 94, 0.5);
   transform: translateY(-2px) scale(1.04);
 }
-.department-actions .btn.delete {
+.hall-row .btn.delete {
+    color: #fff;
   background: #d63031;
   border-color: rgba(214, 48, 49, 0.3);
 }
-.department-actions .btn.delete:hover {
+.hall-row .btn.delete:hover {
   background: #b71c1c;
   box-shadow: 0 6px 25px rgba(214, 48, 49, 0.2);
   border-color: rgba(214, 48, 49, 0.5);
   transform: translateY(-2px) scale(1.04);
 }
 
-@media (max-width: 768px) {
-  .department-page {
-    padding: 1rem;
-  }
-  .department-header {
-    font-size: 1.8rem;
-  }
-  .department-grid {
-    gap: 0.8rem;
-  }
-  .department-card, .add-department-card {
-    padding: 1rem;
-    min-height: 140px;
-  }
-  .department-info .department-name {
-    font-size: 1rem;
-  }
-  .department-info .faculty-name {
-    font-size: 0.9rem;
-  }
-  .department-actions .btn {
-    padding: 0.6rem 0.5rem;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .department-page {
-    padding: 0.5rem;
-  }
-  .department-header {
-    font-size: 1.4rem;
-  }
-  .department-grid {
-    gap: 0.5rem;
-  }
-  .department-card, .add-department-card {
-    padding: 0.7rem;
-    min-height: 100px;
-  }
-  .department-info .department-name {
-    font-size: 0.95rem;
-  }
-  .department-info .faculty-name {
-    font-size: 0.8rem;
-  }
-  .department-actions {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .department-actions .btn {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
-  }
-}
- /* Modal Styles for Department Page */
-.department-modal-bg {
+/* Modal Styles for Hall Page */
+.hall-modal-bg {
   position: fixed;
   top: 0;
   left: 0;
@@ -200,7 +132,7 @@
   z-index: 1000;
 }
 
-.department-modal {
+.hall-modal {
   background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   border-radius: 16px;
   padding: 2rem;
@@ -211,23 +143,24 @@
   gap: 1rem;
   position: relative;
   color: rgba(255,255,255,0.9);
+  font-family: 'Cairo', sans-serif;
 }
 
-.department-modal h3 {
+.hall-modal h3 {
   text-align: center;
   color: #646cff;
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
 
-.department-modal label {
+.hall-modal label {
   font-size: 1rem;
   margin-bottom: 0.2rem;
   color: rgba(255,255,255,0.8);
 }
 
-.department-modal input,
-.department-modal select {
+.hall-modal input,
+.hall-modal select {
   width: 100%;
   padding: 0.5rem;
   border-radius: 8px;
@@ -238,18 +171,18 @@
   font-size: 1rem;
 }
 
-.department-modal select:focus,
-.department-modal input:focus {
+.hall-modal select:focus,
+.hall-modal input:focus {
   outline: none;
   border-color: #535bf2;
 }
 
-.department-modal .btn {
+.hall-modal .btn {
   margin-top: 1rem;
   width: 100%;
 }
 
-.department-modal .close-btn {
+.hall-modal .close-btn {
   position: absolute;
   top: 1rem;
   left: 1rem;

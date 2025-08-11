@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/dashboard.css';
-import Courses from '../components/Courses';
-import Schedule from "../components/Schedule";
-import FacultyManage from './FacultyManage';
-import Department from './Department';
+// import PlexusBackground from '../components/PlexusBackground';
+import Courses from './Courses';
+import Schedule from "./Schedule";
+import FacultyManage from "./FacultyManage";
+import Department from "./Department";
+import Hall from "./Hall";
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -119,7 +121,7 @@ function Dashboard() {
               }`}
             onClick={() => setActiveTab("facultyManagement")}
           >
-            <span className="tab-icon">📈</span>
+            <span className="tab-icon">🏫</span>
             <span className="tab-text"> الكليات</span>
           </button>
           <button
@@ -127,8 +129,17 @@ function Dashboard() {
               }`}
             onClick={() => setActiveTab("department")}
           >
-            <span className="tab-icon">📈</span>
+            <span className="tab-icon"> 🗂️ </span>
             <span className="tab-text"> الأقسام</span>
+          </button>
+          <button
+            className={`sidebar-tab ${
+              activeTab === "hall" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("hall")}
+          >
+            <span className="tab-icon">🏛️</span>
+            <span className="tab-text"> القاعات</span>
           </button>
         </nav>
         <div className="sidebar-header">
@@ -209,6 +220,7 @@ function Dashboard() {
 
           {activeTab === "schedule" && <Schedule />}
           {activeTab === "department" && <Department />}
+          {activeTab === "hall" && <Hall />}
 
           {activeTab === "progress" && (
             <div className="progress-section-applying">
