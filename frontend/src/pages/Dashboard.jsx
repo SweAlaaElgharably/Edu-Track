@@ -7,6 +7,7 @@ import Courses from './Courses';
 import Schedule from "./Schedule";
 import FacultyManage from './FacultyManage';
 import Department from './Department';
+import Hall from './Hall';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -136,6 +137,15 @@ function Dashboard() {
             <span className="tab-icon">📈</span>
             <span className="tab-text"> الأقسام</span>
           </button>
+          <button
+            className={`sidebar-tab ${
+              activeTab === "hall" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("hall")}
+          >
+            <span className="tab-icon">📈</span>
+            <span className="tab-text"> القاعات</span>
+          </button>
         </nav>
         <div className="sidebar-header">
           <div className="user-info">
@@ -215,6 +225,7 @@ function Dashboard() {
 
           {activeTab === "schedule" && <Schedule />}
           {activeTab === "department" && <Department />}
+          {activeTab === "hall" && <Hall />}
 
           {activeTab === "progress" && (
             <div className="progress-section">
