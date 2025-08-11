@@ -4,20 +4,20 @@ import { useAuth } from '../context/AuthContext';
 import '../styles/profile.css';
 
 function Profile() {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Redirect to home if not authenticated
+  // Redirect if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/');
     }
   }, [isAuthenticated, navigate]);
 
-  // Fetch user data from backend
+  // Fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
       if (!isAuthenticated) return;
@@ -55,7 +55,7 @@ function Profile() {
   };
 
   if (!isAuthenticated) {
-    return null; // Don't render anything while redirecting
+    return null;
   }
 
   if (loading) {
@@ -76,121 +76,152 @@ function Profile() {
       <div className="profile-container">
         {error && (
           <div className="error-message">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 8V12M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 8V12M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             {error}
           </div>
         )}
 
-        <div className="profile-header">
-          <div className="profile-avatar">
-            {userData?.picture ? (
-              <img
-                src={`http://localhost:8000${userData.picture}`}
-                alt="صورة المستخدم"
-                className="avatar-image"
-              />
-            ) : (
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
-              </svg>
-            )}
-          </div>
-          <div className="profile-info">
-            <h2>{userData?.first_name && userData?.last_name ? `${userData.first_name} ${userData.last_name}` : userData?.email}</h2>
-            <p className="user-email">{userData?.email}</p>
-            <p className="user-username">اسم المستخدم: {userData?.username || 'غير محدد'}</p>
-          </div>
-        </div>
-
-        <div className="profile-sections">
-          {/* Personal Information Section */}
-          <div className="profile-section">
-            <h3>المعلومات الشخصية</h3>
-            <div className="info-grid">
-              <div className="info-item">
-                <label>الاسم الكامل باللغة الإنجليزية:</label>
-                <span>{userData?.englishfullname || 'غير محدد'}</span>
-              </div>
-              <div className="info-item">
-                <label>رقم الهاتف:</label>
-                <span>{userData?.phonenumber || 'غير محدد'}</span>
-              </div>
-              <div className="info-item">
-                <label>تاريخ الميلاد:</label>
-                <span>{formatDate(userData?.birthday)}</span>
-              </div>
-              <div className="info-item">
-                <label>مكان الميلاد:</label>
-                <span>{userData?.placeofbirth || 'غير محدد'}</span>
-              </div>
-              <div className="info-item">
-                <label>الرقم القومي:</label>
-                <span>{userData?.nationalid || 'غير محدد'}</span>
-              </div>
-              <div className="info-item">
-                <label>الجنسية:</label>
-                <span>{userData?.nationality || 'غير محدد'}</span>
-              </div>
-              <div className="info-item">
-                <label>الرمز البريدي:</label>
-                <span>{userData?.zipcode || 'غير محدد'}</span>
-              </div>
-              <div className="info-item">
-                <label>الجنس:</label>
-                <span>{userData?.gender || 'غير محدد'}</span>
-              </div>
-              <div className="info-item">
-                <label>الحالة الاجتماعية:</label>
-                <span>{userData?.maritalstatus || 'غير محدد'}</span>
-              </div>
-              <div className="info-item">
-                <label>الديانة:</label>
-                <span>{userData?.religion || 'غير محدد'}</span>
-              </div>
-              <div className="info-item full-width">
-                <label>العنوان:</label>
-                <span>{userData?.address || 'غير محدد'}</span>
-              </div>
+        {/* Top two sections in grid */}
+        <div className="profile-layout">
+          <div className="profile-header profile-main">
+            <div className="profile-avatar">
+              {userData?.picture ? (
+                <img
+                  src={`http://localhost:8000${userData.picture}`}
+                  alt="صورة المستخدم"
+                  className="avatar-image"
+                />
+              ) : (
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              )}
+            </div>
+            <div className="profile-info">
+              <h2>
+                {userData?.first_name && userData?.last_name
+                  ? `${userData.first_name} ${userData.last_name}`
+                  : userData?.email}
+              </h2>
+              <p className="user-email">{userData?.email}</p>
+              <p className="user-username">
+                اسم المستخدم: {userData?.username || 'غير محدد'}
+              </p>
             </div>
           </div>
 
-          {/* Academic Information Section */}
-          <div className="profile-section">
-            <h3>المعلومات الأكاديمية</h3>
-            <div className="info-grid">
-              <div className="info-item">
-                <label>الجامعة:</label>
-                <span>{userData?.university?.name || 'غير محدد'}</span>
-              </div>
-              <div className="info-item">
-                <label>الكلية:</label>
-                <span>{userData?.faculty?.name || 'غير محدد'}</span>
-              </div>
-              <div className="info-item">
-                <label>البرنامج:</label>
-                <span>{userData?.program?.name || 'غير محدد'}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Account Settings Section */}
-          <div className="profile-section">
+          <div className="profile-section profile-settings-card profile-aside">
             <h3>إعدادات الحساب</h3>
-            <p>قم بإدارة إعدادات حسابك وتغيير كلمة المرور</p>
-
+            <p>قم بإدارة إعدادات حسابك</p>
             <div className="profile-actions">
               <button
                 onClick={() => navigate('/change-password')}
-                className="btn btn-primary"
+                className="profile-change-password-btn"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M3 21C3 17.6863 6.68629 15 10 15H12C15.3137 15 19 17.6863 19 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M3 21C3 17.6863 6.68629 15 10 15H12C15.3137 15 19 17.6863 19 21"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
-                تغيير كلمة المرور
+                تغيير إعدادات حسابك
               </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Personal Information Section */}
+        <div className="profile-section">
+          <h3>المعلومات الشخصية</h3>
+          <div className="info-grid">
+            <div className="info-item">
+              <label>الاسم الكامل باللغة الإنجليزية:</label>
+              <span>{userData?.englishfullname || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>رقم الهاتف:</label>
+              <span>{userData?.phonenumber || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>تاريخ الميلاد:</label>
+              <span>{formatDate(userData?.birthday)}</span>
+            </div>
+            <div className="info-item">
+              <label>مكان الميلاد:</label>
+              <span>{userData?.placeofbirth || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>الرقم القومي:</label>
+              <span>{userData?.nationalid || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>الجنسية:</label>
+              <span>{userData?.nationality || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>الرمز البريدي:</label>
+              <span>{userData?.zipcode || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>الجنس:</label>
+              <span>{userData?.gender || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>الحالة الاجتماعية:</label>
+              <span>{userData?.maritalstatus || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>الديانة:</label>
+              <span>{userData?.religion || 'غير محدد'}</span>
+            </div>
+            <div className="info-item full-width">
+              <label>العنوان:</label>
+              <span>{userData?.address || 'غير محدد'}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Academic Information Section */}
+        <div className="profile-section">
+          <h3>المعلومات الأكاديمية</h3>
+          <div className="info-grid">
+            <div className="info-item">
+              <label>الجامعة:</label>
+              <span>{userData?.university?.name || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>الكلية:</label>
+              <span>{userData?.faculty?.name || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>البرنامج:</label>
+              <span>{userData?.program?.name || 'غير محدد'}</span>
             </div>
           </div>
         </div>
