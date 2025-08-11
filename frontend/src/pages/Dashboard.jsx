@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/dashboard.css";
 import Schedule from "./Schedule";
+import Courses from "./Courses";
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
