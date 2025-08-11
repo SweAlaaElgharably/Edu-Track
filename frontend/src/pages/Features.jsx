@@ -6,11 +6,11 @@ import { useEffect } from "react";
 
 function Features() {
 	useEffect(() => {
-		const sections = document.querySelectorAll(".feature-section");
+		// Select all feature sections (namespaced class to avoid global conflicts)
+		const sections = document.querySelectorAll(".ft-section");
 
 		const reveal = () => {
 			const windowHeight = window.innerHeight;
-
 			sections.forEach((section) => {
 				const top = section.getBoundingClientRect().top;
 				if (top < windowHeight - 100) {
@@ -26,16 +26,16 @@ function Features() {
 	}, []);
 
 	return (
-		<div className="features-page" dir="rtl">
-			<h1 className="main-title"> المميزات</h1>
+		<div className="ft-page" dir="rtl">
+			<h1 className="ft-title"> المميزات</h1>
 
-			<p className="intro-text">
+			<p className="ft-intro">
 				مرحبًا بك في منصة <strong>جامعة بورسعيد</strong> – حيث نمنحك السيطرة
 				الكاملة على تنظيم الجدول الدراسي ومتابعة الأداء الأكاديمي بكل سهولة!
 			</p>
 
-			<div className="features-grid">
-				<section className="feature-section">
+			<div className="ft-grid">
+				<section className="ft-section">
 					<h2>🧠 المميزات الأساسية للمنصة</h2>
 					<ul>
 						<li>
@@ -48,7 +48,7 @@ function Features() {
 					</ul>
 				</section>
 
-				<section className="feature-section">
+				<section className="ft-section">
 					<h2>🕒 تنظيم الجداول الدراسية الذكي</h2>
 					<ul>
 						<li>واجهة مخصصة لإنشاء الجداول الدراسية حسب التخصص والمستوى.</li>
@@ -57,7 +57,7 @@ function Features() {
 					</ul>
 				</section>
 
-				<section className="feature-section">
+				<section className="ft-section">
 					<h2>📚 إدارة المقررات الدراسية</h2>
 					<ul>
 						<li>إضافة المحاضرات، المعامل، والاختبارات لكل مادة.</li>
@@ -65,7 +65,7 @@ function Features() {
 					</ul>
 				</section>
 
-				<section className="feature-section">
+				<section className="ft-section">
 					<h2>👨‍🏫 إدارة المستخدمين والأدوار</h2>
 					<p>دعم لأنواع مستخدمين مختلفة:</p>
 					<ul>
@@ -77,7 +77,7 @@ function Features() {
 					</ul>
 				</section>
 
-				<section className="feature-section">
+				<section className="ft-section">
 					<h2>🧩 الميزات الأساسية الإضافية</h2>
 					<ul>
 						<li>إدخال بيانات البرامج والمقررات.</li>
@@ -91,7 +91,7 @@ function Features() {
 					</ul>
 				</section>
 
-				<section className="feature-section">
+				<section className="ft-section">
 					<h2>🔧 ميزات إدارة النظام</h2>
 					<ul>
 						<li>إدخال وإدارة بيانات الجامعات والكليات والبرامج الدراسية.</li>
@@ -103,11 +103,11 @@ function Features() {
 				</section>
 			</div>
 
-			<section className="feature-section full-width-section">
+			<section className="ft-section ft-section--full">
 				<h2 style={{ textAlign: "center" }}>👥 مميزات مخصصة لكل فئة مستخدم</h2>
 
-				<div className="user-grid">
-					<div className="user-group">
+				<div className="ft-user-grid">
+					<div className="ft-user-group">
 						<h3>👨‍🎓 للطلاب:</h3>
 						<ul>
 							<li>عرض الجدول الدراسي الخاص.</li>
@@ -118,7 +118,7 @@ function Features() {
 						</ul>
 					</div>
 
-					<div className="user-group">
+					<div className="ft-user-group">
 						<h3>👨‍🏫 لأعضاء هيئة التدريس:</h3>
 						<ul>
 							<li>عرض الجدول الأكاديمي.</li>
@@ -129,7 +129,7 @@ function Features() {
 						</ul>
 					</div>
 
-					<div className="user-group">
+					<div className="ft-user-group">
 						<h3>🎯 لمنسقي البرامج والكليات:</h3>
 						<ul>
 							<li>إدارة بيانات البرامج الدراسية.</li>
@@ -139,7 +139,7 @@ function Features() {
 						</ul>
 					</div>
 
-					<div className="user-group">
+					<div className="ft-user-group">
 						<h3>🏛️ لرئيس الجامعة:</h3>
 						<ul>
 							<li>الإشراف الكامل على بيانات الجامعات والبرامج.</li>
@@ -150,7 +150,7 @@ function Features() {
 				</div>
 			</section>
 
-			<section className="feature-section full-width-section">
+			<section className="ft-section ft-section--full">
 				<h2>🔐 مميزات غير وظيفية</h2>
 				<ul>
 					<li>واجهة سهلة الاستخدام ومتجاوبة مع جميع الأجهزة.</li>

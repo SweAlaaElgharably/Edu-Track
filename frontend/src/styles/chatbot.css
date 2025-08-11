@@ -1,0 +1,196 @@
+/* Chatbot Styles */
+.chatbot {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: #2d3748; /* Main background */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.chatbot-header {
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #1a202c;
+  border-bottom: 1px solid #4a5568;
+}
+
+.chat-window {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Increased gap */
+  color: #ffffff;
+}
+
+/* Styling for the message wrapper to control alignment */
+.chat-message-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end; /* Align bubble and avatar */
+}
+
+.chat-message-wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* Remove direction-based flex rules and alignment helpers */
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #4a5568;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #fff;
+  font-size: 14px;
+}
+
+.chat-message-wrapper.user .avatar {
+  background-color: #2b6cb0;
+}
+
+.chat-message-wrapper.bot {
+  align-items: flex-start;
+}
+
+.chat-message {
+  padding: 0.75rem 1rem;
+  border-radius: 18px; /* More rounded bubbles */
+  max-width: 85%;
+  word-wrap: break-word;
+  font-weight: bold; /* Bold text as requested */
+  line-height: 1.4;
+}
+
+/* Alignment helpers for RTL/LTR */
+.chat-message.align-right {
+  text-align: right;
+  margin-left: auto;
+  margin-right: 0;
+  direction: rtl;
+}
+.chat-message.align-left {
+  text-align: left;
+  margin-right: auto;
+  margin-left: 0;
+  direction: ltr;
+}
+
+/* For message wrapper flex direction in RTL */
+
+/* === STRICT ALIGNMENT: USER RIGHT, BOT LEFT === */
+
+/* User messages appear on the right, with the avatar to the right of the bubble. */
+.chat-message-wrapper.user {
+  justify-content: flex-end; /* Aligns the whole wrapper to the right */
+  flex-direction: row-reverse; /* Puts avatar after the message bubble */
+}
+
+/* Bot messages appear on the left, with the avatar to the left of the bubble. */
+.chat-message-wrapper.bot {
+  justify-content: flex-start; /* Aligns the whole wrapper to the left */
+  flex-direction: row; /* Puts avatar before the message bubble */
+}
+
+
+/* User message bubble */
+.chat-message-wrapper.user .chat-message {
+  background-color: #2b6cb0; /* Blue for user */
+  color: #ffffff;
+  border-bottom-right-radius: 4px; /* Asymmetric corner */
+}
+
+/* Bot message bubble */
+.chat-message-wrapper.bot .chat-message {
+  background-color: #4a5568; /* Gray for bot */
+  color: #ffffff;
+  border-bottom-left-radius: 4px; /* Asymmetric corner */
+}
+
+/* Text direction styles */
+.chat-message.ltr {
+  text-align: left;
+  direction: ltr;
+}
+
+.chat-message.rtl {
+  text-align: right;
+  direction: rtl;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #1a202c;
+}
+
+.chat-input input {
+  flex-grow: 1;
+  padding: 0.75rem;
+  border: none;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.chat-input input:focus {
+  outline: none;
+  background-color: #1a202c;
+}
+
+.chat-input input::placeholder {
+  color: #a0aec0; /* Lighter placeholder text */
+}
+
+.add-btn {
+  background: #4a5568;
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-input button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #2b6cb0;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.chat-input button:hover {
+  background-color: #2c5282;
+}
+
+.chat-input button:disabled {
+  background-color: #4a5568;
+  cursor: not-allowed;
+}

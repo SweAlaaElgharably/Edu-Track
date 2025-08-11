@@ -2,34 +2,73 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/dashboard.css';
+import Courses from '../components/Courses';
+import Schedule from "../components/Schedule";
+import FacultyManage from './FacultyManage';
+import Department from './Department';
 
 function Dashboard() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState("overview");
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   // Redirect to home if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/');
+      navigate("/");
     }
   }, [isAuthenticated, navigate]);
 
   // Mock data - replace with real data from backend
   const mockData = {
     courses: [
-      { id: 1, name: 'الرياضيات 101', progress: 75, nextClass: '2024-01-15 10:00' },
-      { id: 2, name: 'معمل الفيزياء', progress: 60, nextClass: '2024-01-16 14:00' },
-      { id: 3, name: 'الأدب الإنجليزي', progress: 90, nextClass: '2024-01-17 09:00' }
+      {
+        id: 1,
+        name: "الرياضيات 101",
+        progress: 75,
+        nextClass: "2024-01-15 10:00",
+      },
+      {
+        id: 2,
+        name: "معمل الفيزياء",
+        progress: 60,
+        nextClass: "2024-01-16 14:00",
+      },
+      {
+        id: 3,
+        name: "الأدب الإنجليزي",
+        progress: 90,
+        nextClass: "2024-01-17 09:00",
+      },
     ],
     upcomingDeadlines: [
-      { id: 1, title: 'واجب الرياضيات', course: 'الرياضيات 101', dueDate: '2024-01-20' },
-      { id: 2, title: 'تقرير الفيزياء', course: 'معمل الفيزياء', dueDate: '2024-01-22' }
+      {
+        id: 1,
+        title: "واجب الرياضيات",
+        course: "الرياضيات 101",
+        dueDate: "2024-01-20",
+      },
+      {
+        id: 2,
+        title: "تقرير الفيزياء",
+        course: "معمل الفيزياء",
+        dueDate: "2024-01-22",
+      },
     ],
     recentActivity: [
-      { id: 1, action: 'تم إكمال الواجب', course: 'الأدب الإنجليزي', time: 'قبل ساعتين' },
-      { id: 2, action: 'حضور المحاضرة', course: 'الرياضيات 101', time: 'قبل يوم واحد' }
-    ]
+      {
+        id: 1,
+        action: "تم إكمال الواجب",
+        course: "الأدب الإنجليزي",
+        time: "قبل ساعتين",
+      },
+      {
+        id: 2,
+        action: "حضور المحاضرة",
+        course: "الرياضيات 101",
+        time: "قبل يوم واحد",
+      },
+    ],
   };
 
   if (!isAuthenticated) {
@@ -37,107 +76,154 @@ function Dashboard() {
   }
 
   return (
-    <div className="dashboard">
-      <header className="dashboard-header">
-        <h1>لوحة التحكم</h1>
-        <div className="user-info">
-          <span>مرحباً بك، {user?.first_name || 'طالب'}!</span>
-          <Link to="/profile" className="btn btn-secondary">الملف الشخصي</Link>
+
+    <div className="dashboard-container">
+      {/* <PlexusBackground /> */}
+      {/* Sidebar */}
+      <aside className="dashboard-sidebar">
+        <nav className="sidebar-nav">
+          <h3 style={{ marginBottom: "10px" }}>لوحة التحكم</h3>
+          <button
+            className={`sidebar-tab ${activeTab === "overview" ? "active" : ""
+              }`}
+            onClick={() => setActiveTab("overview")}
+          >
+            <span className="tab-icon">📊</span>
+            <span className="tab-text">نظرة عامة</span>
+          </button>
+          <button
+            className={`sidebar-tab ${activeTab === "courses" ? "active" : ""}`}
+            onClick={() => setActiveTab("courses")}
+          >
+            <span className="tab-icon">📚</span>
+            <span className="tab-text">المقررات</span>
+          </button>
+          <button
+            className={`sidebar-tab ${activeTab === "schedule" ? "active" : ""
+              }`}
+            onClick={() => setActiveTab("schedule")}
+          >
+            <span className="tab-icon">📅</span>
+            <span className="tab-text">الجدول</span>
+          </button>
+          <button
+            className={`sidebar-tab ${activeTab === "progress" ? "active" : ""
+              }`}
+            onClick={() => setActiveTab("progress")}
+          >
+            <span className="tab-icon">📈</span>
+            <span className="tab-text">التقدم</span>
+          </button>
+          <button
+            className={`sidebar-tab ${activeTab === "facultyManagement" ? "active" : ""
+              }`}
+            onClick={() => setActiveTab("facultyManagement")}
+          >
+            <span className="tab-icon">📈</span>
+            <span className="tab-text"> الكليات</span>
+          </button>
+          <button
+            className={`sidebar-tab ${activeTab === "department" ? "active" : ""
+              }`}
+            onClick={() => setActiveTab("department")}
+          >
+            <span className="tab-icon">📈</span>
+            <span className="tab-text"> الأقسام</span>
+          </button>
+        </nav>
+        <div className="sidebar-header">
+          <div className="user-info">
+            <span>مرحباً بك، {user?.first_name || "طالب"}!</span>
+          </div>
         </div>
-      </header>
+        <div className="sidebar-footer">
+          <Link to="/profile" className="btn btn-secondary">
+            الملف الشخصي
+          </Link>
+        </div>
+      </aside>
 
-      <nav className="dashboard-nav">
-        <button 
-          className={`nav-tab ${activeTab === 'overview' ? 'active' : ''}`}
-          onClick={() => setActiveTab('overview')}
-        >
-          نظرة عامة
-        </button>
-        <button 
-          className={`nav-tab ${activeTab === 'courses' ? 'active' : ''}`}
-          onClick={() => setActiveTab('courses')}
-        >
-          المقررات
-        </button>
-        <button 
-          className={`nav-tab ${activeTab === 'schedule' ? 'active' : ''}`}
-          onClick={() => setActiveTab('schedule')}
-        >
-          الجدول
-        </button>
-        <button 
-          className={`nav-tab ${activeTab === 'progress' ? 'active' : ''}`}
-          onClick={() => setActiveTab('progress')}
-        >
-          التقدم
-        </button>
-      </nav>
+      {/* Main Content */}
 
-      <main className="dashboard-content">
-        {activeTab === 'overview' && (
-          <div className="overview-grid">
-            <div className="stats-card">
-              <h3>المقررات الحالية</h3>
-              <div className="stat-number">{mockData.courses.length}</div>
-              <p>المقررات النشطة هذا الفصل الدراسي</p>
-            </div>
-            
-            <div className="stats-card">
-              <h3>متوسط التقدم</h3>
-              <div className="stat-number">75%</div>
-              <p>في جميع المقررات</p>
-            </div>
-            
-            <div className="stats-card">
-              <h3>المواعيد القادمة</h3>
-              <div className="stat-number">{mockData.upcomingDeadlines.length}</div>
-              <p>الواجبات المستحقة قريباً</p>
-            </div>
-            
-            <div className="stats-card">
-              <h3>المحاضرات اليوم</h3>
-              <div className="stat-number">2</div>
-              <p>المحاضرة القادمة خلال 30 دقيقة</p>
-            </div>
-            {/* University/Faculty Management Card */}
-            <div className="stats-card" style={{ cursor: 'pointer' }} onClick={() => window.location.href='/universities'}>
-              <h3>إدارة الجامعات والكليات</h3>
-              <div className="stat-number" style={{ fontSize: 32 }}>🔗</div>
-              <p>انتقل لإدارة الجامعات والكليات</p>
-              <a href="/universities" className="btn btn-secondary" style={{ marginTop: 12, color: '#fff', background: '#1976d2', border: 'none' }}>الذهاب للإدارة</a>
-            </div>
-          </div>
-        )}
+      <main className="dashboard-main">
 
-        {activeTab === 'courses' && (
-          <div className="courses-section">
-            <h2>مقرراتي</h2>
-            <p>انقر على "المقررات" في شريط التنقل لعرض جميع مقرراتك</p>
-            <Link to="/courses" className="btn btn-primary">عرض جميع المقررات</Link>
-          </div>
-        )}
+        <div className="dashboard-content">
+          {activeTab === "overview" && (
+            <div className="overview-grid">
+              <div className="stats-card">
+                <h3>المقررات الحالية</h3>
+                <div className="stat-number-dashboard">
+                  {mockData.courses.length}
+                </div>
+                <p>المقررات النشطة هذا الفصل الدراسي</p>
+              </div>
 
-        {activeTab === 'schedule' && (
-          <div className="schedule-section">
-            <h2>جدول المحاضرات</h2>
-            <p>انقر على "الجدول" في شريط التنقل لعرض جدول محاضراتك</p>
-            <Link to="/schedule" className="btn btn-primary">عرض الجدول الكامل</Link>
-          </div>
-        )}
+              <div className="stats-card">
+                <h3>متوسط التقدم</h3>
+                <div className="stat-number-dashboard">75%</div>
+                <p>في جميع المقررات</p>
+              </div>
 
-        {activeTab === 'progress' && (
-          <div className="progress-section">
-            <h2>التقدم الأكاديمي</h2>
-            <div className="progress-chart">
-              <div className="chart-placeholder">
-                <p>سيتم عرض الرسوم البيانية والتحليلات هنا</p>
+              <div className="stats-card">
+                <h3>المواعيد القادمة</h3>
+                <div className="stat-number-dashboard">
+                  {mockData.upcomingDeadlines.length}
+                </div>
+                <p>الواجبات المستحقة قريباً</p>
+              </div>
+
+              <div className="stats-card">
+                <h3>المحاضرات اليوم</h3>
+                <div className="stat-number-dashboard">2</div>
+                <p>المحاضرة القادمة خلال 30 دقيقة</p>
+              </div>
+              {/* University/Faculty Management Card */}
+              {/* <div
+                className="stats-card"
+                style={{ cursor: "pointer" }}
+                onClick={() => (window.location.href = "/universities")}
+              >
+                <h3>إدارة الجامعات والكليات</h3>
+                <div className="stat-number-dashboard" style={{ fontSize: 32 }}>
+                  🔗
+                </div>
+                <p>انتقل لإدارة الجامعات والكليات</p>
+                <a
+                  href="/universities"
+                  className="btn btn-secondary"
+                  style={{
+                    marginTop: 12,
+                    color: "#fff",
+                    background: "#1976d2",
+                    border: "none",
+                  }}
+                >
+                  الذهاب للإدارة
+                </a>
+              </div> */}
+            </div>
+          )}
+
+          {activeTab === "courses" && <Courses />}
+          {activeTab === "facultyManagement" && <FacultyManage />}
+
+          {activeTab === "schedule" && <Schedule />}
+          {activeTab === "department" && <Department />}
+
+          {activeTab === "progress" && (
+            <div className="progress-section">
+              <h2>التقدم الأكاديمي</h2>
+              <div className="progress-chart">
+                <div className="chart-placeholder">
+                  <p>سيتم عرض الرسوم البيانية والتحليلات هنا</p>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </main>
     </div>
   );
 }
 
-export default Dashboard; 
+export default Dashboard;

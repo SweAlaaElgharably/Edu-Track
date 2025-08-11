@@ -1,4 +1,4 @@
-.features-page {
+.ft-page {
 	background-color: white;
 	color: #222;
 	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -11,7 +11,7 @@
 	position: relative;
 }
 
-.main-title {
+.ft-title {
 	font-size: 3.5rem;
 	color: #3182ce;
 	font-weight: 900;
@@ -24,7 +24,7 @@
 	position: relative;
 }
 
-.main-title::after {
+.ft-title::after {
 	content: "";
 	position: absolute;
 	bottom: -10px;
@@ -36,7 +36,7 @@
 	border-radius: 2px;
 }
 
-.intro-text {
+.ft-intro {
 	text-align: center;
 	font-size: 1.3rem;
 	margin-bottom: 3rem;
@@ -51,7 +51,7 @@
 	line-height: 1.9;
 }
 
-.feature-section {
+.ft-section {
 	margin-bottom: 2.5rem;
 	padding: 2rem;
 	background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
@@ -66,7 +66,7 @@
 	overflow: hidden;
 }
 
-.feature-section::before {
+.ft-section::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -77,13 +77,13 @@
 	border-radius: 20px 20px 0 0;
 }
 
-.feature-section:hover {
+.ft-section:hover {
 	transform: translateY(-8px);
 	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 	border-color: rgba(255, 255, 255, 0.3);
 }
 
-.feature-section h2 {
+.ft-section h2 {
 	font-size: 1.5rem;
 	color: white;
 	font-weight: 700;
@@ -92,7 +92,7 @@
 	position: relative;
 }
 
-.feature-section h2::before {
+.ft-section h2::before {
 	content: "";
 	position: absolute;
 	left: -10px;
@@ -104,14 +104,14 @@
 	border-radius: 2px;
 }
 
-.feature-section ul {
+.ft-section ul {
 	list-style-type: none;
 	padding-right: 0;
 	color: rgba(255, 255, 255, 0.9);
 	margin: 0;
 }
 
-.feature-section ul li {
+.ft-section ul li {
 	position: relative;
 	padding: 0.8rem 0;
 	padding-right: 2rem;
@@ -120,7 +120,7 @@
 	transition: all 0.3s ease;
 }
 
-.feature-section ul li::before {
+.ft-section ul li::before {
 	content: "✦";
 	position: absolute;
 	right: 0;
@@ -132,51 +132,51 @@
 	transition: all 0.3s ease;
 }
 
-.feature-section ul li:hover {
+.ft-section ul li:hover {
 	background: rgba(255, 255, 255, 0.1);
 	padding-right: 2.5rem;
 	transform: translateX(-5px);
 }
 
-.feature-section ul li:hover::before {
+.ft-section ul li:hover::before {
 	color: #667eea;
 	transform: translateY(-50%) scale(1.2);
 }
 
-.features-grid {
+.ft-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 	gap: 2rem;
 	margin-bottom: 3rem;
 }
 
-@media (max-width: 768px) {
-	.features-grid {
+	@media (max-width: 768px) {
+	.ft-grid {
 		grid-template-columns: 1fr;
 		gap: 1.5rem;
 	}
 }
 
-.full-width-section {
+.ft-section--full {
 	width: 100%;
 	margin-bottom: 3rem;
 }
 
-.user-grid {
+.ft-user-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	gap: 2rem;
 	margin-top: 2rem;
 }
 
-@media (max-width: 768px) {
-	.user-grid {
+	@media (max-width: 768px) {
+	.ft-user-grid {
 		grid-template-columns: 1fr;
 		gap: 1.5rem;
 	}
 }
 
-.user-group {
+.ft-user-group {
 	background: rgba(255, 255, 255, 0.08);
 	border-radius: 15px;
 	padding: 1.5rem;
@@ -186,7 +186,7 @@
 	overflow: hidden;
 }
 
-.user-group::before {
+.ft-user-group::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -197,13 +197,13 @@
 	border-radius: 15px 15px 0 0;
 }
 
-.user-group:hover {
+.ft-user-group:hover {
 	transform: translateY(-5px);
 	background: rgba(255, 255, 255, 0.12);
 	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
-.user-group h3 {
+.ft-user-group h3 {
 	font-size: 1.4rem;
 	color: white;
 	font-weight: 700;
@@ -214,13 +214,13 @@
 	gap: 0.5rem;
 }
 
-.user-group ul {
+.ft-user-group ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 }
 
-.user-group ul li {
+.ft-user-group ul li {
 	position: relative;
 	padding: 0.6rem 0;
 	padding-right: 1.5rem;
@@ -230,7 +230,7 @@
 	border-radius: 6px;
 }
 
-.user-group ul li::before {
+.ft-user-group ul li::before {
 	content: "→";
 	position: absolute;
 	right: 0;
@@ -241,13 +241,13 @@
 	transition: all 0.3s ease;
 }
 
-.user-group ul li:hover {
+.ft-user-group ul li:hover {
 	background: rgba(255, 255, 255, 0.1);
 	padding-right: 2rem;
 	transform: translateX(-3px);
 }
 
-.user-group ul li:hover::before {
+.ft-user-group ul li:hover::before {
 	color: #667eea;
 	transform: translateY(-50%) translateX(-3px);
 }
@@ -285,58 +285,58 @@
 	}
 }
 
-.feature-section {
+.ft-section {
 	will-change: transform, opacity;
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
-	.features-page {
+	@media (max-width: 600px) {
+	.ft-page {
 		padding: 1rem;
 	}
 
-	.main-title {
+	.ft-title {
 		font-size: 2.5rem;
 	}
 
-	.intro-text {
+	.ft-intro {
 		font-size: 1.1rem;
 	}
 
-	.feature-section {
+	.ft-section {
 		padding: 1.5rem;
 		margin-bottom: 2rem;
 	}
 
-	.feature-section h2 {
+	.ft-section h2 {
 		font-size: 1rem;
 	}
 
-	.user-group h3 {
+	.ft-user-group h3 {
 		font-size: 1.2rem;
 	}
 
-	.user-group {
+	.ft-user-group {
 		padding: 1.2rem;
 	}
 }
 
 /* Scroll animations */
-.feature-section:nth-child(1) {
+.ft-section:nth-child(1) {
 	animation-delay: 0.1s;
 }
-.feature-section:nth-child(2) {
+.ft-section:nth-child(2) {
 	animation-delay: 0.2s;
 }
-.feature-section:nth-child(3) {
+.ft-section:nth-child(3) {
 	animation-delay: 0.3s;
 }
-.feature-section:nth-child(4) {
+.ft-section:nth-child(4) {
 	animation-delay: 0.4s;
 }
-.feature-section:nth-child(5) {
+.ft-section:nth-child(5) {
 	animation-delay: 0.5s;
 }
-.feature-section:nth-child(6) {
+.ft-section:nth-child(6) {
 	animation-delay: 0.6s;
 }

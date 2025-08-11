@@ -59,10 +59,7 @@ function Schedule() {
     <div className="schedule-page">
       <header className="schedule-header">
         <h1>جدول المحاضرات</h1>
-        <div className="user-info">
-          <span>مرحباً بك، {user?.first_name || 'طالب'}!</span>
-          <Link to="/profile" className="btn btn-secondary">الملف الشخصي</Link>
-        </div>
+       
       </header>
 
       <div className="schedule-stats">

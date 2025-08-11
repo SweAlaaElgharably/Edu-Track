@@ -6,12 +6,13 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import PlexusBackground from './components/PlexusBackground.jsx';
 import RoutesList from '../routes/RoutesList.jsx';
-import ScrollToTop from './components/ScrollToTop.jsx';
-
+import ScrollToTop from './components/ScrollToTop'; //
 const queryClient = new QueryClient();
 
 function AppContent() {
   const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/forgot-password';
+
   return (
     <div className="App">
       <PlexusBackground />
@@ -19,8 +20,8 @@ function AppContent() {
       <main className="main-content">
         <ScrollToTop />
         <RoutesList />
-      </main>
       <Footer />
+      </main>
     </div>
   );
 }
@@ -34,5 +35,6 @@ function App() {
     </QueryClientProvider>
   );
 }
+
 
 export default App;
