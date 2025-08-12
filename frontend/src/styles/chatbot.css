@@ -68,6 +68,7 @@
 
 .chat-message-wrapper.user .avatar {
   background-color: #2b6cb0;
+  color: #ffffff;
 }
 
 .chat-message-wrapper.bot {
