@@ -7,7 +7,7 @@ class UserSerializer(ModelSerializer):
         fields = (
             "username", "first_name", "last_name", "email", "englishfullname", "address", "religion", "picture", 
             "phonenumber", "birthday", "placeofbirth", "nationalid", "nationality", "zipcode", 
-            "gender", "maritalstatus" 
+            "gender", "maritalstatus", "groups" 
         )
 
     #program
