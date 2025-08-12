@@ -4,7 +4,7 @@ import { useForm } from "@formspree/react";
 import { useNavigate } from "react-router-dom";
 
 export default function Contact() {
-  const [state, handleSubmit] = useForm("mzzvjlqy");
+  const [state, handleSubmit] = useForm("xvgqlqpd");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -54,14 +54,17 @@ export default function Contact() {
   };
 
   // Only submit if no errors
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const allValid = Object.values(errors).every((e) => e === "") &&
-                     Object.values(formData).every((v) => v.trim() !== "");
+      Object.values(formData).every((v) => v.trim() !== "");
+    
     if (allValid) {
-      handleSubmit(e);
-      alert("تم إرسال الرسالة بنجاح");
-      navigate('/');
+      await handleSubmit(e);
+      if (state.succeeded) {
+        alert("تم إرسال الرسالة بنجاح");
+        navigate('/');
+      }
     }
   };
 
@@ -74,7 +77,8 @@ export default function Contact() {
             {state.succeeded ? (
               <p className="success-msg">تم إرسال الرسالة بنجاح! ✅</p>
             ) : (
-              <form id="contact-form" onSubmit={onSubmit}>
+              <form id="contact-form" onSubmit={onSubmit}
+              >
                 <div className="col-md-12">
                   <div className="form-group">
                     <label htmlFor="name">اسم المستخدم</label>

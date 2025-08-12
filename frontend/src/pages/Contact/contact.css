@@ -352,7 +352,7 @@
   padding: 16px 20px;
   font-size: 16px;
   line-height: 1.5;
-  color: #2d3748;
+  color: #2d3748 !important; /* ensure dark text overrides any global white */
   background: #ffffff;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
@@ -361,6 +361,27 @@
   overflow: hidden;
   font-family: 'Cairo', sans-serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  caret-color: #2d3748;
+}
+
+/* Explicitly target inputs & textarea in the contact form for safety */
+.contact-form input.form-control,
+.contact-form textarea.form-control {
+  color: #1a202c !important;
+}
+
+/* Improve placeholder contrast */
+.contact-form .form-control::placeholder {
+  color: #718096;
+  opacity: 0.9;
+}
+
+/* Handle autofill (Chrome / Edge) which can force light text on light bg */
+.contact-form input.form-control:-webkit-autofill,
+.contact-form textarea.form-control:-webkit-autofill {
+  -webkit-text-fill-color: #1a202c !important;
+  box-shadow: 0 0 0 1000px #ffffff inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .form-control:focus {
