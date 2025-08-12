@@ -85,12 +85,84 @@
   transition: all 0.3s ease;
 }
 
-.today-schedule h2,
-.week-schedule h2 {
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 0.7rem;
-  font-weight: 600;
+.today-schedule {
+  padding: 0.7rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.today-schedule .schedule-list {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  font-size: 0.92rem;
+}
+.today-schedule .schedule-item {
+  font-size: 0.92rem;
+  padding: 0.5rem 0.3rem;
+  min-width: 0;
+  max-width: 100%;
+  text-align: right;
+  align-items: flex-start;
+  border-radius: 8px;
+  gap: 0.3rem;
+  height: auto;
+}
+.today-schedule .time {
   font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+}
+.today-schedule .duration {
+  font-size: 0.7rem;
+  margin-bottom: 0.1rem;
+}
+.today-schedule .class-info h4 {
+  font-size: 0.95rem;
+  margin-bottom: 0.1rem;
+}
+.today-schedule .class-info p {
+  font-size: 0.8rem;
+  margin-bottom: 0.1rem;
+}
+.today-schedule .class-type {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.5rem;
+  margin-bottom: 0.2rem;
+}
+.today-schedule .class-actions .btn {
+  font-size: 0.8rem;
+  padding: 0.2rem 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .today-schedule .schedule-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+  .today-schedule .schedule-item {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.2rem;
+    border-radius: 7px;
+    gap: 0.2rem;
+  }
+}
+@media (max-width: 600px) {
+  .today-schedule {
+    padding: 0.4rem 0.1rem;
+  }
+  .today-schedule .schedule-list {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+  .today-schedule .schedule-item {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.1rem;
+    border-radius: 6px;
+    gap: 0.1rem;
+  }
 }
 
 /* Schedule Items */
@@ -411,376 +483,167 @@
 /* Mobile Schedule */
 @media (max-width: 768px) {
   .schedule-page {
-    padding: 0.8rem;
+    padding: 0.5rem;
+    z-index: 2;
+    position: relative;
+    width: 100vw;
+    left: 0;
+    right: 0;
+    background: inherit;
+    overflow-x: hidden;
   }
-
-  .schedule-header {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.8rem;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 10px;
-  }
-
-  .schedule-header h1 {
-    font-size: 1.2rem;
-    margin: 0;
-  }
-
-  .user-info {
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.8rem;
-  }
-
-  .schedule-stats {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .stat-card {
-    padding: 0.8rem;
-    border-radius: 8px;
-    backdrop-filter: blur(8px);
-  }
-
-  .stat-card:hover {
-    transform: translateY(-2px);
-  }
-
-  .today-schedule .schedule-list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
-  }
-
-  .today-schedule .schedule-item {
-    padding: 1rem;
-    border-radius: 8px;
-    backdrop-filter: blur(8px);
-  }
-
-  .week-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
-    margin-top: 0.8rem;
-  }
-
-  .day-card {
-    padding: 0.8rem;
-    border-radius: 8px;
-    backdrop-filter: blur(8px);
-  }
-
-  .day-class {
-    margin-bottom: 0.8rem;
-    padding: 0.8rem;
-    border-radius: 6px;
-  }
-}
-
-.stat-card h3 {
-  font-size: 0.7rem;
-  margin-bottom: 0.3rem;
-}
-
-.stat-number {
-  font-size: 1.5rem;
-  margin-bottom: 0.2rem;
-}
-
-.stat-card p {
-  font-size: 0.7rem;
-}
-
-.schedule-columns {
-  display: block;
-}
-
-.today-schedule,
-.week-schedule {
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
-.today-schedule h2,
-.week-schedule h2 {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-.today-schedule .schedule-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
-}
-
-.today-schedule .schedule-item {
-  padding: 0.8rem 0.5rem;
-  font-size: 0.8rem;
-  min-height: auto;
-}
-
-.today-schedule .time {
-  font-size: 0.9rem;
-}
-
-.today-schedule .duration {
-  font-size: 0.7rem;
-}
-
-.today-schedule .class-info h4 {
-  font-size: 0.8rem;
-  margin-bottom: 0.3rem;
-}
-
-.today-schedule .class-info p {
-  font-size: 0.7rem;
-  margin-bottom: 0.2rem;
-}
-
-.today-schedule .class-type {
-  font-size: 0.6rem;
-  padding: 0.2rem 0.4rem;
-}
-
-.today-schedule .class-actions .btn {
-  font-size: 0.7rem;
-  padding: 0.3rem 0.5rem;
-}
-
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.5rem;
-}
-
-.day-card {
-  padding: 0.8rem;
-}
-
-.day-card h3 {
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-}
-
-.day-class {
-  padding: 0.5rem;
-  margin-bottom: 0.3rem;
-}
-
-.class-time {
-  font-size: 0.8rem;
-  margin-bottom: 0.2rem;
-}
-
-.class-name {
-  font-size: 0.8rem;
-  margin-bottom: 0.1rem;
-}
-
-.class-room {
-  font-size: 0.7rem;
-}
-
-/* Extra small mobile devices */
-@media (max-width: 480px) {
-  .schedule-page {
-    padding: 0.6rem;
-  }
-
-  .schedule-header {
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .schedule-header h1 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .user-info {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .schedule-stats {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.6rem;
-    margin-bottom: 1rem;
-  }
-
-  .stat-card {
-    padding: 0.8rem 0.5rem;
-    border-radius: 8px;
-  }
-
-  .stat-card h3 {
-    font-size: 0.7rem;
-    margin-bottom: 0.2rem;
-  }
-
-  .stat-number {
-    font-size: 1.1rem;
-    margin-bottom: 0.2rem;
-  }
-
   .today-schedule,
   .week-schedule {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 10px;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+    z-index: 2;
+    position: relative;
+    overflow-x: visible;
+    padding: 0.7rem 0.2rem;
   }
-
-  .today-schedule h2,
-  .week-schedule h2 {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    text-align: center;
+  .week-grid,
+  .today-schedule .schedule-list {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: visible;
   }
-
+  .day-card,
+  .today-schedule .schedule-item {
+    min-width: 0;
+    max-width: 100%;
+  }
   .today-schedule .schedule-list {
     grid-template-columns: 1fr;
-    gap: 0.8rem;
+    gap: 0.5rem;
+    width: 100vw;
+    max-width: 100vw;
+    overflow-x: auto;
   }
-
   .today-schedule .schedule-item {
-    padding: 1rem;
+    padding: 0.5rem 0.2rem;
     border-radius: 8px;
+    min-width: 120px;
+    max-width: 100%;
+    font-size: 0.7rem;
   }
-
-  .today-schedule .time-section {
-    align-items: flex-start;
+  .today-schedule .time {
+    font-size: 0.8rem;
   }
-
-  .week-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
+  .today-schedule .duration {
+    font-size: 0.6rem;
   }
-
-  .day-card {
-    padding: 0.8rem;
-    border-radius: 8px;
+  .today-schedule .class-info h4 {
+    font-size: 0.7rem;
   }
-
-  .day-card h3 {
-    font-size: 0.9rem;
-    margin-bottom: 0.8rem;
-    text-align: center;
-    background: rgba(100, 108, 255, 0.1);
-    padding: 0.4rem;
-    border-radius: 6px;
+  .today-schedule .class-info p {
+    font-size: 0.6rem;
   }
-
-  .day-class {
-    padding: 0.8rem;
-    margin-bottom: 0.6rem;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.05);
+  .today-schedule .class-type {
+    font-size: 0.55rem;
+    padding: 0.1rem 0.3rem;
   }
-
-  .day-class:last-child {
-    margin-bottom: 0;
-  }
-
-  .class-info {
-    margin-top: 0.5rem;
+  .today-schedule .class-actions .btn {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.3rem;
   }
 }
 
-.today-schedule .schedule-list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.6rem;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.today-schedule .schedule-item {
-  padding: 0.8rem;
-  width: 100%;
-  font-size: 0.75rem;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: right;
-  height: 100%;
-  justify-content: space-between;
-  gap: 0.6rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-}
-
-.today-schedule .time {
-  font-size: 0.95rem;
-  margin-bottom: 0.2rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.today-schedule .duration {
-  font-size: 0.75rem;
-  margin-bottom: 0.2rem;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.today-schedule .class-info {
-  width: 100%;
-}
-
-.today-schedule .class-info h4 {
-  font-size: 0.9rem;
-  margin-bottom: 0.3rem;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.today-schedule .class-info p {
-  font-size: 0.85rem;
-  margin-bottom: 0.4rem;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.today-schedule .class-type {
-  font-size: 0.8rem;
-  margin-bottom: 0.5rem;
-  padding: 0.3rem 0.8rem;
-  background: rgba(100, 108, 255, 0.2);
-  border-radius: 6px;
-  display: inline-block;
-}
-
-.today-schedule .class-actions {
-  width: 100%;
-  margin-top: 0.3rem;
-}
-
-.today-schedule .class-actions .btn {
-  font-size: 0.75rem;
-  padding: 0.4rem 0.8rem;
-  background: rgba(100, 108, 255, 0.1);
-  border: 1px solid rgba(100, 108, 255, 0.3);
-  border-radius: 6px;
-  color: rgba(255, 255, 255, 0.9);
-  transition: all 0.3s ease;
-  width: 100%;
-  text-align: center;
-}
-
-.today-schedule .class-actions .btn:hover {
-  background: rgba(100, 108, 255, 0.2);
-  transform: translateY(-2px);
-}
-
-@media (max-width: 900px) {
+@media (max-width: 480px) {
+  .schedule-page {
+    padding: 0.2rem;
+    overflow-x: hidden;
+  }
   .today-schedule,
   .week-schedule {
+    width: 100%;
     max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.5rem 0.1rem;
+    overflow-x: visible;
+  }
+  .week-grid,
+  .today-schedule .schedule-list {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: visible;
+  }
+  .day-card,
+  .today-schedule .schedule-item {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+/* --- Desktop/Laptop styles: readable font, right alignment, good spacing --- */
+@media (min-width: 769px) {
+  .schedule-page {
+    font-size: 1rem;
+    padding: 1.5rem;
+    text-align: right;
+  }
+  .today-schedule,
+  .week-schedule {
+    padding: 1.5rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .today-schedule .schedule-list {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+    font-size: 1rem;
+  }
+  .today-schedule .schedule-item,
+  .day-card {
+    font-size: 1rem;
+    padding: 1.2rem;
+    min-width: 0;
+    max-width: 100%;
+    text-align: right;
+    align-items: flex-start;
+  }
+  .today-schedule .time {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .today-schedule .duration {
+    font-size: 0.9rem;
+  }
+  .today-schedule .class-info h4 {
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+  }
+  .today-schedule .class-info p {
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+  }
+  .today-schedule .class-type {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.7rem;
+  }
+  .today-schedule .class-actions .btn {
+    font-size: 0.95rem;
+    padding: 0.4rem 1rem;
+  }
+  .week-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.2rem;
+    margin-top: 1rem;
+  }
+  .day-card {
+    font-size: 1rem;
+    padding: 1.2rem;
+    min-width: 0;
+    max-width: 100%;
+    text-align: right;
   }
 }

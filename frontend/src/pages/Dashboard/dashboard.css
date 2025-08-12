@@ -48,18 +48,20 @@
 /* Sidebar Navigation */
 .sidebar-nav {
   margin-top: 80px;
-  flex: 1;
-  padding: 1.5rem 1rem;
+  flex: 1 1 auto;
+  padding: 1rem 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .sidebar-tab {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1rem 1.5rem;
+  padding: 0.6rem 1rem;
   border: none;
   background: transparent;
   color: rgba(255, 255, 255, 0.7);
@@ -72,6 +74,9 @@
   width: 100%;
   position: relative;
   overflow: hidden;
+  min-height: 0;
+  flex: 1 1 0;
+  box-sizing: border-box;
 }
 
 .sidebar-tab::before {
@@ -101,6 +106,7 @@
   color: white;
   box-shadow: 0 4px 15px rgba(100, 108, 255, 0.3);
   border: 1px solid rgba(100, 108, 255, 0.3);
+  min-height: 0;
 }
 
 .sidebar-tab.active::before {
@@ -315,47 +321,46 @@
   .dashboard-container {
     flex-direction: column;
   }
-  
   .dashboard-sidebar {
     width: 100%;
     height: auto;
     position: relative;
     border-right: none;
     border-bottom: 1px solid rgba(100, 108, 255, 0.2);
+    min-height: unset;
+    max-height: 40vh;
+    overflow-y: auto;
   }
-  
   .dashboard-main {
     margin-left: 0;
     padding: 1rem;
   }
-  
   .sidebar-nav {
-    
     flex-direction: row;
     overflow-x: auto;
-    padding: 1rem;
+    padding: 0.5rem;
+    min-height: 0;
+    max-height: 40vh;
   }
-  
   .sidebar-tab {
-    min-width: 120px;
+    min-width: 100px;
     flex-direction: column;
     gap: 0.5rem;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.7rem;
+    flex: 1 1 0;
+    min-height: 0;
+    box-sizing: border-box;
   }
-  
   .tab-text {
     font-size: 0.8rem;
   }
-  
   .overview-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
   .stats-card {
     padding: 1rem;
   }
-  
   .stat-number-dashboard {
     font-size: 2rem;
   }

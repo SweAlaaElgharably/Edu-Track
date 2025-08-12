@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const fetchLocations = async () => {
-  const res = await fetch(`${api.baseURL}/locations/`, {
+  const res = await fetch(`${api.baseURL}/location/`, {
     headers: api.getAuthHeaders(),
   });
   if (!res.ok) throw new Error("فشل في جلب القاعات");
@@ -9,7 +9,7 @@ export const fetchLocations = async () => {
 };
 
 export const createLocation = async (formData) => {
-  const res = await fetch(`${api.baseURL}/locations/create/`, {
+  const res = await fetch(`${api.baseURL}/location/create/`, {
     method: "POST",
     headers: api.getAuthHeaders(),
     body: JSON.stringify(formData),
@@ -19,7 +19,7 @@ export const createLocation = async (formData) => {
 };
 
 export const updateLocation = async (slug, formData) => {
-  const res = await fetch(`${api.baseURL}/locations/${slug}/update/`, {
+  const res = await fetch(`${api.baseURL}/location/${slug}/update/`, {
     method: "PUT",
     headers: api.getAuthHeaders(),
     body: JSON.stringify(formData),
@@ -29,7 +29,7 @@ export const updateLocation = async (slug, formData) => {
 };
 
 export const deleteLocation = async (slug) => {
-  const res = await fetch(`${api.baseURL}/locations/${slug}/delete/`, {
+  const res = await fetch(`${api.baseURL}/location/${slug}/delete/`, {
     method: "DELETE",
     headers: api.getAuthHeaders(),
   });

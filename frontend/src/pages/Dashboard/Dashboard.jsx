@@ -4,10 +4,10 @@ import { useAuth } from '../../context/AuthContext';
 import './dashboard.css';
 import Courses from '../../components/Courses';
 import Schedule from '../../components/Schedule';
-// Corrected paths: these are page components, not in components folder
 import FacultyManage from '../FacultyManage/FacultyManage';
 import Department from '../Department/Department';
 import Hall from '../Hall/Hall';
+import CoursesMange from '../../components/CoursesMange';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -141,6 +141,13 @@ function Dashboard() {
             <span className="tab-icon">🏛️</span>
             <span className="tab-text"> القاعات</span>
           </button>
+          <button
+            className={`sidebar-tab ${activeTab === "coursesMange" ? "active" : ""}`}
+            onClick={() => setActiveTab("coursesMange")}
+          >
+            <span className="tab-icon">📝</span>
+            <span className="tab-text">ادارة المقررات</span>
+          </button>
         </nav>
         <div className="sidebar-header">
           <div className="user-info">
@@ -217,7 +224,7 @@ function Dashboard() {
 
           {activeTab === "courses" && <Courses />}
           {activeTab === "facultyManagement" && <FacultyManage />}
-
+          {activeTab === "coursesMange" && <CoursesMange />}
           {activeTab === "schedule" && <Schedule />}
           {activeTab === "department" && <Department />}
           {activeTab === "hall" && <Hall />}

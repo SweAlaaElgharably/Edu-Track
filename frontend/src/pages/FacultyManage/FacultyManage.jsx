@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchFaculties, createFaculty, updateFaculty, deleteFaculty } from '../../services/facultyApi';
 import { fetchUniversities } from '../../services/universityApi';
