@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import '../../styles/auth.css';
+import './register.css';
 import image2 from '../../assets/2.jpeg';
 
 function Register() {
@@ -40,18 +40,18 @@ function Register() {
     }
   };
   return (
-    <div className="auth-split-page">
-      <div className="auth-image-section">
-        <img src={image2} alt="Port Said University" className="auth-bg-image" />
+    <div className="register-split-page">
+      <div className="register-image-section">
+        <img src={image2} alt="Port Said University" className="register-bg-image" />
         <div className="university-logo"></div>
       </div>
-      <div className="auth-form-section">
-        <div className="auth-container">
+      <div className="register-form-section">
+        <div className="register-container">
           <h2>إنشاء حساب جديد</h2>
           <p>سجل بياناتك للانضمام إلى جامعة بورسعيد</p>
-          {error && <div className="error-message">{error}</div>}
-          <form className="auth-form" onSubmit={handleSubmit}>
-            <div className="form-group">
+          {error && <div className="register-error-message">{error}</div>}
+          <form className="register-form" onSubmit={handleSubmit}>
+            <div className="register-form-group">
               <label htmlFor="username">اسم المستخدم</label>
               <input
                 type="text"
@@ -63,8 +63,8 @@ function Register() {
                 placeholder="أدخل اسم المستخدم"
               />
             </div>
-            <div className="form-row">
-              <div className="form-group">
+            <div className="register-form-row">
+              <div className="register-form-group">
                 <label htmlFor="first_name">الاسم الأول</label>
                 <input
                   type="text"
@@ -76,7 +76,7 @@ function Register() {
                   placeholder="أدخل اسمك الأول"
                 />
               </div>
-              <div className="form-group">
+              <div className="register-form-group">
                 <label htmlFor="last_name">اسم العائلة</label>
                 <input
                   type="text"
@@ -89,7 +89,7 @@ function Register() {
                 />
               </div>
             </div>
-            <div className="form-group">
+            <div className="register-form-group">
               <label htmlFor="email">البريد الإلكتروني</label>
               <input
                 type="email"
@@ -101,8 +101,8 @@ function Register() {
                 placeholder="أدخل بريدك الإلكتروني"
               />
             </div>
-            <div className="form-row">
-              <div className="form-group">
+            <div className="register-form-row">
+              <div className="register-form-group">
                 <label htmlFor="password">كلمة المرور</label>
                 <input
                   type="password"
@@ -114,7 +114,7 @@ function Register() {
                   placeholder="أنشئ كلمة مرور"
                 />
               </div>
-              <div className="form-group">
+              <div className="register-form-group">
                 <label htmlFor="re_password">تأكيد كلمة المرور</label>
                 <input
                   type="password"
@@ -127,11 +127,11 @@ function Register() {
                 />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
+            <button type="submit" className="register-btn btn-primary" disabled={loading}>
               {loading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب'}
             </button>
           </form>
-          <div className="auth-links">
+          <div className="register-links">
             <p>
               لديك حساب بالفعل؟ <Link to="/login">تسجيل الدخول</Link>
             </p>

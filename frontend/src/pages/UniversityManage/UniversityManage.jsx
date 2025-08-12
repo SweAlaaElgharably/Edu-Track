@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchUniversities, createUniversity, updateUniversity, deleteUniversity } from '../../services/universityApi';
-import '../../styles/university-faculty-manage.css';
+import './university-faculty-manage.css';
 
 const initialForm = { name: '', slug: '', logo: null };
 

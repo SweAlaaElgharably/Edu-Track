@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/hall.css";
+import "./hall.css";
 import {
   fetchLocations,
   createLocation,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import '../../styles/auth.css';
+import './login.css';
 import image2 from '../../assets/psu2.jpg';
 import PlexusBackground from '../../components/PlexusBackground';
 
@@ -41,20 +41,20 @@ function Login() {
   };
 
   return (
-    <div className="auth-split-page">
+    <div className="login-split-page">
       <PlexusBackground />
-      <div className="auth-image-section">
-        <img src={image2} alt="Port Said University" className="auth-bg-image" />
+      <div className="login-image-section">
+        <img src={image2} alt="Port Said University" className="login-bg-image" />
         <div className="university-logo"></div>
       </div>
-      <div className="auth-form-section">
-        <div className="auth-container">
+      <div className="login-form-section">
+        <div className="login-container">
           <h2>مرحباً بعودتك</h2>
           <p>سجل دخولك إلى حساب جامعة بورسعيد</p>
           
-          {error && <div className="error-message">{error}</div>}
-          <form onSubmit={handleSubmit} className="auth-form">
-            <div className="form-group">
+          {error && <div className="login-error-message">{error}</div>}
+          <form onSubmit={handleSubmit} className="login-form">
+            <div className="login-form-group">
               <label htmlFor="username">اسم المستخدم</label>
               <input
                 type="text"
@@ -67,7 +67,7 @@ function Login() {
               />
             </div>
             
-            <div className="form-group">
+            <div className="login-form-group">
               <label htmlFor="password">كلمة المرور</label>
               <input
                 type="password"
@@ -80,12 +80,12 @@ function Login() {
               />
             </div>
             
-            <button type="submit" className="btn btn-primary" disabled={loading}>
+            <button type="submit" className="login-btn btn-primary" disabled={loading}>
               {loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
             </button>
           </form>
           
-          <div className="auth-links">
+          <div className="login-links">
             <Link to="/forgot-password">نسيت كلمة المرور؟</Link>
             <p>
               ليس لديك حساب؟ <Link to="/register">إنشاء حساب</Link>

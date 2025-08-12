@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/auth.css';
+import './forgot-password.css';
 import PlexusBackground from '../../components/PlexusBackground';
 
 function ForgotPassword() {
@@ -39,19 +39,19 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="auth-split-page">
+    <div className="forgot-password-split-page">
       <PlexusBackground />
 
-      <div className="auth-form-section">
-        <div className="auth-container">
+      <div className="forgot-password-form-section">
+        <div className="forgot-password-container">
           <h2>نسيت كلمة المرور</h2>
           <p>أدخل بريدك الإلكتروني لإرسال رابط إعادة تعيين كلمة المرور</p>
 
-          {error && <div className="error-message">{error}</div>}
-          {success && <div className="success-message">{success}</div>}
+          {error && <div className="forgot-password-error-message">{error}</div>}
+          {success && <div className="forgot-password-success-message">{success}</div>}
 
-          <form onSubmit={handleSubmit} className="auth-form">
-            <div className="form-group">
+          <form onSubmit={handleSubmit} className="forgot-password-form">
+            <div className="forgot-password-form-group">
               <label htmlFor="email">البريد الإلكتروني</label>
               <input
                 type="email"
@@ -64,7 +64,7 @@ function ForgotPassword() {
               />
             </div>
 
-            <button type="submit" className="btn btn-primary" disabled={loading}>
+            <button type="submit" className="forgot-password-btn btn-primary" disabled={loading}>
               {loading ? 'جاري الإرسال...' : 'إرسال رابط إعادة التعيين'}
             </button>
           </form>
