@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import '../styles/auth.css';
-import PlexusBackground from '../components/PlexusBackground';
+import '../../styles/auth.css';
+import PlexusBackground from '../../components/PlexusBackground';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');

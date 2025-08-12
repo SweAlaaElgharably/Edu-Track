@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Chatbot from '../components/Chatbot';
-import '../styles/help.css';
+import Chatbot from '../../components/Chatbot';
+import '../../styles/help.css';
 import { helpCategories, helpFaqs } from './HelpCenterFaqData';
 
 function HelpCenter() {

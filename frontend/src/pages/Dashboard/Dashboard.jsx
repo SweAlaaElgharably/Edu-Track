@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import '../styles/dashboard.css';
-// import PlexusBackground from '../components/PlexusBackground';
-import Courses from '../components/Courses';
-import Schedule from '../components/Schedule';
-import FacultyManage from "./FacultyManage";
-import Department from "./Department";
-import Hall from "./Hall";
+import { useAuth } from '../../context/AuthContext';
+import './dashboard.css';
+import Courses from '../../components/Courses';
+import Schedule from '../../components/Schedule';
+// Corrected paths: these are page components, not in components folder
+import FacultyManage from '../FacultyManage/FacultyManage';
+import Department from '../Department/Department';
+import Hall from '../Hall/Hall';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");

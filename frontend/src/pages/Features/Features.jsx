@@ -1,7 +1,7 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import "../styles/features.css";
+import "../../styles/features.css";
 import { useEffect } from "react";
 
 function Features() {

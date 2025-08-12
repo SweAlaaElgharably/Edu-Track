@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "../styles/hall.css";
+import "../../styles/hall.css";
 import {
   fetchLocations,
   createLocation,
   updateLocation,
   deleteLocation,
-} from "../services/locationApi";
-import { fetchFaculties } from "../services/facultyApi";
+} from "../../services/locationApi";
+import { fetchFaculties } from "../../services/facultyApi";
 
 export default function Hall() {
   const [halls, setHalls] = useState([]);

@@ -1,19 +1,21 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "../src/pages/Home";
-import Login from "../src/pages/Login";
-import Register from "../src/pages/Register";
-import Dashboard from "../src/pages/Dashboard";
-import Profile from "../src/pages/Profile";
+import Home from "../src/pages/Home/Home";
+import Login from "../src/pages/Login/Login";
+import Register from "../src/pages/Register/Register";
+import Dashboard from "../src/pages/Dashboard/Dashboard";
+import Profile from "../src/pages/Profile/Profile";
 import ProtectedRoute from "../src/components/ProtectedRoute";
-import Features from "../src/pages/Features";
-import Contact from "../src/pages/Contact";
-import UniversityManage from "../src/pages/UniversityManage";
-import FacultyManage from "../src/pages/FacultyManage";
-import PageNotFound from "../src/pages/PageNotFound";
-import ForgotPassword from "../src/pages/ForgotPassword";
-import HelpCenter from "../src/pages/HelpCenter";
-import ChangePassword from "../src/pages/ChangePassword";
+import Features from "../src/pages/Features/Features";
+import Contact from "../src/pages/Contact/Contact";
+import UniversityManage from "../src/pages/UniversityManage/UniversityManage";
+import FacultyManage from "../src/pages/FacultyManage/FacultyManage";
+import PageNotFound from "../src/pages/PageNotFound/PageNotFound";
+import ForgotPassword from "../src/pages/ForgotPassword/ForgotPassword";
+import HelpCenter from "../src/pages/HelpCenter/HelpCenter";
+import ChangePassword from "../src/pages/ChangePassword/ChangePassword";
+import About from "../src/pages/About/About";
+
 
 const RoutesList = () => {
   return (
@@ -66,6 +68,7 @@ const RoutesList = () => {
       />
       <Route path="/help" element={<HelpCenter />} />    
       <Route path="*" element={<PageNotFound />} />
+      <Route path="/about" element={<About />} />
 
     </Routes>
   );

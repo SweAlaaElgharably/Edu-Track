@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import '../styles/auth.css';
-import image2 from '../assets/psu2.jpg';
-import PlexusBackground from '../components/PlexusBackground';
+import { useAuth } from '../../context/AuthContext';
+import '../../styles/auth.css';
+import image2 from '../../assets/psu2.jpg';
+import PlexusBackground from '../../components/PlexusBackground';
 
 
 function Login() {

@@ -1,11 +1,7 @@
-
-
-
-
 import React, { useEffect, useState } from 'react';
-import '../styles/department.css';
-import { fetchPrograms, createProgram, updateProgram, deleteProgram } from '../services/programApi';
-import { fetchFaculties } from '../services/facultyApi';
+import '../Department/department.css'
+import { fetchPrograms, createProgram, updateProgram, deleteProgram } from '../../services/programApi';
+import { fetchFaculties } from '../../services/facultyApi';
 
 
 export default function Department() {
