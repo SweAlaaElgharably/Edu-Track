@@ -21,6 +21,16 @@ function HelpCenter() {
     }, 180);
   };
 
+  // Handle pagination change with animation
+  const handlePageChange = (nextPage) => {
+    if (nextPage === currentPage) return;
+    setFaqFade(false);
+    setTimeout(() => {
+      setCurrentPage(nextPage);
+      setFaqFade(true);
+    }, 180);
+  };
+
   // Filtered FAQs
   const filteredFaqs = activeCategory === 'all'
     ? helpFaqs
@@ -92,50 +102,26 @@ function HelpCenter() {
 
           {/* Pagination controls for 'all' */}
           {activeCategory === 'all' && totalPages > 1 && (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginTop: '1rem' }}>
+            <div className="pagination-controls">
               <button
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                style={{
-                  padding: '0.5rem 0.9rem',
-                  borderRadius: 9999,
-                  border: '1px solid #e5e7eb',
-                  background: currentPage === 1 ? '#f1f5f9' : 'linear-gradient(90deg, #3b82f6 0%, #1e40af 100%)',
-                  color: currentPage === 1 ? '#94a3b8' : '#ffffff',
-                  fontWeight: 700,
-                  boxShadow: '0 10px 30px rgba(2, 6, 23, 0.06)',
-                  cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
-                }}
+                className={`page-nav prev${currentPage === 1 ? ' disabled' : ''}`}
               >السابق</button>
-              {Array.from({ length: totalPages }).map((_, i) => {
-                const page = i + 1;
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => {
                 const active = page === currentPage;
                 return (
-                  <button key={page} onClick={() => setCurrentPage(page)}
-                    style={{
-                      width: 36, height: 36, borderRadius: 8,
-                      border: '1px solid #e5e7eb',
-                      background: active ? 'linear-gradient(90deg, #3b82f6 0%, #1e40af 100%)' : '#ffffff',
-                      color: active ? '#ffffff' : '#0f172a',
-                      fontWeight: 800,
-                      boxShadow: '0 10px 30px rgba(2, 6, 23, 0.06)'
-                    }}
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`page-btn ${active ? 'active' : ''}`}
                   >{page}</button>
                 );
               })}
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                style={{
-                  padding: '0.5rem 0.9rem',
-                  borderRadius: 9999,
-                  border: '1px solid #e5e7eb',
-                  background: currentPage === totalPages ? '#f1f5f9' : 'linear-gradient(90deg, #3b82f6 0%, #1e40af 100%)',
-                  color: currentPage === totalPages ? '#94a3b8' : '#ffffff',
-                  fontWeight: 700,
-                  boxShadow: '0 10px 30px rgba(2, 6, 23, 0.06)',
-                  cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
-                }}
+                className={`page-nav next${currentPage === totalPages ? ' disabled' : ''}`}
               >التالي</button>
             </div>
           )}
