@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import '../About/About.css';
+import './about.css';
 
 function About() {
   const visionRef = useRef(null);

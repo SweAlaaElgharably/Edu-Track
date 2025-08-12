@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Contact/Contact.css";
+import "./contact.css";
 import { useForm } from "@formspree/react";
 import { useNavigate } from "react-router-dom";
 

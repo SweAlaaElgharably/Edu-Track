@@ -1,12 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../styles/footer.css";
 import psuLogo from "../assets/psu-logo.svg";
 
 function Footer() {
+  const location = useLocation();
+  const isDashboard = location.pathname === '/dashboard' || location.pathname.startsWith('/dashboard');
+
   return (
-    <footer className="footer">
-      <div className="footer-content">
+    <footer className={`footer ${isDashboard ? 'dashboard-footer' : ''}`}>
+      <div className={`footer-content ${isDashboard ? 'dashboard-content' : ''}`}>
         <div className="footer-map">
           <div className="map-container">
             <iframe
