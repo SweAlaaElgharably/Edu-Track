@@ -44,6 +44,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const refreshUser = async () => {
+    try {
+      if (apiService.isAuthenticated()) {
+        const userData = await apiService.getCurrentUser();
+        setUser(userData);
+      }
+    } catch (error) {
+      // silent
+    }
+  };
+
   const register = async (userData) => {
     try {
       const data = await apiService.register(userData);
@@ -66,7 +77,8 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
-    isAuthenticated: !!user
+  refreshUser,
+  isAuthenticated: !!user
   };
 
   return (

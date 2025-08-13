@@ -91,9 +91,10 @@ class ApiService {
   // Get current user
   async getCurrentUser() {
     try {
-      const response = await fetch(`${this.baseURL}/auth/users/me/`, {
+      const response = await fetch(`${this.baseURL}/auth/users/me/?t=${Date.now()}`, {
         method: 'GET',
-        headers: this.getAuthHeaders()
+        headers: this.getAuthHeaders(),
+        cache: 'no-store'
       });
 
       if (!response.ok) {

@@ -4,16 +4,17 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   direction: rtl;
 }
 
 .profile-container {
   width: 100%;
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 3rem;
   animation: slideInUp 0.6s ease-out;
+  background: transparent;
 }
 
 @keyframes slideInUp {
@@ -48,8 +49,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-container p {
@@ -87,16 +92,80 @@
 /* Profile Header */
 .profile-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1.5rem;
   margin-bottom: 2rem;
-  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
-  border-radius: 15px;
-  padding: 2rem;
-  border: 2px solid rgba(100, 108, 255, 0.18);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 16px;
+  padding: 2.75rem 1.75rem 1.5rem; /* extra top space so avatar/name sit lower */
+  border: 1px solid rgba(100, 108, 255, 0.1);
   transition: all 0.3s ease;
-  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+.profile-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
+}
+
+/* Narrow variant for merged header */
+.header-narrow {
+  max-width: 1100px;
+  margin-inline: auto;
+}
+/* Pin title to top-right, independent from content below */
+.header-title-block {
+  position: absolute;
+  top: 0.6rem;
+  right: 1rem;
+  margin: 0;
+}
+.header-title-block .section-title {
+  margin: 0;
+  font-size: 1rem;
+  padding-bottom: 0.15rem;
+}
+
+/* Nudge header content slightly down so it doesn't float under the title/top border */
+.profile-header > .profile-avatar,
+.profile-header > .profile-info,
+.profile-header > .profile-actions {
+  margin-top: 0.35rem;
+}
+.header-title-row {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+}
+.header-title-row .section-title {
+  margin: 0;
+  font-size: 1.3rem;
+  padding-bottom: 0.15rem;
+}
+.section-title {
+  margin: 0;
+  color: #1a365d;
+  font-size: 1.1rem;
+  font-weight: 800;
+  position: relative;
+  padding-bottom: 0.25rem;
+}
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
+  border-radius: 2px;
 }
 
 .profile-avatar {
@@ -112,7 +181,6 @@
   overflow: hidden;
   transition: all 0.3s ease;
   border: 3px solid rgba(255, 255, 255, 0.9);
-
 }
 
 .profile-avatar:hover {
@@ -140,21 +208,21 @@
 .profile-info h2 {
   font-size: 2.2rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.95);
+  color: #1a365d;
   margin-bottom: 0.5rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Cairo", sans-serif;
 }
 
 .user-email {
-  font-size: 1.1rem;
-  color: #667eea;
+  font-size: 1.05rem;
+  color: #1a365d;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
 .user-username {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: #374151;
   font-weight: 500;
 }
 
@@ -162,15 +230,27 @@
 .profile-section {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 2rem;
   margin-bottom: 2rem;
-  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
-  border-radius: 15px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 16px;
   padding: 2rem;
-  border: 2px solid rgba(100, 108, 255, 0.18);
+  border: 1px solid rgba(100, 108, 255, 0.1);
   transition: all 0.3s ease;
-  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
 }
+.profile-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
+}
+
 .profile-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -234,39 +314,40 @@
 .profile-header:hover {
   transform: translateY(-6px) scale(1.01);
   box-shadow: 0 12px 40px rgba(100, 108, 255, 0.22);
-  border-color: #3b82f6;
+  border-color: #1a365d;
 }
 
 .profile-section:hover {
   transform: translateY(-6px) scale(1.01);
   box-shadow: 0 12px 40px rgba(100, 108, 255, 0.22);
-  border-color: #3b82f6;
+  border-color: #1a365d;
 }
 
 .profile-section h3 {
-  color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 1.5rem;
-  font-size: 1.4rem;
+  color: #1a365d;
+  margin: 0 0 1.25rem;
+  font-size: 1.25rem;
   font-weight: 700;
   position: relative;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.45rem;
+  font-family: "Cairo", sans-serif;
 }
 
 .profile-section h3::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 50px;
+  width: 48px;
   height: 3px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
   border-radius: 2px;
 }
 
 .profile-section p {
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
+  color: #4b5563;
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
@@ -280,18 +361,17 @@
 .info-item {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.06);
+  gap: 0.4rem;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: all 0.3s ease;
+  border: 1px solid rgba(100, 108, 255, 0.12);
+  transition: 0.25s;
 }
 
 .info-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
 .info-item.full-width {
@@ -300,18 +380,18 @@
 
 .info-item label {
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: #374151;
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
+  text-transform: none;
 }
 
 .info-item span {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 1rem;
+  color: #1f2937;
+  font-size: 0.95rem;
   font-weight: 500;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(100, 108, 255, 0.15);
 }
 
 /* Profile Actions */
@@ -321,26 +401,27 @@
   flex-wrap: wrap;
 }
 
-.profile-actions .profile-change-password-btn{
+.profile-actions .profile-change-password-btn {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
+  padding: 0.9rem 1.25rem;
+  background: linear-gradient(135deg, #1a365d, #535bf2);
+  color: #fff;
   border: none;
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: 0.3s;
   text-decoration: none;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(100, 108, 255, 0.3);
+  font-family: "Cairo", sans-serif;
 }
 
 .profile-actions .profile-change-password-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(100, 108, 255, 0.4);
 }
 
 .profile-actions .profile-change-password-btn svg {
@@ -363,10 +444,12 @@
   }
 
   .profile-header {
-    background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
     flex-direction: column;
     text-align: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
+  }
+  .profile-actions {
+    justify-content: center;
   }
 
   .profile-info h2 {
@@ -417,55 +500,6 @@
 
   .info-item span {
     font-size: 0.9rem;
-  }
-}
-
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  .profile-container {
-    color: white;
-  }
-
-  .profile-info h2 {
-    color: white;
-  }
-
-  .user-email {
-    color: #60a5fa;
-  }
-
-  .user-username {
-    color: #d1d5db;
-  }
-
-  .profile-section {
-    border-color: rgba(102, 126, 234, 0.2);
-  }
-
-  .profile-section h3 {
-    color: white;
-  }
-
-  .profile-section p {
-    color: #d1d5db;
-  }
-
-  .info-item {
-    background: rgba(31, 41, 55, 0.8);
-    border-color: rgba(102, 126, 234, 0.2);
-  }
-
-  .info-item:hover {
-    background: rgba(31, 41, 55, 0.95);
-  }
-
-  .info-item label {
-    color: white;
-  }
-
-  .info-item span {
-    color: #d1d5db;
-    border-bottom-color: rgba(102, 126, 234, 0.2);
   }
 }
 

@@ -38,7 +38,7 @@ function Profile() {
         } else {
           setError('فشل في تحميل بيانات المستخدم');
         }
-      } catch (error) {
+  } catch {
         setError('خطأ في الاتصال بالسيرفر');
       } finally {
         setLoading(false);
@@ -50,8 +50,20 @@ function Profile() {
 
   const formatDate = (dateString) => {
     if (!dateString) return 'غير محدد';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ar-SA');
+    // Parse as local date to avoid timezone shifts and format in Gregorian Arabic
+    const parts = String(dateString).split('-');
+    if (parts.length !== 3) return 'غير محدد';
+    const [y, m, d] = parts.map(Number);
+    const date = new Date(y, (m || 1) - 1, d || 1);
+    try {
+      return new Intl.DateTimeFormat('ar-EG-u-ca-gregory', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).format(date);
+    } catch {
+      return `${String(d).padStart(2, '0')}/${String(m).padStart(2, '0')}/${y}`;
+    }
   };
 
   if (!isAuthenticated) {
@@ -71,6 +83,13 @@ function Profile() {
     );
   }
 
+  const normalizeMediaUrl = (p) => {
+    if (!p) return null;
+    if (p.startsWith('http')) return p;
+    if (p.startsWith('/')) return `http://localhost:8000${p}`;
+    return `http://localhost:8000/media/${p}`;
+  };
+
   return (
     <div className="profile-page">
       <div className="profile-container">
@@ -89,70 +108,67 @@ function Profile() {
           </div>
         )}
 
-        {/* Top two sections in grid */}
-        <div className="profile-layout">
-          <div className="profile-header profile-main">
-            <div className="profile-avatar">
-              {userData?.picture ? (
-                <img
-                  src={`http://localhost:8000${userData.picture}`}
-                  alt="صورة المستخدم"
-                  className="avatar-image"
-                />
-              ) : (
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              )}
-            </div>
-            <div className="profile-info">
-              <h2>
-                {userData?.first_name && userData?.last_name
-                  ? `${userData.first_name} ${userData.last_name}`
-                  : userData?.email}
-              </h2>
-              <p className="user-email">{userData?.email}</p>
-              <p className="user-username">
-                اسم المستخدم: {userData?.username || 'غير محدد'}
-              </p>
-            </div>
+        {/* Merged top header: avatar + info + actions in one card */}
+        <div className="profile-header profile-main header-narrow">
+          <div className="header-title-row">
+            <h3 className="section-title">إعدادات الحساب</h3>
           </div>
-
-          <div className="profile-section profile-settings-card profile-aside">
-            <h3>إعدادات الحساب</h3>
-            <p>قم بإدارة إعدادات حسابك</p>
-            <div className="profile-actions">
-              <button
-                onClick={() => navigate('/change-password')}
-                className="profile-change-password-btn"
+          <div className="profile-avatar">
+            {userData?.picture ? (
+              <img
+                src={`${normalizeMediaUrl(userData.picture)}?t=${Date.now()}`}
+                alt="صورة المستخدم"
+                className="avatar-image"
+              />
+            ) : (
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
+          </div>
+          <div className="profile-info">
+            <h2>
+              {userData?.first_name && userData?.last_name
+                ? `${userData.first_name} ${userData.last_name}`
+                : userData?.email}
+            </h2>
+            <p className="user-email">{userData?.email}</p>
+            <p className="user-username">
+              اسم المستخدم: {userData?.username || 'غير محدد'}
+            </p>
+          </div>
+          <div className="profile-actions">
+            <button
+              onClick={() => navigate('/change-password')}
+              className="profile-change-password-btn"
+              title="تعديل إعدادات الملف الشخصي"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
               >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M3 21C3 17.6863 6.68629 15 10 15H12C15.3137 15 19 17.6863 19 21"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                تغيير إعدادات حسابك
-              </button>
-            </div>
+                <path
+                  d="M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M3 21C3 17.6863 6.68629 15 10 15H12C15.3137 15 19 17.6863 19 21"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              تغيير إعدادات حسابك
+            </button>
           </div>
         </div>
 
@@ -160,6 +176,14 @@ function Profile() {
         <div className="profile-section">
           <h3>المعلومات الشخصية</h3>
           <div className="info-grid">
+            <div className="info-item">
+              <label>الاسم الأول:</label>
+              <span>{userData?.first_name || 'غير محدد'}</span>
+            </div>
+            <div className="info-item">
+              <label>الأسم الأخير:</label>
+              <span>{userData?.last_name || 'غير محدد'}</span>
+            </div>
             <div className="info-item">
               <label>الاسم الكامل باللغة الإنجليزية:</label>
               <span>{userData?.englishfullname || 'غير محدد'}</span>
