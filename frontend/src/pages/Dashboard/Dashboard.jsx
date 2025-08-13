@@ -13,6 +13,51 @@ function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
+  // Calendar and Live Clock state
+  const [viewDate, setViewDate] = useState(new Date()); // month being viewed
+  const [now, setNow] = useState(new Date()); // live updating current time
+
+  // Tick every second to keep time/date current
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Calendar helpers
+  const monthNames = [
+    "يناير",
+    "فبراير",
+    "مارس",
+    "أبريل",
+    "مايو",
+    "يونيو",
+    "يوليو",
+    "أغسطس",
+    "سبتمبر",
+    "أكتوبر",
+    "نوفمبر",
+    "ديسمبر",
+  ];
+  const weekdayShort = ["أحد", "إثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"];
+
+  const startOfMonth = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
+  const endOfMonth = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0);
+  const daysInMonth = endOfMonth.getDate();
+  const prefixBlanks = startOfMonth.getDay(); // 0=Sun ... 6=Sat
+
+  const calendarCells = [
+    ...Array(prefixBlanks).fill(null),
+    ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
+  ];
+  // Ensure 6 rows (like Google Calendar)
+  while (calendarCells.length < 42) calendarCells.push(null);
+
+  const prevMonth = () => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1));
+  const nextMonth = () => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1));
+  const goToToday = () => {
+    const d = new Date();
+    setViewDate(new Date(d.getFullYear(), d.getMonth(), 1));
+  };
 
   // Redirect to home if not authenticated
   useEffect(() => {
@@ -167,58 +212,64 @@ function Dashboard() {
 
         <div className="dashboard-content">
           {activeTab === "overview" && (
-            <div className="overview-grid">
-              <div className="stats-card">
-                <h3>المقررات الحالية</h3>
-                <div className="stat-number-dashboard">
-                  {mockData.courses.length}
+            <div className="calendar-overview" style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 16 }}>
+              {/* Calendar (month view) */}
+              <div className="stats-card" style={{ padding: 0, overflow: "hidden" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderBottom: "1px solid #eee" }}>
+                  <button aria-label="الشهر السابق" onClick={prevMonth} className="btn btn-secondary-calender" style={{ padding: "4px 8px" }}>‹</button>
+                  <h3 style={{ margin: 0 }}>{monthNames[viewDate.getMonth()]} {viewDate.getFullYear()}</h3>
+                  <button aria-label="الشهر التالي" onClick={nextMonth} className="btn btn-secondary-calender" style={{ padding: "4px 8px" }}>›</button>
                 </div>
-                <p>المقررات النشطة هذا الفصل الدراسي</p>
+                <div style={{ padding: "12px 16px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 6, marginBottom: 8 }}>
+                    {weekdayShort.map((d) => (
+                      <div key={d} style={{ textAlign: "center", fontWeight: 600, color: "#555" }}>{d}</div>
+                    ))}
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 6 }}>
+                    {calendarCells.map((day, idx) => {
+                      const isToday = day !== null &&
+                        viewDate.getFullYear() === now.getFullYear() &&
+                        viewDate.getMonth() === now.getMonth() &&
+                        day === now.getDate();
+                      return (
+                        <div
+                          key={idx}
+                          style={{
+                            height: 72,
+                            border: "1px solid #eee",
+                            borderRadius: 8,
+                            padding: 8,
+                            background: isToday ? "#1976d2" : "#fff",
+                            color: isToday ? "#fff" : "#333",
+                            display: "flex",
+                            alignItems: "flex-start",
+                            justifyContent: "flex-end",
+                            fontWeight: isToday ? 700 : 500,
+                          }}
+                          title={day ? `${day} ${monthNames[viewDate.getMonth()]} ${viewDate.getFullYear()}` : ""}
+                        >
+                          {day !== null ? day : ""}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div style={{ marginTop: 12, textAlign: "center" }}>
+                    <button onClick={goToToday} className="btn btn-secondary-calender">اليوم</button>
+                  </div>
+                </div>
               </div>
 
-              <div className="stats-card">
-                <h3>متوسط التقدم</h3>
-                <div className="stat-number-dashboard">75%</div>
-                <p>في جميع المقررات</p>
-              </div>
-
-              <div className="stats-card">
-                <h3>المواعيد القادمة</h3>
-                <div className="stat-number-dashboard">
-                  {mockData.upcomingDeadlines.length}
+              {/* Live Clock */}
+              <div className="stats-card" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <h3 style={{ marginBottom: 8 }}>الوقت الآن</h3>
+                <div className="stat-number-dashboard" style={{ fontFamily: "monospace", fontSize: 28, marginBottom: 8 }}>
+                  {now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
                 </div>
-                <p>الواجبات المستحقة قريباً</p>
+                <p style={{ margin: 0 }}>
+                  {now.toLocaleDateString("ar-EG", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+                </p>
               </div>
-
-              <div className="stats-card">
-                <h3>المحاضرات اليوم</h3>
-                <div className="stat-number-dashboard">2</div>
-                <p>المحاضرة القادمة خلال 30 دقيقة</p>
-              </div>
-              {/* University/Faculty Management Card */}
-              {/* <div
-                className="stats-card"
-                style={{ cursor: "pointer" }}
-                onClick={() => (window.location.href = "/universities")}
-              >
-                <h3>إدارة الجامعات والكليات</h3>
-                <div className="stat-number-dashboard" style={{ fontSize: 32 }}>
-                  🔗
-                </div>
-                <p>انتقل لإدارة الجامعات والكليات</p>
-                <a
-                  href="/universities"
-                  className="btn btn-secondary"
-                  style={{
-                    marginTop: 12,
-                    color: "#fff",
-                    background: "#1976d2",
-                    border: "none",
-                  }}
-                >
-                  الذهاب للإدارة
-                </a>
-              </div> */}
             </div>
           )}
 
