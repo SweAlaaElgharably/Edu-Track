@@ -143,7 +143,7 @@ function Dashboard() {
             onClick={() => setActiveTab("courses")}
           >
             <span className="tab-icon">📚</span>
-            <span className="tab-text">المقررات</span>
+            <span className="tab-text">التسجيل الإكاديمي</span>
           </button>
           <button
             className={`sidebar-tab ${activeTab === "schedule" ? "active" : ""
@@ -159,7 +159,7 @@ function Dashboard() {
             onClick={() => setActiveTab("progress")}
           >
             <span className="tab-icon">📈</span>
-            <span className="tab-text">التقدم</span>
+            <span className="tab-text">جدول الأمتحانات</span>
           </button>
           <button
             className={`sidebar-tab ${activeTab === "facultyManagement" ? "active" : ""
@@ -191,7 +191,7 @@ function Dashboard() {
             onClick={() => setActiveTab("coursesMange")}
           >
             <span className="tab-icon">📝</span>
-            <span className="tab-text">ادارة المقررات</span>
+            <span className="tab-text">المقررات</span>
           </button>
         </nav>
         <div className="sidebar-header">
