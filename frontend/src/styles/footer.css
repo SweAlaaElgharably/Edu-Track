@@ -210,9 +210,44 @@
   margin: 0;
   font-size: 0.9rem;
 }
+/* Dashboard-specific footer styles */
+/* Add this to the end of your footer.css file */
 
+.dashboard-footer .footer-content {
+  margin-left: 20vw;
+  transition: margin 0.3s ease;
+}
+
+/* Alternative approach using padding if you prefer */
+/* 
+.dashboard-content {
+  padding-right: 240px;
+  padding-left: 2rem;
+}
+*/@media (max-width: 1250px){
+  .dashboard-footer .footer-content {
+    margin-left: 30vw;
+  } ;
+}
+
+/* Responsive adjustments for dashboard footer */
+@media (max-width: 1050px) {
+ .dashboard-footer .footer-content {
+    margin-left: 100vw;
+  } ;
+}
+
+
+
+/* If you want a smoother transition when navigating between pages */
+.footer-content {
+  transition: margin 0.3s ease;
+}
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 769px) {
+  .dashboard-footer .footer-content {
+    margin-left: auto;
+  }
   .footer-content {
     grid-template-columns: 1fr;
     gap: 2rem;

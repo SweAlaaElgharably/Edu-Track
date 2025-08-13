@@ -1,8 +1,7 @@
 .ft-page {
-	background-color: white;
 	color: #222;
 	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-	padding: 2rem;
+	padding: 4rem;
 	max-width: 1400px;
 	margin: 4rem auto;
 	line-height: 1.8;
@@ -12,8 +11,8 @@
 }
 
 .ft-title {
-	font-size: 3.5rem;
-	color: #3182ce;
+	font-size: 4rem;
+	color: #182e8d;
 	font-weight: 900;
 	text-align: center;
 	margin-bottom: 1.5rem;
@@ -38,7 +37,7 @@
 
 .ft-intro {
 	text-align: center;
-	font-size: 1.3rem;
+	font-size: 1.5rem;
 	margin-bottom: 3rem;
 	color: #333;
 	opacity: 0;
@@ -54,16 +53,18 @@
 .ft-section {
 	margin-bottom: 2.5rem;
 	padding: 2rem;
-	background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	border-radius: 20px;
-	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+	background: #ffffff;
+	border: 2px solid #e2e8f0;
+	border-radius: 12px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 	opacity: 0;
 	transform: translateY(60px);
-	animation: fadeInScroll 1.2s ease-out forwards;
 	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 	overflow: hidden;
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+	animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .ft-section::before {
@@ -78,37 +79,18 @@
 }
 
 .ft-section:hover {
-	transform: translateY(-8px);
-	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-	border-color: rgba(255, 255, 255, 0.3);
+	transform: translateY(-4px);
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	border-color: #667eea;
 }
 
-.ft-section h2 {
-	font-size: 1.5rem;
-	color: white;
-	font-weight: 700;
-	margin-bottom: 1.5rem;
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-	position: relative;
-}
 
-.ft-section h2::before {
-	content: "";
-	position: absolute;
-	left: -10px;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 4px;
-	height: 30px;
-	background: linear-gradient(180deg, #3182ce, #667eea);
-	border-radius: 2px;
-}
-
-.ft-section ul {
+.ft-section ul li {
 	list-style-type: none;
 	padding-right: 0;
-	color: rgba(255, 255, 255, 0.9);
+	color: #4a5568;
 	margin: 0;
+	font-weight: bold;
 }
 
 .ft-section ul li {
@@ -118,29 +100,30 @@
 	margin-bottom: 0.5rem;
 	border-radius: 8px;
 	transition: all 0.3s ease;
+	font-size: 1.4rem;
 }
 
-.ft-section ul li::before {
-	content: "✦";
-	position: absolute;
-	right: 0;
-	top: 50%;
-	transform: translateY(-50%);
-	color: #3182ce;
-	font-weight: bold;
-	font-size: 1.2rem;
-	transition: all 0.3s ease;
+.feature-icon {
+	display: inline-block;
+	margin-left: 1rem;
+	font-size: 1.5rem;
+	vertical-align: middle;
+}
+
+.ft-section ul li {
+	display: flex;
+	align-items: center;
 }
 
 .ft-section ul li:hover {
-	background: rgba(255, 255, 255, 0.1);
+	background: #f1f4f7;
 	padding-right: 2.5rem;
-	transform: translateX(-5px);
+	transform: translateX(-3px);
 }
 
 .ft-section ul li:hover::before {
-	color: #667eea;
-	transform: translateY(-50%) scale(1.2);
+	color: #3182ce;
+	transform: translateY(-50%) scale(1.1);
 }
 
 .ft-grid {
@@ -252,37 +235,110 @@
 	transform: translateY(-50%) translateX(-3px);
 }
 
-@keyframes fadeInScroll {
-	0% {
-		opacity: 0;
-		transform: translateY(60px);
-	}
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
+@keyframes slideFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-@keyframes fadeInDown {
-	0% {
-		opacity: 0;
-		transform: translateY(-30px);
-	}
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
+@keyframes slideFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 @keyframes fadeInUp {
-	0% {
-		opacity: 0;
-		transform: translateY(30px);
-	}
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
+    0% {
+        opacity: 0;
+        transform: translateY(60px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.ft-section {
+    animation-play-state: paused;
+}
+
+.ft-section:nth-child(4n + 1) {
+    animation-name: slideFromRight;
+}
+
+.ft-section:nth-child(4n + 2) {
+    animation-name: slideFromLeft;
+}
+
+.ft-section:nth-child(4n + 3) {
+    animation-name: fadeInUp;
+}
+
+.ft-section:nth-child(4n + 4) {
+    animation-name: scaleIn;
+}
+
+/* Add different delays for each card */
+.tl-item:nth-child(1) .ft-section { animation-delay: 0.1s; }
+.tl-item:nth-child(2) .ft-section { animation-delay: 0.3s; }
+.tl-item:nth-child(3) .ft-section { animation-delay: 0.5s; }
+.tl-item:nth-child(4) .ft-section { animation-delay: 0.7s; }
+
+/* Add a nice transform effect for the icons */
+.feature-icon {
+    display: inline-block;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ft-section.animated .feature-icon {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0.2s;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .ft-section {
@@ -339,4 +395,143 @@
 }
 .ft-section:nth-child(6) {
 	animation-delay: 0.6s;
+}
+
+/* Timeline (Aceternity-style) */
+.timeline-wrapper {
+	margin-top: 2rem;
+}
+
+.tl-root {
+	width: 100%;
+	background: transparent;
+}
+
+.tl-inner {
+	position: relative;
+	max-width: 1200px;
+	margin: 0 auto 2rem;
+	padding-bottom: 4rem;
+}
+
+.tl-item {
+	display: flex;
+	justify-content: flex-start;
+	gap: 1rem;
+	padding-top: 4rem;
+}
+
+@media (min-width: 768px) {
+	.tl-item {
+		padding-top: 10rem;
+		gap: 2.5rem;
+	}
+}
+
+.tl-sticky {
+	position: sticky;
+	top: 10rem;
+	align-self: flex-start;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	z-index: 3;
+	min-width: 240px;
+}
+
+@media (min-width: 768px) {
+	.tl-sticky {
+		flex-direction: row;
+		align-items: center;
+	}
+}
+
+.tl-dot {
+	position: absolute;
+	inset-inline-start: 0.75rem; /* works for RTL/LTR */
+	width: 2rem;
+	height: 2rem;
+	border-radius: 9999px;
+	background: linear-gradient(90deg, #3182ce, #667eea, #764ba2);;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+body.dark .tl-dot, .ft-page.dark .tl-dot {
+	background: #000000;
+}
+
+.tl-dot-inner {
+	width: 1rem;
+	height: 1rem;
+	border-radius: 9999px;
+	background: #e5e7eb; /* neutral-200 */
+	border: 1px solid #d1d5db; /* neutral-300 */
+}
+
+body.dark .tl-dot-inner, .ft-page.dark .tl-dot-inner {
+	background: #1f2937; /* neutral-800 */
+	border-color: #374151; /* neutral-700 */
+}
+
+.tl-title {
+	font-weight: 800;
+	color: #667eea;
+	font-size: 2.2rem !important ; /* neutral-500 */
+}
+
+.tl-title--desktop {
+	display: none;
+	font-size: 2rem;
+	padding-inline-start: 5rem; /* accounts for dot area */
+}
+
+.tl-title--mobile {
+	display: block;
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+	.tl-title--desktop { display: block; }
+	.tl-title--mobile { display: none; }
+}
+
+.tl-content {
+	position: relative;
+	padding-inline-start: 5rem;
+	padding-inline-end: 1rem;
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.tl-content { padding-inline-start: 1rem; }
+}
+
+.tl-rail {
+	position: absolute;
+	inset-inline-start: 2rem; /* place under the dot */
+	top: 0;
+	width: 4px;
+	background: linear-gradient(to bottom, transparent 0%, #cbd5e1 10%, #cbd5e1 90%, transparent 99%);
+	/* Soft mask to fade ends */
+	-webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+	mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+	overflow: hidden;
+	z-index: 1;
+}
+
+body.dark .tl-rail, .ft-page.dark .tl-rail {
+	background: linear-gradient(to bottom, transparent 0%, #475569 10%, #475569 90%, transparent 99%);
+}
+
+.tl-progress {
+	position: absolute;
+	inset-inline: 0;
+	top: 0;
+	width: 2px;
+	background: linear-gradient(to top, #7c3aed 0%, #3b82f6 10%, transparent 100%);
+	border-radius: 9999px;
+	z-index: 2;
 }
