@@ -6,4 +6,3 @@ class FacultySerializer(ModelSerializer):
     class Meta:
         model = Faculty
         fields = '__all__'
-        depth = 1
