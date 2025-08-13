@@ -1,196 +1,346 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useCallback, memo, useEffect, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchFaculties, createFaculty, updateFaculty, deleteFaculty } from '../../services/facultyApi';
-import { fetchUniversities } from '../../services/universityApi';
-import './university-faculty-manage.css';
+import './FacultyManage.css';
 
-const initialForm = { name: '', slug: '', logo: null, university: '' };
+
+const initialForm = { name: '', slug: '', logo: null };
+
+// Form validation function
+const validateForm = (form) => {
+  const errors = {};
+  if (!form.name.trim()) {
+    errors.name = 'اسم الكلية مطلوب';
+  } else if (form.name.length > 30) {
+    errors.name = 'اسم الكلية يجب أن لا يتجاوز 30 حرف';
+  }
+
+  if (!form.slug.trim()) {
+    errors.slug = 'الرابط المختصر مطلوب';
+  } else if (form.slug.length > 30) {
+    errors.slug = 'الرابط المختصر يجب أن لا يتجاوز 30 حرف';
+  }
+  
+  if (form.logo && form.logo.size > 5 * 1024 * 1024) { // 5MB limit
+    errors.logo = 'حجم الصورة يجب أن لا يتجاوز 5 ميجابايت';
+  }
+  
+  return errors;
+};
+
+// Memoized AddEditForm component
+const AddEditForm = memo(({ 
+  isClosing, 
+  editSlug, 
+  form, 
+  error, 
+  onClose, 
+  onSubmit, 
+  onChange 
+}) => {
+  
+  
+  return (
+    <div className={`faculty-form-container ${isClosing ? 'fadeOut' : ''}`}>
+      <div className="faculty-form-card">
+        <div className="form-header">
+          <h2 className="form-title">{editSlug ? 'تعديل كلية' : 'إضافة كلية'}</h2>
+          <button className="close-button" onClick={onClose}>
+            ✕
+          </button>
+        </div>
+        <form onSubmit={onSubmit} dir="rtl" autoComplete="off">
+          <div className="form-group">
+            <label htmlFor="faculty-name" className="themed-label">اسم الكلية</label>
+            <input
+              id="faculty-name"
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={onChange}
+              placeholder="مثال: كلية الهندسة"
+              required
+              maxLength={30}
+              autoComplete="off"
+            />
+            <small className="input-helper">{form.name.length}/30</small>
+          </div>
+          <div className="form-group">
+            <label htmlFor="faculty-slug" className="themed-label">الرابط المختصر</label>
+            <input
+              id="faculty-slug"
+              type="text"
+              name="slug"
+              value={form.slug}
+              onChange={onChange}
+              placeholder="مثال: engineering-faculty"
+              required
+              maxLength={30}
+              autoComplete="off"
+              dir="ltr"
+            />
+            <small className="input-helper">{form.slug.length}/30 - سيتم استخدامه في الرابط</small>
+          </div>
+          <div className="form-group">
+            <label htmlFor="faculty-logo" className="themed-label">شعار الكلية</label>
+            <input
+              id="faculty-logo"
+              type="file"
+              name="logo"
+              onChange={onChange}
+              accept="image/*"
+              className="file-input"
+              autoComplete="off"
+            />
+            <small className="input-helper">الحد الأقصى: 5 ميجابايت</small>
+          </div>
+          {error && <div className="error-message">{error}</div>}
+          <button type="submit" className="submit-button">
+            {editSlug ? 'حفظ التغييرات' : 'إضافة الكلية'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+});
+
+// Memoized FacultyList component
+const FacultyList = memo(({ 
+  faculties, 
+  isLoading, 
+  isError, 
+  onAdd, 
+  onEdit, 
+  onDelete 
+}) => {
+  
+  
+  return (
+    <div className="faculty-list-container">
+      <div className="header-actions">
+        <h1>إدارة الكليات</h1>
+        <button onClick={onAdd} className="add-button">
+          إضافة كلية
+        </button>
+      </div>
+      {isLoading ? (
+        <div className="loading">جاري التحميل...</div>
+      ) : isError ? (
+        <div className="error">حدث خطأ في تحميل البيانات</div>
+      ) : (
+        <div className="faculty-grid">
+          {faculties?.map((faculty) => (
+            <div key={faculty.slug} className="faculty-card">
+              {faculty.logo && (
+                <div className="faculty-logo">
+                  <img src={faculty.logo} alt={faculty.name} />
+                </div>
+              )}
+              <div className="faculty-info">
+                <h3>{faculty.name}</h3>
+                <p>{faculty.slug}</p>
+              </div>
+              <div className="faculty-actions">
+                <button onClick={() => onEdit(faculty)} className="edit-button">
+                  تعديل
+                </button>
+                <button onClick={() => onDelete(faculty.slug)} className="delete-button">
+                  حذف
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+});
 
 const FacultyManage = () => {
-  const { slug: universitySlug } = useParams();
   const queryClient = useQueryClient();
-  const [form, setForm] = useState(initialForm);
-  const [editSlug, setEditSlug] = useState(null);
-  const [error, setError] = useState('');
-  const [formOpen, setFormOpen] = useState(false);
-
-    const { data: faculties, isLoading, isError } = useQuery({
-    queryKey: ['faculties', universitySlug],
-    queryFn: () => fetchFaculties(universitySlug),
-    enabled: !!universitySlug,
+  const [formState, setFormState] = useState({
+    form: initialForm,
+    editSlug: null,
+    error: '',
+    isOpen: false,
+    isClosing: false
   });
 
-    const { data: universities, isLoading: isUnivLoading, isError: isUnivError } = useQuery({
-    queryKey: ['universities'],
-    queryFn: fetchUniversities
+  const handleCloseForm = useCallback(() => {
+    setFormState(prev => ({ ...prev, isClosing: true }));
+  }, []);
+
+  useEffect(() => {
+    let timer;
+    if (formState.isClosing) {
+      timer = setTimeout(() => {
+        setFormState({
+          form: initialForm,
+          editSlug: null,
+          error: '',
+          isOpen: false,
+          isClosing: false
+        });
+      }, 300);
+    }
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [formState.isClosing]);
+
+  const { data: faculties, isLoading, isError } = useQuery({
+    queryKey: ['faculties'],
+    queryFn: fetchFaculties
   });
 
   const createMutation = useMutation({
     mutationFn: createFaculty,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['faculties'] });
-      setForm(initialForm);
-      setError('');
-      setFormOpen(false);
+      handleCloseForm();
     },
-    onError: () => setError('فشل في إنشاء الكلية'),
+    onError: (error) => setFormState(prev => ({ ...prev, error: error?.message || 'فشل في إنشاء الكلية' })),
   });
 
   const updateMutation = useMutation({
     mutationFn: updateFaculty,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['faculties'] });
-      setForm(initialForm);
-      setEditSlug(null);
-      setError('');
-      setFormOpen(false);
+      handleCloseForm();
     },
-    onError: () => setError('فشل في تحديث الكلية'),
+    onError: (error) => setFormState(prev => ({ ...prev, error: error?.message || 'فشل في تحديث الكلية' })),
   });
 
   const deleteMutation = useMutation({
     mutationFn: deleteFaculty,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['faculties'] });
-      setError('');
     },
-    onError: () => setError('فشل في حذف الكلية'),
+    onError: (error) => setFormState(prev => ({ ...prev, error: error?.message || 'فشل في حذف الكلية' })),
   });
 
-  const handleChange = e => {
+  // Optimized handleChange with useCallback and proper dependencies
+  const handleChange = useCallback((e) => {
     const { name, value, files } = e.target;
-    setForm(f => ({ ...f, [name]: files ? files[0] : value }));
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('name', form.name);
-    formData.append('slug', form.slug);
-    formData.append('university', form.university);
-    if (form.logo) formData.append('logo', form.logo);
     
-    if (editSlug) {
-      updateMutation.mutate({ slug: editSlug, formData });
-    } else {
-      createMutation.mutate(formData);
-    }
-  };
-
-    const handleEdit = (fac) => {
-    setForm({ 
-      name: fac.name, 
-      slug: fac.slug, 
-      logo: null, 
-      university: fac.university?.id || fac.university 
-    });
-    setEditSlug(fac.slug);
-    setError('');
-    setFormOpen(true);
-  };
-
-  useEffect(() => {
-    if (universitySlug && universities) {
-      const currentUniversity = universities.find(uni => uni.slug === universitySlug);
-      if (currentUniversity) {
-        setForm(f => ({ ...f, university: currentUniversity.id }));
+    setFormState(prev => {
+      const newForm = { ...prev.form };
+      
+      if (files) {
+        newForm[name] = files[0];
+      } else {
+        newForm[name] = value;
       }
-    }
-  }, [universitySlug, universities]);
+      
+      return {
+        ...prev,
+        form: newForm
+      };
+    });
+  }, []); // Empty dependencies since we're using functional updates
 
-  const handleDelete = (slug) => {
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    
+    // Validate form
+    const errors = validateForm(formState.form);
+    if (Object.keys(errors).length > 0) {
+      const errorMessage = Object.values(errors).join('\n');
+      setFormState(prev => ({ ...prev, error: errorMessage }));
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', formState.form.name);
+    formData.append('slug', formState.form.slug);
+    if (formState.form.logo) formData.append('logo', formState.form.logo);
+    
+    try {
+      if (formState.editSlug) {
+        updateMutation.mutate({ slug: formState.editSlug, formData });
+      } else {
+        createMutation.mutate(formData);
+      }
+    } catch (error) {
+      setFormState(prev => ({ 
+        ...prev, 
+        error: error.response?.data?.message || 'حدث خطأ أثناء حفظ البيانات' 
+      }));
+    }
+  }, [formState.form, formState.editSlug, updateMutation, createMutation]);
+
+  const handleEdit = useCallback((fac) => {
+    setFormState(prev => ({
+      ...prev,
+      form: { 
+        name: fac.name,
+        slug: fac.slug,
+        logo: null
+      },
+      editSlug: fac.slug,
+      isOpen: true,
+      error: ''
+    }));
+  }, []);
+
+  const handleAdd = useCallback(() => {
+    setFormState(prev => ({
+      ...prev,
+      form: initialForm,
+      editSlug: null,
+      isOpen: true,
+      error: ''
+    }));
+  }, []);
+
+  const handleDelete = useCallback((slug) => {
     if (window.confirm('هل أنت متأكد من حذف الكلية؟')) {
       deleteMutation.mutate(slug);
     }
-  };
+  }, [deleteMutation]);
+
+  // Memoize props to prevent unnecessary re-renders
+  const formProps = useMemo(() => ({
+    isClosing: formState.isClosing,
+    editSlug: formState.editSlug,
+    form: formState.form,
+    error: formState.error,
+    onClose: handleCloseForm,
+    onSubmit: handleSubmit,
+    onChange: handleChange
+  }), [
+    formState.isClosing,
+    formState.editSlug,
+    formState.form,
+    formState.error,
+    handleCloseForm,
+    handleSubmit,
+    handleChange
+  ]);
+
+  const listProps = useMemo(() => ({
+    faculties,
+    isLoading,
+    isError,
+    onAdd: handleAdd,
+    onEdit: handleEdit,
+    onDelete: handleDelete
+  }), [
+    faculties,
+    isLoading,
+    isError,
+    handleAdd,
+    handleEdit,
+    handleDelete
+  ]);
 
   return (
-    <div className="ufm-container">
-      <div className="ufm-dashboard-box">
-                <h1 className="ufm-main-title">
-          إدارة الكليات {universities && `- ${universities.find(u => u.slug === universitySlug)?.name}`}
-        </h1>
-        <div className="ufm-dashboard-content">
-          <div className={`ufm-dashboard-form-panel ufm-form-panel ${!formOpen ? 'closed' : ''}`}>
-            <button className="ufm-form-back-btn" onClick={() => setFormOpen(false)}>
-              رجوع
-            </button>
-            <form onSubmit={handleSubmit} className="uni-form">
-              <h2 className="form-title">{editSlug ? 'تعديل الكلية' : 'إضافة كلية'}</h2>
-              <div className="form-group">
-                <label className="form-label">اسم الكلية</label>
-                <input type="text" name="name" value={form.name} onChange={handleChange} required className="form-control" />
-              </div>
-              <div className="form-group">
-                <label className="form-label">الاسم المختصر (slug)</label>
-                <input type="text" name="slug" value={form.slug} onChange={handleChange} required className="form-control" disabled={!!editSlug} />
-              </div>
-              <div className="form-group">
-                <label className="form-label">شعار الكلية</label>
-                <input type="file" name="logo" accept="image/*" onChange={handleChange} className="form-control" />
-              </div>
-              <div className="form-group">
-                <label className="form-label">الجامعة</label>
-                <select name="university" value={form.university} onChange={handleChange} required className="form-control">
-                  <option value="">اختر الجامعة</option>
-                  {isUnivLoading ? <option disabled>جاري التحميل...</option> : universities?.map(uni => (
-                    <option value={uni.id} key={uni.id}>{uni.name}</option>
-                  ))}
-                </select>
-              </div>
-              {error && <div className="form-error">{error}</div>}
-              <div className="form-actions">
-                <button type="submit" className="ufm-btn" disabled={createMutation.isLoading || updateMutation.isLoading}>
-                  {editSlug ? 'تحديث' : 'إضافة'}
-                </button>
-                {editSlug && (
-                  <button type="button" className="ufm-btn delete" onClick={() => { setForm(initialForm); setEditSlug(null); setError(''); setFormOpen(false); }}>
-                    إلغاء
-                  </button>
-                )}
-              </div>
-            </form>
-          </div>
-
-          <div className={`ufm-dashboard-cards-panel ${formOpen ? 'closed' : ''}`}>
-            <div className="ufm-cards-col">
-              {isLoading ? <div className="loading-state">جاري التحميل...</div> : isError ? <div className="error-state">فشل في تحميل الكليات</div> : (
-                faculties?.length ? faculties.map(fac => (
-                  <div className="ufm-card" key={fac.slug}>
-                    {fac.logo && (
-                      <div className="ufm-card-logo">
-                        <img src={fac.logo} alt="logo" />
-                      </div>
-                    )}
-                    <div className="ufm-card-title">{fac.name}</div>
-                    <div className="ufm-card-slug">{fac.university?.name || 'N/A'}</div>
-                    <div className="ufm-card-actions">
-                      <button className="ufm-btn" title="تعديل" onClick={() => handleEdit(fac)}>
-                        تعديل
-                      </button>
-                      <button className="ufm-btn delete" title="حذف" onClick={() => handleDelete(fac.slug)}>
-                        حذف
-                      </button>
-                    </div>
-                  </div>
-                )) : <div className="empty-state">لا توجد كليات بعد</div>
-              )}
-            </div>
-            <div className="ufm-dashboard-add-row">
-              <button className="ufm-dashboard-add-btn" aria-label="إضافة كلية" onClick={() => {
-                const currentUniversity = universities.find(uni => uni.slug === universitySlug);
-                setForm({ ...initialForm, university: currentUniversity?.id || '' });
-                setEditSlug(null);
-                setError('');
-                setFormOpen(true);
-              }}>
-                <span>+</span> إضافة كلية
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="faculty-manage" dir="rtl">
+      {formState.isOpen ? (
+        <AddEditForm {...formProps} />
+      ) : (
+        <FacultyList {...listProps} />
+      )}
     </div>
   );
 };

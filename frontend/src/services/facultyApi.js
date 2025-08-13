@@ -10,26 +10,42 @@ export const fetchFaculties = async (universitySlug) => {
 };
 
 export const createFaculty = async (formData) => {
+  const headers = { ...api.getAuthHeaders() };
+  // Remove JSON Content-Type so browser sets correct multipart boundary
+  delete headers['Content-Type'];
   const res = await fetch(`${api.baseURL}/faculty/create/`, {
     method: 'POST',
-    headers: {
-      ...api.getAuthHeaders(),
-    },
+    headers,
     body: formData,
   });
-  if (!res.ok) throw new Error('فشل في إنشاء الكلية');
+  if (!res.ok) {
+    let msg = 'فشل في إنشاء الكلية';
+    try {
+      const data = await res.json();
+      msg = data?.detail || Object.values(data).flat().join(' \n ') || msg;
+    } catch (_) {}
+    throw new Error(msg);
+  }
   return res.json();
 };
 
 export const updateFaculty = async ({ slug, formData }) => {
+  const headers = { ...api.getAuthHeaders() };
+  // Remove JSON Content-Type so browser sets correct multipart boundary
+  delete headers['Content-Type'];
   const res = await fetch(`${api.baseURL}/faculty/${slug}/update/`, {
     method: 'PATCH',
-    headers: {
-      ...api.getAuthHeaders(),
-    },
+    headers,
     body: formData,
   });
-  if (!res.ok) throw new Error('فشل في تحديث الكلية');
+  if (!res.ok) {
+    let msg = 'فشل في تحديث الكلية';
+    try {
+      const data = await res.json();
+      msg = data?.detail || Object.values(data).flat().join(' \n ') || msg;
+    } catch (_) {}
+    throw new Error(msg);
+  }
   return res.json();
 };
 
@@ -38,6 +54,13 @@ export const deleteFaculty = async (slug) => {
     method: 'DELETE',
     headers: api.getAuthHeaders(),
   });
-  if (!res.ok) throw new Error('فشل في حذف الكلية');
+  if (!res.ok) {
+    let msg = 'فشل في حذف الكلية';
+    try {
+      const data = await res.json();
+      msg = data?.detail || Object.values(data).flat().join(' \n ') || msg;
+    } catch (_) {}
+    throw new Error(msg);
+  }
   return true;
 };
