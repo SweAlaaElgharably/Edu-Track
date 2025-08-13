@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'faculty.apps.FacultyConfig',
     'program.apps.ProgramConfig',
     'location.apps.LocationConfig',
+    'course.apps.CourseConfig',
+    'lecture.apps.LectureConfig',
 ]
 
 MIDDLEWARE = [
