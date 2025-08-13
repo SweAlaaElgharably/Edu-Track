@@ -71,7 +71,7 @@ backdrop-filter: blur(10px);
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #646cff, #535bf2);
+  background: linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
 }
 
 .stat-card-contact:hover {
@@ -131,7 +131,7 @@ backdrop-filter: blur(10px);
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #646cff, #535bf2);
+  background: linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
 }
 
 .course-card:hover {
@@ -236,7 +236,7 @@ backdrop-filter: blur(10px);
 
 /* use dashboard .btn-primary for first */
 .course-actions .btn:first-child {
-  background: linear-gradient(135deg, #646cff 0%, #535bf2 100%);
+  background: linear-gradient(135deg, #1a365d, #535bf2);
   color: #fff;
   box-shadow: 0 4px 15px rgba(100, 108, 255, 0.3);
 }
@@ -248,7 +248,7 @@ backdrop-filter: blur(10px);
 
 /* Second button - Solid Color (الواجبات) */
 .course-actions .btn:last-child {
-  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
+  background: linear-gradient(135deg, #1a365d, #535bf2);
   color: #fff;
 }
 

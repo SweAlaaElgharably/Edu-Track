@@ -15,6 +15,22 @@ export default function Department() {
   const [modalType, setModalType] = useState('create'); // 'create' or 'update'
   const [selectedDept, setSelectedDept] = useState(null);
   const [form, setForm] = useState({ name: '', faculty: '' });
+  const [submitting, setSubmitting] = useState(false);
+
+  const slugify = (text) => {
+    return text
+      .toString()
+      .trim()
+      .toLowerCase()
+      // Replace spaces with -
+      .replace(/\s+/g, '-')
+      // Remove all non-word chars except - and _
+      .replace(/[^a-z0-9-_]/g, '')
+      // Replace multiple - with single -
+      .replace(/-+/g, '-')
+      // Trim - from start and end
+      .replace(/^-+|-+$/g, '');
+  };
 
   useEffect(() => {
     loadDepartments();
@@ -87,19 +103,37 @@ export default function Department() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    // Client-side validation
+    if (!form.name?.trim()) {
+      setError('اسم القسم مطلوب');
+      return;
+    }
+    if (!form.faculty) {
+      setError('يجب اختيار الكلية');
+      return;
+    }
     setLoading(true);
+    setSubmitting(true);
     try {
       if (modalType === 'create') {
-        await createProgram(form);
+        const payload = { ...form };
+        // Backend requires slug
+        payload.slug = slugify(form.name);
+        payload.faculty = Number(form.faculty);
+        await createProgram(payload);
       } else if (modalType === 'update' && selectedDept) {
-        await updateProgram(selectedDept.slug, form);
+        const payload = { name: form.name, faculty: Number(form.faculty) };
+        // If you want to allow slug change, include: payload.slug = slugify(form.name)
+        await updateProgram(selectedDept.slug, payload);
       }
       setShowModal(false);
       await loadDepartments();
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'حدث خطأ أثناء حفظ القسم');
     }
     setLoading(false);
+    setSubmitting(false);
   };
 
   return (
@@ -157,7 +191,9 @@ export default function Department() {
                 ))}
               </select>
             </label>
-            <button type="submit" className="btn update">{modalType === 'create' ? 'اضافة القسم' : 'تحديث القسم'}</button>
+            <button type="submit" className="btn update" disabled={submitting}>
+              {submitting ? 'جارٍ الحفظ...' : (modalType === 'create' ? 'اضافة القسم' : 'تحديث القسم')}
+            </button>
           </form>
         </div>
       )}

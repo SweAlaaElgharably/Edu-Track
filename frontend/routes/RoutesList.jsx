@@ -8,7 +8,7 @@ import Profile from "../src/pages/Profile/Profile";
 import ProtectedRoute from "../src/components/ProtectedRoute";
 import Features from "../src/pages/Features/Features";
 import Contact from "../src/pages/Contact/Contact";
-import UniversityManage from "../src/pages/UniversityManage/UniversityManage";
+
 import FacultyManage from "../src/pages/FacultyManage/FacultyManage";
 import PageNotFound from "../src/pages/PageNotFound/PageNotFound";
 import ForgotPassword from "../src/pages/ForgotPassword/ForgotPassword";
@@ -50,14 +50,7 @@ const RoutesList = () => {
       />
       <Route path="/features" element={<Features />} />
       <Route path="/contact" element={<Contact />} />
-      <Route
-        path="/universities"
-        element={
-          <ProtectedRoute>
-            <UniversityManage />
-          </ProtectedRoute>
-        }
-      />
+    
       <Route
         path="/universities/:slug/faculties"
         element={

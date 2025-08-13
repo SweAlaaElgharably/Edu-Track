@@ -100,6 +100,25 @@ export default function Lecture() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Basic client-side validations
+    if (!form.title?.trim()) {
+      setError('عنوان المحاضرة مطلوب');
+      return;
+    }
+    const instructorId = Number(form.instructor);
+    if (!Number.isFinite(instructorId) || instructorId <= 0) {
+      setError('رقم المٌحاضر (ID) مطلوب ويجب أن يكون رقمًا صحيحًا');
+      return;
+    }
+    const locationId = Number(form.location);
+    if (!Number.isFinite(locationId) || locationId <= 0) {
+      setError('القاعه مطلوبة');
+      return;
+    }
+    if (!form.day) {
+      setError('اليوم مطلوب');
+      return;
+    }
     setLoading(true);
     try {
       // Client-side time validation: start must be before end
@@ -117,9 +136,9 @@ export default function Lecture() {
       }
 
       const payload = {
-        title: form.title,
-        instructor: Number(form.instructor),
-        location: Number(form.location),
+        title: form.title.trim(),
+        instructor: instructorId,
+        location: locationId,
         day: form.day,
         starttime: form.starttime,
         endtime: form.endtime,
@@ -290,10 +309,10 @@ export default function Lecture() {
               </label>
             </div>
 
-            <button type="submit" className="btn update">
-              {modalType === 'create' ? 'اضافة' : 'تحديث'}
+            <button type="submit" className="btn update" disabled={loading}>
+              {loading ? 'جارٍ الحفظ...' : (modalType === 'create' ? 'اضافة' : 'تحديث')}
             </button>
-            <button type="button" className="btn cancel" onClick={() => setShowModal(false)}>
+            <button type="button" className="btn cancel" onClick={() => setShowModal(false)} disabled={loading}>
               الغاء
             </button>
           </form>

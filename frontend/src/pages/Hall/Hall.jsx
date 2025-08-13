@@ -104,12 +104,37 @@ export default function Hall() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Client-side validations to prevent 500 from NOT NULL at DB level
+    if (!form.name?.trim()) {
+      setError('اسم القاعة مطلوب');
+      return;
+    }
+    const facultyId = Number(form.faculty);
+    if (!Number.isFinite(facultyId) || facultyId <= 0) {
+      setError('الكلية مطلوبة ويجب اختيار قيمة صحيحة');
+      return;
+    }
+    const cap = Number(form.capacity ?? 1);
+    if (!Number.isFinite(cap) || cap <= 0) {
+      setError('مساحة القاعة يجب أن تكون رقمًا أكبر من 0');
+      return;
+    }
     setLoading(true);
     try {
       if (modalType === 'create') {
-        await createLocation(form);
-      } else if (modalType === 'update' && selectedHall) {
-        await updateLocation(selectedHall.slug, form);
+        await createLocation({
+          name: form.name.trim(),
+          slug: form.slug?.trim(),
+          capacity: cap,
+          faculty: facultyId,
+        });
+      } else {
+        await updateLocation(selectedHall.slug, {
+          name: form.name.trim(),
+          slug: form.slug?.trim(),
+          capacity: cap,
+          faculty: facultyId,
+        });
       }
       setShowModal(false);
       await loadHalls();

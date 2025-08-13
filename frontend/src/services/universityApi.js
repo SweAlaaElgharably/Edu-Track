@@ -5,7 +5,8 @@ export const fetchUniversities = async () => {
     headers: api.getAuthHeaders()
   });
   if (!res.ok) throw new Error('فشل في جلب الجامعات');
-  return res.json();
+  const data = await res.json();
+  return Array.isArray(data) ? data : (data?.results ?? []);
 };
 
 export const createUniversity = async (formData) => {

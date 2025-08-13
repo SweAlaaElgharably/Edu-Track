@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchFaculties, createFaculty, updateFaculty, deleteFaculty } from '../../services/facultyApi';
-import { fetchUniversities } from '../../services/universityApi';
 import './university-faculty-manage.css';
 
-const initialForm = { name: '', slug: '', logo: null, university: '' };
+const initialForm = { name: '', slug: '', logo: null };
 
 const FacultyManage = () => {
   const { slug: universitySlug } = useParams();
@@ -16,43 +15,39 @@ const FacultyManage = () => {
   const [formOpen, setFormOpen] = useState(false);
 
     const { data: faculties, isLoading, isError } = useQuery({
-    queryKey: ['faculties', universitySlug],
+    queryKey: ['faculties', universitySlug ?? null],
     queryFn: () => fetchFaculties(universitySlug),
-    enabled: !!universitySlug,
   });
 
-    const { data: universities, isLoading: isUnivLoading, isError: isUnivError } = useQuery({
-    queryKey: ['universities'],
-    queryFn: fetchUniversities
-  });
+    // University selection removed; backend no longer requires it
 
   const createMutation = useMutation({
     mutationFn: createFaculty,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['faculties'] });
+      queryClient.invalidateQueries({ queryKey: ['faculties'], exact: false });
       setForm(initialForm);
       setError('');
       setFormOpen(false);
     },
-    onError: () => setError('فشل في إنشاء الكلية'),
+    onError: (e) => setError(e?.message || 'فشل في إنشاء الكلية'),
   });
 
   const updateMutation = useMutation({
     mutationFn: updateFaculty,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['faculties'] });
+      queryClient.invalidateQueries({ queryKey: ['faculties'], exact: false });
       setForm(initialForm);
       setEditSlug(null);
       setError('');
       setFormOpen(false);
     },
-    onError: () => setError('فشل في تحديث الكلية'),
+    onError: (e) => setError(e?.message || 'فشل في تحديث الكلية'),
   });
 
   const deleteMutation = useMutation({
     mutationFn: deleteFaculty,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['faculties'] });
+      queryClient.invalidateQueries({ queryKey: ['faculties'], exact: false });
       setError('');
     },
     onError: () => setError('فشل في حذف الكلية'),
@@ -65,10 +60,15 @@ const FacultyManage = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    // Client-side required checks to avoid 400s
+    if (!editSlug && !form.logo) {
+      // logo is required by backend ImageField on create
+      setError('شعار الكلية مطلوب');
+      return;
+    }
     const formData = new FormData();
     formData.append('name', form.name);
     formData.append('slug', form.slug);
-    formData.append('university', form.university);
     if (form.logo) formData.append('logo', form.logo);
     
     if (editSlug) {
@@ -82,22 +82,14 @@ const FacultyManage = () => {
     setForm({ 
       name: fac.name, 
       slug: fac.slug, 
-      logo: null, 
-      university: fac.university?.id || fac.university 
+      logo: null
     });
     setEditSlug(fac.slug);
     setError('');
     setFormOpen(true);
   };
 
-  useEffect(() => {
-    if (universitySlug && universities) {
-      const currentUniversity = universities.find(uni => uni.slug === universitySlug);
-      if (currentUniversity) {
-        setForm(f => ({ ...f, university: currentUniversity.id }));
-      }
-    }
-  }, [universitySlug, universities]);
+  // Removed pre-filling university since field no longer exists
 
   const handleDelete = (slug) => {
     if (window.confirm('هل أنت متأكد من حذف الكلية؟')) {
@@ -109,9 +101,20 @@ const FacultyManage = () => {
     <div className="ufm-container">
       <div className="ufm-dashboard-box">
                 <h1 className="ufm-main-title">
-          إدارة الكليات {universities && `- ${universities.find(u => u.slug === universitySlug)?.name}`}
+          إدارة الكليات 
+        
         </h1>
+        <div className="ufm-dashboard-add-row">
+              <button className="ufm-dashboard-add-btn" aria-label="إضافة كلية" onClick={() => {
+                setForm({ ...initialForm });
+                setEditSlug(null);
+                setError('');
+                setFormOpen(true);
+              }}>
+                <span>+</span> إضافة كلية
+              </button>
         <div className="ufm-dashboard-content">
+            </div>
           <div className={`ufm-dashboard-form-panel ufm-form-panel ${!formOpen ? 'closed' : ''}`}>
             <button className="ufm-form-back-btn" onClick={() => setFormOpen(false)}>
               رجوع
@@ -130,15 +133,7 @@ const FacultyManage = () => {
                 <label className="form-label">شعار الكلية</label>
                 <input type="file" name="logo" accept="image/*" onChange={handleChange} className="form-control" />
               </div>
-              <div className="form-group">
-                <label className="form-label">الجامعة</label>
-                <select name="university" value={form.university} onChange={handleChange} required className="form-control">
-                  <option value="">اختر الجامعة</option>
-                  {isUnivLoading ? <option disabled>جاري التحميل...</option> : universities?.map(uni => (
-                    <option value={uni.id} key={uni.id}>{uni.name}</option>
-                  ))}
-                </select>
-              </div>
+              
               {error && <div className="form-error">{error}</div>}
               <div className="form-actions">
                 <button type="submit" className="ufm-btn" disabled={createMutation.isLoading || updateMutation.isLoading}>
@@ -164,7 +159,7 @@ const FacultyManage = () => {
                       </div>
                     )}
                     <div className="ufm-card-title">{fac.name}</div>
-                    <div className="ufm-card-slug">{fac.university?.name || 'N/A'}</div>
+                    <div className="ufm-card-slug">{fac.slug}</div>
                     <div className="ufm-card-actions">
                       <button className="ufm-btn" title="تعديل" onClick={() => handleEdit(fac)}>
                         تعديل
@@ -177,17 +172,7 @@ const FacultyManage = () => {
                 )) : <div className="empty-state">لا توجد كليات بعد</div>
               )}
             </div>
-            <div className="ufm-dashboard-add-row">
-              <button className="ufm-dashboard-add-btn" aria-label="إضافة كلية" onClick={() => {
-                const currentUniversity = universities.find(uni => uni.slug === universitySlug);
-                setForm({ ...initialForm, university: currentUniversity?.id || '' });
-                setEditSlug(null);
-                setError('');
-                setFormOpen(true);
-              }}>
-                <span>+</span> إضافة كلية
-              </button>
-            </div>
+           
           </div>
         </div>
       </div>
