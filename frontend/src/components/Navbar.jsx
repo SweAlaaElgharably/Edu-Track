@@ -56,7 +56,7 @@ function Navbar() {
         {!isAuthenticated ? (
           <>
             <Link to="/login" className="btn btn-outline" onClick={closeMenu}>تسجيل الدخول</Link>
-            <Link to="/register" className="btn btn-primary" onClick={closeMenu}>إنشاء حساب</Link>
+            {/* <Link to="/register" className="btn btn-primary" onClick={closeMenu}>إنشاء حساب</Link> */}
           </>
         ) : (
           <div className="user-section">

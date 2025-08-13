@@ -195,6 +195,7 @@ input, textarea, select, button {
 }
 
 .chat-input button {
+  font-family: 'Cairo', sans-serif;
   padding: 0.6rem 1.1rem;
   border: none;
   background: linear-gradient(90deg, #3182ce 0%, #2c5282 100%);
