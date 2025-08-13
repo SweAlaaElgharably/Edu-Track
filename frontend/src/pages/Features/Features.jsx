@@ -50,22 +50,28 @@ function Timeline({ data }) {
 
 function Features() {
 	useEffect(() => {
-		// Select all feature sections (namespaced class to avoid global conflicts)
 		const sections = document.querySelectorAll(".ft-section");
-
+		
 		const reveal = () => {
 			const windowHeight = window.innerHeight;
 			sections.forEach((section) => {
-				const top = section.getBoundingClientRect().top;
-				if (top < windowHeight - 100) {
+				const rect = section.getBoundingClientRect();
+				const revealPoint = 150; // Adjust this value to change when the animation triggers
+				
+				if (rect.top < windowHeight - revealPoint) {
 					section.style.animationPlayState = "running";
+					section.classList.add("animated");
 				}
 			});
 		};
 
-		window.addEventListener("scroll", reveal);
-		reveal();
+		// Initial check
+		setTimeout(reveal, 100);
 
+		// Add scroll listener
+		window.addEventListener("scroll", reveal);
+		
+		// Cleanup
 		return () => window.removeEventListener("scroll", reveal);
 	}, []);
 
@@ -75,9 +81,9 @@ function Features() {
 			content: (
 				<section className="ft-section">
 					<ul>
-						<li>إدارة شاملة لبيانات الجامعات والكليات والبرامج الدراسية</li>
-						<li>تنظيم وجدولة المحاضرات والمعامل بشكل تلقائي</li>
-						<li>نظام ذكي لمعالجة التعارضات في الجداول الدراسية</li>
+						<li><span className="feature-icon">🏛️</span>إدارة شاملة لبيانات الجامعات والكليات والبرامج الدراسية</li>
+						<li><span className="feature-icon">📅</span>تنظيم وجدولة المحاضرات والمعامل بشكل تلقائي</li>
+						<li><span className="feature-icon">🔄</span>نظام ذكي لمعالجة التعارضات في الجداول الدراسية</li>
 					</ul>
 				</section>
 			),
@@ -87,21 +93,21 @@ function Features() {
 			content: (
 				<section className="ft-section">
 					<ul>
-						<li>عرض الجدول الدراسي وتفاصيل المقررات المسجلة</li>
-						<li>تسجيل الحضور بسهولة عبر رموز QR</li>
-						<li>متابعة الحضور والغياب والأداء الأكاديمي</li>
+						<li><span className="feature-icon">📊</span>عرض الجدول الدراسي وتفاصيل المقررات المسجلة</li>
+						<li><span className="feature-icon">📱</span>تسجيل الحضور بسهولة عبر رموز QR</li>
+						<li><span className="feature-icon">📈</span>متابعة الحضور والغياب والأداء الأكاديمي</li>
 					</ul>
 				</section>
 			),
 		},
 		{
-			title: " منصة الأساتذة",
+			title: "منصة الأساتذة",
 			content: (
 				<section className="ft-section">
 					<ul>
-						<li>إدارة المحاضرات والأنشطة التعليمية</li>
-						<li>توليد وإدارة رموز QR للحضور</li>
-						<li>مزامنة الجداول مع التقويم الشخصي</li>
+						<li><span className="feature-icon">📚</span>إدارة المحاضرات والأنشطة التعليمية</li>
+						<li><span className="feature-icon">🔲</span>توليد وإدارة رموز QR للحضور</li>
+						<li><span className="feature-icon">🗓️</span>مزامنة الجداول مع التقويم الشخصي</li>
 					</ul>
 				</section>
 			),
@@ -111,10 +117,10 @@ function Features() {
 			content: (
 				<section className="ft-section">
 					<ul>
-						<li>تحكم كامل في صلاحيات المستخدمين والأدوار</li>
-						<li>إدارة القاعات وتوزيع الموارد بكفاءة</li>
-						<li>تقارير تفصيلية وإحصائيات شاملة</li>
-						<li>واجهة سهلة الاستخدام مع أمان عالي للبيانات</li>
+						<li><span className="feature-icon">👥</span>تحكم كامل في صلاحيات المستخدمين والأدوار</li>
+						<li><span className="feature-icon">🎯</span>إدارة القاعات وتوزيع الموارد بكفاءة</li>
+						<li><span className="feature-icon">📊</span>تقارير تفصيلية وإحصائيات شاملة</li>
+						<li><span className="feature-icon">🔒</span>واجهة سهلة الاستخدام مع أمان عالي للبيانات</li>
 					</ul>
 				</section>
 			),

@@ -11,7 +11,7 @@
 }
 
 .ft-title {
-	font-size: 3.5rem;
+	font-size: 4rem;
 	color: #667eea;
 	font-weight: 900;
 	text-align: center;
@@ -37,7 +37,7 @@
 
 .ft-intro {
 	text-align: center;
-	font-size: 1.3rem;
+	font-size: 1.5rem;
 	margin-bottom: 3rem;
 	color: #333;
 	opacity: 0;
@@ -59,10 +59,12 @@
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 	opacity: 0;
 	transform: translateY(60px);
-	animation: fadeInScroll 1.2s ease-out forwards;
 	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 	overflow: hidden;
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+	animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .ft-section::before {
@@ -79,7 +81,7 @@
 .ft-section:hover {
 	transform: translateY(-4px);
 	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-	border-color: #3182ce;
+	border-color: #667eea;
 }
 
 .ft-section h2 {
@@ -107,7 +109,6 @@
 	padding-right: 0;
 	color: #4a5568;
 	margin: 0;
-	font-size: 20px !important;
 	font-weight: bold;
 }
 
@@ -118,23 +119,23 @@
 	margin-bottom: 0.5rem;
 	border-radius: 8px;
 	transition: all 0.3s ease;
-	font-size: 1rem;
+	font-size: 1.4rem;
 }
 
-.ft-section ul li::before {
-	content: "•";
-	position: absolute;
-	right: 0;
-	top: 50%;
-	transform: translateY(-50%);
-	color: #3182ce;
-	font-weight: bold;
+.feature-icon {
+	display: inline-block;
+	margin-left: 1rem;
 	font-size: 1.5rem;
-	transition: all 0.3s ease;
+	vertical-align: middle;
+}
+
+.ft-section ul li {
+	display: flex;
+	align-items: center;
 }
 
 .ft-section ul li:hover {
-	background: #f7fafc;
+	background: #f1f4f7;
 	padding-right: 2.5rem;
 	transform: translateX(-3px);
 }
@@ -253,37 +254,110 @@
 	transform: translateY(-50%) translateX(-3px);
 }
 
-@keyframes fadeInScroll {
-	0% {
-		opacity: 0;
-		transform: translateY(60px);
-	}
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
+@keyframes slideFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-@keyframes fadeInDown {
-	0% {
-		opacity: 0;
-		transform: translateY(-30px);
-	}
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
+@keyframes slideFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 @keyframes fadeInUp {
-	0% {
-		opacity: 0;
-		transform: translateY(30px);
-	}
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
+    0% {
+        opacity: 0;
+        transform: translateY(60px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.ft-section {
+    animation-play-state: paused;
+}
+
+.ft-section:nth-child(4n + 1) {
+    animation-name: slideFromRight;
+}
+
+.ft-section:nth-child(4n + 2) {
+    animation-name: slideFromLeft;
+}
+
+.ft-section:nth-child(4n + 3) {
+    animation-name: fadeInUp;
+}
+
+.ft-section:nth-child(4n + 4) {
+    animation-name: scaleIn;
+}
+
+/* Add different delays for each card */
+.tl-item:nth-child(1) .ft-section { animation-delay: 0.1s; }
+.tl-item:nth-child(2) .ft-section { animation-delay: 0.3s; }
+.tl-item:nth-child(3) .ft-section { animation-delay: 0.5s; }
+.tl-item:nth-child(4) .ft-section { animation-delay: 0.7s; }
+
+/* Add a nice transform effect for the icons */
+.feature-icon {
+    display: inline-block;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ft-section.animated .feature-icon {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0.2s;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .ft-section {
