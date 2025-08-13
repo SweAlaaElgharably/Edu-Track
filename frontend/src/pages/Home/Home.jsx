@@ -34,32 +34,32 @@ function Home() {
       
       <div className="features">
         <div className="feature">
-          <div className="feature-icon">📚</div>
+          <div className="feature-icon-home">📚</div>
           <h3>إدارة المقررات</h3>
           <p>نظم وتتبع مقرراتك الدراسية والواجبات والمواعيد النهائية</p>
         </div>
         <div className="feature">
-          <div className="feature-icon">📊</div>
+          <div className="feature-icon-home">📊</div>
           <h3>تتبع التقدم</h3>
           <p>راقب تقدمك الأكاديمي مع تحليلات مفصلة</p>
         </div>
         <div className="feature">
-          <div className="feature-icon">🎯</div>
+          <div className="feature-icon-home">🎯</div>
           <h3>تحديد الأهداف</h3>
           <p>حدد وحقق أهدافك التعليمية مع تذكيرات ذكية</p>
         </div>
         <div className="feature">
-          <div className="feature-icon">📅</div>
+          <div className="feature-icon-home">📅</div>
           <h3>إدارة الجدول</h3>
           <p>تتبع المحاضرات والامتحانات والتواريخ المهمة</p>
         </div>
         <div className="feature">
-          <div className="feature-icon">📈</div>
+          <div className="feature-icon-home">📈</div>
           <h3>لوحة التحكم</h3>
           <p>لوحة تحكم شاملة لعرض إحصائياتك الأكاديمية والتقدم الدراسي</p>
         </div>
         <div className="feature">
-          <div className="feature-icon">👨‍🏫</div>
+          <div className="feature-icon-home">👨‍🏫</div>
           <h3>إدارة محاضرات الأساتذة</h3>
           <p>منصة خاصة للأساتذة لإدارة جداول المحاضرات والمواعيد الدراسية</p>
         </div>
