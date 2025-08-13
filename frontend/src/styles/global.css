@@ -242,32 +242,36 @@ h3 {
 input, textarea, select {
   padding: 0.8rem;
   border-radius: 8px;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  background: rgba(255, 255, 255, 0.9);
-  color: #ffffff;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #1f2937; /* dark readable text */
   font-size: 1rem;
   font-family: 'Cairo', sans-serif;
-  transition: border-color 0.2s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  caret-color: #1f2937;
 }
 
 input::placeholder, textarea::placeholder {
   font-family: 'Cairo', sans-serif;
-  color: #ffffff;
+  color: #9ca3af; /* neutral placeholder */
   font-size: 0.95rem;
+  font-weight: 400;
 }
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  color: #ffffff;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+  color: #1f2937; /* keep dark on focus */
+  background:#ffffff;
 }
 
 label {
-  color: #ffffff;
-  font-weight: 500;
+  color: #1a365d; /* navy for light theme */
+  font-weight: 600;
   margin-bottom: 0.5rem;
+  font-family: 'Cairo', sans-serif;
 }
 
 /* Utility Classes */
