@@ -12,7 +12,7 @@
 
 .ft-title {
 	font-size: 4rem;
-	color: #667eea;
+	color: #182e8d;
 	font-weight: 900;
 	text-align: center;
 	margin-bottom: 1.5rem;
@@ -84,25 +84,6 @@
 	border-color: #667eea;
 }
 
-.ft-section h2 {
-	font-size: 1.5rem;
-	color: #2d3748;
-	font-weight: 700;
-	margin-bottom: 1.5rem;
-	position: relative;
-}
-
-.ft-section h2::before {
-	content: "";
-	position: absolute;
-	left: -10px;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 4px;
-	height: 30px;
-	background: linear-gradient(180deg, #3182ce, #667eea);
-	border-radius: 2px;
-}
 
 .ft-section ul li {
 	list-style-type: none;
