@@ -6,18 +6,25 @@ import './home.css';
 function Home() {
   const { isAuthenticated, user } = useAuth();
   
-
+  // Determine best display name: full name > first name > username > email local-part
+  const displayName = (() => {
+    if (!user) return '';
+    const first = (user.first_name || '').trim();
+    const last = (user.last_name || '').trim();
+    if (first && last) return `${first} ${last}`; // full name
+    if (first) return first;                      // first name only
+    if (user.username) return user.username;      // username
+    if (user.email) return user.email.split('@')[0]; // email local-part
+    return '';
+  })();
   
   return (
     <div className="home">
       <div className="hero-section">
         <h1>
-          {isAuthenticated && user?.first_name && user?.last_name 
-            ? `مرحباً بك ${user.first_name} ${user.last_name} فى جامعة بورسعيد`
-            : isAuthenticated && user?.email
-            ? `مرحباً بك ${user.first_name} فى جامعة بورسعيد`
-            : 'مرحباً بك في جامعة بورسعيد'
-          }
+          {isAuthenticated && displayName
+            ? `مرحباً بك ${displayName} في جامعة بورسعيد`
+            : 'مرحباً بك في جامعة بورسعيد'}
         </h1>
         <p className="subtitle">منصة تتبع تعليمي شاملة</p>
         <div className="cta-buttons">

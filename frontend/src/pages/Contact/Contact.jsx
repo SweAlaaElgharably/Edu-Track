@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./contact.css";
 import { useForm } from "@formspree/react";
 import { useNavigate } from "react-router-dom";
@@ -9,14 +9,18 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
   });
 
   const [errors, setErrors] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
   });
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [localSubmitting, setLocalSubmitting] = useState(false);
   const navigate = useNavigate();
 
   // Validate individual fields on input
@@ -31,6 +35,10 @@ export default function Contact() {
 
       if (name === "email" && !/\S+@\S+\.\S+/.test(value)) {
         error = "البريد الإلكتروني غير صالح";
+      }
+
+      if (name === "subject" && value.trim().length < 3) {
+        error = "الموضوع قصير جداً (3 أحرف على الأقل)";
       }
 
       if (name === "message" && value.trim().length < 10) {
@@ -58,90 +66,162 @@ export default function Contact() {
     e.preventDefault();
     const allValid = Object.values(errors).every((e) => e === "") &&
       Object.values(formData).every((v) => v.trim() !== "");
-    
-    if (allValid) {
-      await handleSubmit(e);
-      if (state.succeeded) {
-        alert("تم إرسال الرسالة بنجاح");
-        navigate('/');
-      }
+
+    if (!allValid) return;
+
+    setLocalSubmitting(true);
+    await handleSubmit(e);
+    setLocalSubmitting(false);
+
+    if (state.succeeded) {
+      setShowSuccess(true);
     }
+  };
+
+  // Auto redirect after success
+  useEffect(() => {
+    if (showSuccess) {
+      const t = setTimeout(() => {
+        navigate("/");
+      }, 4000);
+      return () => clearTimeout(t);
+    }
+  }, [showSuccess, navigate]);
+
+  const subjectSuggestions = ["استفسار", "شكوى", "مقترح", "دعم فني"];  
+
+  const handleSubjectClick = (val) => {
+    setFormData((p) => ({ ...p, subject: val }));
+    validateField("subject", val);
   };
 
   return (
     <div className="contact">
+      <header className="contact-header inside-form">
+        <h1>مركز التواصل</h1>
+        <p>يرجى ملء النموذج أدناه وسنعود إليك في أقرب وقت ممكن.</p>
+      </header>
       <div className="row">
         {/* Contact Form Section */}
         <div className="col-lg-6 d-flex align-items-center">
           <div className="contact-form">
-            {state.succeeded ? (
-              <p className="success-msg">تم إرسال الرسالة بنجاح! ✅</p>
-            ) : (
-              <form id="contact-form" onSubmit={onSubmit}
-              >
-                <div className="col-md-12">
-                  <div className="form-group">
-                    <label htmlFor="name">اسم المستخدم</label>
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      className="form-control"
-                      placeholder="ادخل الاسم *"
-                      value={formData.name}
-                      onChange={handleChange}
-                      autoComplete="name"
-                    />
-                    {errors.name && <p className="error">{errors.name}</p>}
-                  </div>
-                </div>
-
-                <div className="col-md-12">
-                  <div className="form-group">
-                    <label htmlFor="email">البريد الإلكتروني</label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      className="form-control"
-                      placeholder="ادخل البريد الالكتروني *"
-                      value={formData.email}
-                      onChange={handleChange}
-                      autoComplete="email"
-                    />
-                    {errors.email && <p className="error">{errors.email}</p>}
-                  </div>
-                </div>
-
-                <div className="col-md-12">
-                  <div className="form-group">
-                    <label htmlFor="message">الرسالة</label>
-                    <textarea
-                      rows="4"
-                      name="message"
-                      id="message"
-                      className="form-control"
-                      placeholder="اكتب رسالتك *"
-                      value={formData.message}
-                      onChange={handleChange}
-                    ></textarea>
-                    {errors.message && (
-                      <p className="error">{errors.message}</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="col-md-12">
-                  <button
-                    type="submit"
-                    className="btn-big contact-btn btn-bg"
-                    disabled={state.submitting}
-                  >
-                    <i className="fas fa-arrow-right"></i> ارسل
-                  </button>
-                </div>
-              </form>
+            {showSuccess && (
+              <div className="success-overlay" role="status" aria-live="polite">
+                <div className="success-icon">✅</div>
+                <h3>تم إرسال رسالتك بنجاح</h3>
+                <p>سيتم تحويلك للصفحة الرئيسية خلال لحظات...</p>
+              </div>
             )}
+            <form id="contact-form" onSubmit={onSubmit} noValidate className="enhanced-form">
+              <div className="field-grid">
+                <div className="floating-group static-label">
+                  <label htmlFor="name" className="field-label">
+                    <span className="label-main">اسم المستخدم</span>
+                    <span className="label-help">ادخل اسمك الكامل</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    autoComplete="name"
+                    aria-invalid={!!errors.name}
+                    aria-describedby={errors.name ? "error-name" : undefined}
+                    placeholder=""
+                  />
+                  {errors.name && <p id="error-name" className="error mini">{errors.name}</p>}
+                </div>
+                <div className="floating-group static-label">
+                  <label htmlFor="email" className="field-label">
+                    <span className="label-main">البريد الإلكتروني</span>
+                    <span className="label-help">سنستخدمه للرد عليك</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    autoComplete="email"
+                    aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? "error-email" : undefined}
+                    placeholder=""
+                  />
+                  {errors.email && <p id="error-email" className="error mini">{errors.email}</p>}
+                </div>
+              </div>
+
+              <div className="floating-group full static-label">
+                <label htmlFor="subject" className="field-label">
+                  <span className="label-main">الموضوع</span>
+                  <span className="label-help">اختر أو اكتب موضوعاً</span>
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  autoComplete="off"
+                  aria-invalid={!!errors.subject}
+                  aria-describedby={errors.subject ? "error-subject" : undefined}
+                  placeholder=""
+                />
+                {errors.subject && <p id="error-subject" className="error mini">{errors.subject}</p>}
+                <div className="subject-suggestions" aria-label="اقتراحات الموضوع">
+                  {subjectSuggestions.map((s) => (
+                    <button
+                      type="button"
+                      key={s}
+                      className={`chip ${formData.subject === s ? 'active' : ''}`}
+                      onClick={() => handleSubjectClick(s)}
+                    >{s}</button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="floating-group full static-label">
+                <label htmlFor="message" className="field-label">
+                  <span className="label-main">نص الرسالة</span>
+                  <span className="label-help">اكتب تفاصيل رسالتك هنا</span>
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  value={formData.message}
+                  onChange={handleChange}
+                  maxLength={1000}
+                  aria-invalid={!!errors.message}
+                  aria-describedby={`message-counter ${errors.message ? 'error-message' : ''}`}
+                  placeholder=""
+                />
+                <div className="message-meta compact">
+                  <span id="message-counter" className="char-counter">
+                    {formData.message.length}/1000
+                  </span>
+                  {errors.message && (
+                    <p id="error-message" className="error inline-error mini">{errors.message}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="actions-row">
+                <button
+                  type="submit"
+                  className="btn-big contact-btn btn-bg"
+                  disabled={state.submitting || localSubmitting || showSuccess}
+                >
+                  {localSubmitting ? (
+                    <span className="spinner" aria-hidden="true" />
+                  ) : (
+                    <i className="fas fa-paper-plane"></i>
+                  )}
+                  <span>{localSubmitting ? "جارٍ الإرسال" : "ارسل"}</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
 
@@ -178,6 +258,18 @@ export default function Contact() {
                   </div>
                 </li>
               </ul>
+              <div className="mini-map-wrapper" aria-label="خريطة موقع جامعة بورسعيد">
+                <iframe
+                  title="Port Said University Location"
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2411.98878324528!2d32.3139404287668!3d31.24656161249347!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f99dc961ff1487%3A0xd647f6053ce7da2!2sPort%20Said%20University!5e0!3m2!1sen!2seg!4v1755083880183!5m2!1sen!2seg"
+                  width="600"
+                  height="450"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
               <div className="social-media">
                 <a href="#" className="social-link" title="Facebook" aria-label="Facebook">
                   <i className="fa-brands fa-facebook-f"></i>
