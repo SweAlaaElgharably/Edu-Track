@@ -40,21 +40,21 @@ function Courses() {
       </header>
 
       <div className="courses-stats">
-        <div className="stat-card">
+        <div className="stat-card-contact">
           <h3>إجمالي المقررات</h3>
-          <div className="stat-number">{mockData.courses.length}</div>
+          <div className="stat-number-contact">{mockData.courses.length}</div>
           <p>مقررات مسجلة هذا الفصل</p>
         </div>
-        <div className="stat-card">
+        <div className="stat-card-contact">
           <h3>متوسط التقدم</h3>
-          <div className="stat-number">
+          <div className="stat-number-contact">
             {Math.round(mockData.courses.reduce((sum, course) => sum + course.progress, 0) / mockData.courses.length)}%
           </div>
           <p>في جميع المقررات</p>
         </div>
-        <div className="stat-card">
+        <div className="stat-card-contact">
           <h3>إجمالي الساعات المعتمدة</h3>
-          <div className="stat-number">
+          <div className="stat-number-contact">
             {mockData.courses.reduce((sum, course) => sum + course.credits, 0)}
           </div>
           <p>ساعة معتمدة</p>

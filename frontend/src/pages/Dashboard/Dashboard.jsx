@@ -8,6 +8,7 @@ import FacultyManage from '../FacultyManage/FacultyManage';
 import Department from '../Department/Department';
 import Hall from '../Hall/Hall';
 import CoursesMange from '../../components/CoursesMange';
+import Lecture from '../Lecture/Lecture';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -193,6 +194,13 @@ function Dashboard() {
             <span className="tab-icon">📝</span>
             <span className="tab-text">المقررات</span>
           </button>
+          <button
+            className={`sidebar-tab ${activeTab === "lecture" ? "active" : ""}`}
+            onClick={() => setActiveTab("lecture")}
+          >
+            <span className="tab-icon">📝</span>
+            <span className="tab-text">المحاضرات</span>
+          </button>
         </nav>
         <div className="sidebar-header">
           <div className="user-info">
@@ -273,15 +281,44 @@ function Dashboard() {
             </div>
           )}
 
-          {activeTab === "courses" && <Courses />}
-          {activeTab === "facultyManagement" && <FacultyManage />}
-          {activeTab === "coursesMange" && <CoursesMange />}
-          {activeTab === "schedule" && <Schedule />}
-          {activeTab === "department" && <Department />}
-          {activeTab === "hall" && <Hall />}
+          {activeTab === "courses" && (
+            <div className="content-card">
+              <Courses />
+            </div>
+          )}
+          {activeTab === "facultyManagement" && (
+            <div className="content-card">
+              <FacultyManage />
+            </div>
+          )}
+          {activeTab === "coursesMange" && (
+            <div className="content-card">
+              <CoursesMange />
+            </div>
+          )}
+          {activeTab === "schedule" && (
+            <div className="content-card">
+              <Schedule />
+            </div>
+          )}
+          {activeTab === "department" && (
+            <div className="content-card">
+              <Department />
+            </div>
+          )}
+          {activeTab === "hall" && (
+            <div className="content-card">
+              <Hall />
+            </div>
+          )}
+          {activeTab === "lecture" && (
+            <div className="content-card">
+              <Lecture />
+            </div>
+          )}
 
           {activeTab === "progress" && (
-            <div className="progress-section-applying">
+            <div className="content-card progress-section-applying">
               <h2>التقدم الأكاديمي</h2>
               <div className="progress-chart">
                 <div className="chart-placeholder">
