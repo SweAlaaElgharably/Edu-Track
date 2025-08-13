@@ -282,37 +282,37 @@ function Dashboard() {
           )}
 
           {activeTab === "courses" && (
-            <div className="content-card">
+            <div>
               <Courses />
             </div>
           )}
           {activeTab === "facultyManagement" && (
-            <div className="content-card">
+            <div>
               <FacultyManage />
             </div>
           )}
           {activeTab === "coursesMange" && (
-            <div className="content-card">
+            <div>
               <CoursesMange />
             </div>
           )}
           {activeTab === "schedule" && (
-            <div className="content-card">
+            <div>
               <Schedule />
             </div>
           )}
           {activeTab === "department" && (
-            <div className="content-card">
+            <div>
               <Department />
             </div>
           )}
           {activeTab === "hall" && (
-            <div className="content-card">
+            <div>
               <Hall />
             </div>
           )}
           {activeTab === "lecture" && (
-            <div className="content-card">
+            <div>
               <Lecture />
             </div>
           )}
