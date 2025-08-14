@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './forgot-password.css';
 import PlexusBackground from '../../components/PlexusBackground';
+import api from '../../services/api';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -15,18 +16,25 @@ function ForgotPassword() {
     setSuccess('');
 
     try {
-      // Replace with your API endpoint for password reset
-      const response = await fetch('/api/password-reset/', {
+      if (!email) {
+        throw new Error('يرجى إدخال بريدك الإلكتروني.');
+      }
+
+      // Djoser endpoint for initiating password reset
+      const response = await fetch(`${api.baseURL}/auth/users/reset_password/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
-      
-      if (!email) {
-        throw new Error('يرجى إدخال بريدك الإلكتروني.');
-      }
+
       if (!response.ok) {
-        throw new Error('حدث خطأ أثناء إرسال الرابط، حاول مرة أخرى.');
+        let msg = 'حدث خطأ أثناء إرسال الرابط، حاول مرة أخرى.';
+        try {
+          const data = await response.json();
+          if (data?.email) msg = Array.isArray(data.email) ? data.email[0] : data.email;
+          else if (data?.detail) msg = data.detail;
+        } catch (_) {}
+        throw new Error(msg);
       }
 
       setSuccess('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.');

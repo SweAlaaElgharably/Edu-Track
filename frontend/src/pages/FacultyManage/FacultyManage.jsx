@@ -42,7 +42,7 @@ const AddEditForm = memo(({
   
   return (
     <div className={`faculty-form-container ${isClosing ? 'fadeOut' : ''}`}>
-      <div className="faculty-form-card">
+      <div className="faculty-form-card content-card">
         <div className="form-header">
           <h2 className="form-title">{editSlug ? 'تعديل كلية' : 'إضافة كلية'}</h2>
           <button className="close-button" onClick={onClose}>

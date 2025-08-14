@@ -27,7 +27,6 @@
 /* Main Page Container */
 .about-edu-page {
   min-height: 100vh;
-  background: var(--about-edu-light);
   font-family: 'Cairo', sans-serif;
   direction: rtl;
   text-align: right;
@@ -65,7 +64,6 @@
   transform: translateX(-50%);
   width: 80px;
   height: 4px;
-  background: var(--about-edu-gradient-primary);
   border-radius: 2px;
 }
 
@@ -196,7 +194,6 @@
 /* Vision & Mission Section */
 .about-edu-vision-mission {
   padding: 6rem 0;
-  background: var(--about-edu-white);
 }
 
 .about-edu-cards-grid {
@@ -209,18 +206,21 @@
 .about-edu-card {
   background: var(--about-edu-white);
   border-radius: var(--about-edu-border-radius);
-  padding: 3rem;
+  padding: 2rem;
   box-shadow: var(--about-edu-shadow);
   border: 2px solid transparent;
   transition: var(--about-edu-transition);
   position: relative;
   overflow: hidden;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(30px) translateZ(0);
+  will-change: transform, opacity;
 }
 
 .about-edu-card.animate-in {
-  animation: about-edu-cardSlideIn 0.8s ease-out forwards;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
 }
 
 .about-edu-card::before {
@@ -265,11 +265,14 @@
   padding: 3rem;
   margin-top: 3rem;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(30px) translateZ(0);
+  will-change: transform, opacity;
 }
 
 .about-edu-goals.animate-in {
-  animation: about-edu-cardSlideIn 0.8s ease-out forwards;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
 }
 
 .about-edu-goals h3 {
@@ -327,7 +330,6 @@
 /* History Section */
 .about-edu-history {
   padding: 6rem 0;
-  background: var(--about-edu-light);
 }
 
 .about-edu-history-content {
@@ -367,7 +369,6 @@
 /* Timeline Section */
 .about-edu-timeline {
   padding: 6rem 0;
-  background: var(--about-edu-white);
 }
 
 .about-edu-timeline-container {
@@ -392,8 +393,10 @@
   align-items: center;
   margin-bottom: 3rem;
   opacity: 0;
-  transform: translateX(-50px);
-  transition: var(--about-edu-transition);
+  transform: translateX(-50px) translateZ(0);
+  transition: opacity 420ms ease, transform 420ms ease;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .about-edu-timeline-item:nth-child(even) {
@@ -402,9 +405,9 @@
 }
 
 .about-edu-timeline-item.animate-in {
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
   opacity: 1;
-  transform: translateX(0);
-  animation: about-edu-timelineSlideIn 0.8s ease-out forwards;
+  transform: translateX(0) translateZ(0);
 }
 
 .about-edu-timeline-year {
@@ -429,7 +432,8 @@
   flex: 1;
   box-shadow: var(--about-edu-shadow);
   border: 2px solid transparent;
-  transition: var(--about-edu-transition);
+  transition: transform 300ms ease, border-color 300ms ease;
+  will-change: transform;
 }
 
 .about-edu-timeline-content:hover {
@@ -453,7 +457,6 @@
 /* Centers Section */
 .about-edu-centers {
   padding: 6rem 0;
-  background: var(--about-edu-white);
 }
 
 .about-edu-centers-grid {
@@ -529,11 +532,23 @@
 @keyframes about-edu-timelineSlideIn {
   0% {
     opacity: 0;
-    transform: translateX(-50px);
+    transform: translateX(-50px) translateZ(0);
   }
   100% {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) translateZ(0);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .about-edu-timeline-item,
+  .about-edu-card,
+  .about-edu-goals {
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 

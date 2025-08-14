@@ -39,6 +39,9 @@ function Navbar() {
         {!isAuthenticated ? (
           // Public navigation
           <>
+            <Link to="/contact" className="nav-link" onClick={closeMenu}>اتصل بنا</Link>
+
+            <Link to="/help" className="nav-link" onClick={closeMenu}>مركز المساعدة</Link>
             <Link to="/about" className="nav-link" onClick={closeMenu}>حول</Link>
             <Link to="/features" className="nav-link" onClick={closeMenu}>المميزات</Link>
             <Link to="/" className="nav-link" onClick={closeMenu}>الرئيسية</Link>

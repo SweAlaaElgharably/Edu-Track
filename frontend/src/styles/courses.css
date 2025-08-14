@@ -71,7 +71,7 @@ backdrop-filter: blur(10px);
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #646cff, #535bf2);
+  background:  linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
 }
 
 .stat-card-contact:hover {
@@ -131,7 +131,7 @@ backdrop-filter: blur(10px);
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #646cff, #535bf2);
+  background: linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
 }
 
 .course-card:hover {
@@ -208,7 +208,7 @@ backdrop-filter: blur(10px);
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #646cff 0%, #535bf2 100%);
+  background:  linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
   border-radius: 6px;
   transition: width 0.3s ease;
 }
@@ -236,7 +236,7 @@ backdrop-filter: blur(10px);
 
 /* use dashboard .btn-primary for first */
 .course-actions .btn:first-child {
-  background: linear-gradient(135deg, #646cff 0%, #535bf2 100%);
+  background:  linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
   color: #fff;
   box-shadow: 0 4px 15px rgba(100, 108, 255, 0.3);
 }

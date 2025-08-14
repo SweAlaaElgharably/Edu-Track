@@ -87,9 +87,9 @@ function Login() {
           
           <div className="login-links">
             <Link to="/forgot-password">نسيت كلمة المرور؟</Link>
-            <p>
+            {/* <p>
               ليس لديك حساب؟ <Link to="/register">إنشاء حساب</Link>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

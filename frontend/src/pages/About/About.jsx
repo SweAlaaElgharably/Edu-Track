@@ -9,14 +9,17 @@ function About() {
 
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.12,
+      // start the reveal a bit earlier so work happens off-screen
+      rootMargin: '0px 0px -20% 0px',
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-in');
+          // reveal once then stop observing to avoid repeated work
+          obs.unobserve(entry.target);
         }
       });
     }, observerOptions);
@@ -29,11 +32,10 @@ function About() {
     // Also observe timeline items for individual animations
     const timelineItems = document.querySelectorAll('.about-edu-timeline-item');
     timelineItems.forEach((item, index) => {
-      if (item) {
-        observer.observe(item);
-        // Add delay for staggered animation
-        item.style.animationDelay = `${index * 0.2}s`;
-      }
+      if (!item) return;
+      observer.observe(item);
+      // light stagger using transitionDelay, cheaper than keyframes
+      item.style.transitionDelay = `${index * 60}ms`;
     });
 
     return () => observer.disconnect();

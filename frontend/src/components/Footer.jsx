@@ -74,10 +74,10 @@ function Footer() {
                   <Link to="/dashboard">لوحة التحكم</Link>
                 </li>
                 <li>
-                  <Link to="/courses">المقررات</Link>
+                  <Link to="/features">المميزات</Link>
                 </li>
                 <li>
-                  <Link to="/schedule">الجدول</Link>
+                  <Link to="/register">التسجيل</Link>
                 </li>
               </ul>
             </div>
