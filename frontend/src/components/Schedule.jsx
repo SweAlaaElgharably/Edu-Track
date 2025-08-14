@@ -90,11 +90,11 @@ function Schedule() {
       </div>
 
       <main className="schedule-content schedule-columns">
-        <section className="today-schedule">
+        <section className="today-schedule content-card">
           <h2>جدول اليوم</h2>
           <div className="schedule-list">
             {mockData.todaySchedule.map(class_ => (
-              <div key={class_.id} className="schedule-item">
+              <div key={class_.id} className="schedule-item content-card">
                 <div className="time-section">
                   <div className="time">🕒{class_.time}</div>
                   <div className="duration">{class_.duration}</div>

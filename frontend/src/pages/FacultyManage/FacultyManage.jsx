@@ -130,7 +130,7 @@ const FacultyList = memo(({
       ) : (
         <div className="faculty-grid">
           {faculties?.map((faculty) => (
-            <div key={faculty.slug} className="faculty-card">
+            <div key={faculty.slug} className="faculty-card content-card">
               {faculty.logo && (
                 <div className="faculty-logo">
                   <img src={faculty.logo} alt={faculty.name} />
