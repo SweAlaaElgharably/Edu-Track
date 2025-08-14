@@ -57,10 +57,12 @@ function Schedule() {
 
   return (
     <div className="schedule-page">
-      <header className="schedule-header">
+        <header className='schedule-head'>
         <h1>جدول المحاضرات</h1>
+
+        </header>
        
-      </header>
+      
 
       <div className="schedule-stats">
         <div className="stat-card">

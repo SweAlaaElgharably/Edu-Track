@@ -6,6 +6,7 @@ import { fetchFaculties } from '../../services/facultyApi';
 export default function Hall() {
   const [halls, setHalls] = useState([]);
   const [faculties, setFaculties] = useState([]);
+  const [facultiesLoaded, setFacultiesLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -61,18 +62,12 @@ export default function Hall() {
   const loadFaculties = async () => {
     try {
       const data = await fetchFaculties();
-      setFaculties(data.length ? data : [
-        { id: 1, name: 'كلية الهندسة' },
-        { id: 2, name: 'كلية العلوم' },
-        { id: 3, name: 'كلية التجارة' },
-      ]);
+      setFaculties(data.length ? data : []);
+      setFacultiesLoaded(!!data.length);
     } catch (err) {
-      setFaculties([
-        { id: 1, name: 'كلية الهندسة' },
-        { id: 2, name: 'كلية العلوم' },
-        { id: 3, name: 'كلية التجارة' },
-      ]);
-      setError(err.message);
+      setFaculties([]);
+      setFacultiesLoaded(false);
+      setError('تعذر تحميل قائمة الكليات. لا يمكن إضافة/تعديل قاعة بدون الكليات.');
     }
   };
 
@@ -104,12 +99,51 @@ export default function Hall() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    if (!facultiesLoaded) {
+      setError('تعذر تحميل الكليات. يرجى إعادة تحميل الصفحة أو التأكد من تشغيل السيرفر.');
+      return;
+    }
+    // Client-side validations to prevent 500 from NOT NULL at DB level
+    if (!form.name?.trim()) {
+      setError('اسم القاعة مطلوب');
+      return;
+    }
+    if (!form.slug?.trim()) {
+      setError('المعرف (Slug) مطلوب');
+      return;
+    }
+    const slugPattern = /^[A-Za-z0-9_-]+$/;
+    if (!slugPattern.test(form.slug)) {
+      setError('المعرف (Slug) يجب أن يحتوي على أحرف إنجليزية أو أرقام أو - أو _ فقط');
+      return;
+    }
+    const facultyId = Number(form.faculty);
+    if (!facultyId) {
+      setError('يجب اختيار الكلية');
+      return;
+    }
+    const cap = Number(form.capacity ?? 1);
+    if (!Number.isFinite(cap) || cap <= 0) {
+      setError('مساحة القاعة يجب أن تكون رقمًا أكبر من 0');
+      return;
+    }
     setLoading(true);
     try {
       if (modalType === 'create') {
-        await createLocation(form);
-      } else if (modalType === 'update' && selectedHall) {
-        await updateLocation(selectedHall.slug, form);
+        await createLocation({
+          name: form.name.trim(),
+          slug: form.slug?.trim(),
+          capacity: cap,
+          faculty: facultyId,
+        });
+      } else {
+        await updateLocation(selectedHall.slug, {
+          name: form.name.trim(),
+          slug: form.slug?.trim(),
+          capacity: cap,
+          faculty: facultyId,
+        });
       }
       setShowModal(false);
       await loadHalls();
@@ -173,26 +207,26 @@ export default function Hall() {
             <h3>{modalType === 'create' ? 'اضافة قاعة جديدة' : 'تعديل القاعة'}</h3>
             <label>
               اسم القاعة:
-              <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
+              <input name="name" type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
             </label>
             <label>
               اسم الكلية:
-              <select value={form.faculty} onChange={e => setForm({ ...form, faculty: e.target.value })} required>
+              <select name="faculty" value={form.faculty} onChange={e => setForm({ ...form, faculty: e.target.value })} required disabled={!facultiesLoaded}>
                 <option value="">اختر الكلية</option>
-                {faculties.map(fac => (
+                {facultiesLoaded && faculties.map(fac => (
                   <option key={fac.id} value={fac.id}>{fac.name}</option>
                 ))}
               </select>
             </label>
             <label>
               slug:
-              <input type="text" value={form.slug} onChange={e => setForm({ ...form, slug: e.target.value })} required />
+              <input name="slug" type="text" value={form.slug} onChange={e => setForm({ ...form, slug: e.target.value })} required />
             </label>
             <label>
               مساحه القاعة:
-              <input type="number" value={form.capacity} onChange={e => setForm({ ...form, capacity: e.target.value })} required />
+              <input name="capacity" type="number" value={form.capacity} onChange={e => setForm({ ...form, capacity: e.target.value })} required />
             </label>
-            <button type="submit" className="btn update">{modalType === 'create' ? 'اضافة القاعة' : 'تحديث القاعة'}</button>
+            <button type="submit" className="btn update" disabled={!facultiesLoaded}>{modalType === 'create' ? 'اضافة القاعة' : 'تحديث القاعة'}</button>
             <button type="button" className="btn cancel" onClick={() => setShowModal(false)}>الغاء</button>
           </form>
         </div>

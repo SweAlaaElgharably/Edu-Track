@@ -7,7 +7,7 @@ import Schedule from '../../components/Schedule';
 import FacultyManage from '../FacultyManage/FacultyManage';
 import Department from '../Department/Department';
 import Hall from '../Hall/Hall';
-import CoursesMange from '../../components/CoursesMange';
+import CoursesMange from '../courseMange/CoursesMange';
 import Lecture from '../Lecture/Lecture';
 
 function Dashboard() {

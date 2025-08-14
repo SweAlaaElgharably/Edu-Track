@@ -3,6 +3,12 @@
   padding: 2rem;
 }
 
+/* Enforce consistent font family across all text and controls in this page */
+.faculty-manage,
+.faculty-manage * {
+  font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .faculty-form-container {
   max-width: 600px;
   margin: 0 auto;

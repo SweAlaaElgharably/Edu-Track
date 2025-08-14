@@ -1,7 +1,12 @@
 from rest_framework import serializers
 from .models import Lecture
+from user.models import User
+from location.models import Location
 
 class LectureSerializer(serializers.ModelSerializer):
+    instructor = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    location = serializers.PrimaryKeyRelatedField(queryset=Location.objects.all())
+    students = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
     class Meta:
         model = Lecture
         fields = '__all__'

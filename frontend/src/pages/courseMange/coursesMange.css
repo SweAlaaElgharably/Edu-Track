@@ -8,38 +8,58 @@
   min-height: 100vh;
 }
 .courses-mange-header {
-  color: rgba(255, 255, 255, 0.9);
+  color: #1f2937;
   margin-bottom: 2rem;
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
   font-family: 'Cairo', sans-serif;
 }
 .courses-mange-add-btn {
-  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(100, 108, 255, 0.1);
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 1.2rem 1.5rem;
-  color: #646cff;
+  color: #1f2937;
   cursor: pointer;
-  border: 2px dashed #646cff;
   font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
-  transition: box-shadow 0.3s, background 0.3s, transform 0.3s;
-  will-change: transform, box-shadow, background;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.courses-mange-add-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
 }
 .courses-mange-add-btn:hover {
-  box-shadow: 0 6px 25px rgba(100, 108, 255, 0.2);
-  background: linear-gradient(135deg, #282c4e 0%, #1e1e2e 50%, #2d3748 100%);
-  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px) scale(1.02);
 }
 .courses-mange-table-wrapper {
-  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(100, 108, 255, 0.1);
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   padding: 2rem;
   overflow-x: auto;
+  position: relative;
+}
+.courses-mange-table-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
 }
 .courses-mange-table {
   width: 100%;
@@ -49,7 +69,7 @@
 .courses-mange-table th, .courses-mange-table td {
   padding: 1rem 0.7rem;
   text-align: center;
-  color: rgba(255,255,255,0.9);
+  color: #4b5563;
   font-size: 1rem;
   border-bottom: 1px solid rgba(100, 108, 255, 0.1);
 }
@@ -75,13 +95,13 @@
   will-change: transform, box-shadow, background;
 }
 .courses-mange-table .btn.update {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
-  border-color: rgba(52, 73, 94, 0.3);
+  background: linear-gradient(135deg, #1a365d, #535bf2);
+  border-color: rgba(100, 108, 255, 0.3);
 }
 .courses-mange-table .btn.update:hover {
-  background: linear-gradient(135deg, #34495e 0%, #2c3e50 50%, #34495e 100%);
-  box-shadow: 0 6px 25px rgba(52, 73, 94, 0.3);
-  border-color: rgba(52, 73, 94, 0.5);
+  background: linear-gradient(135deg, #6b72ff 0%, #5a62f4 100%);
+  box-shadow: 0 6px 25px rgba(100, 108, 255, 0.3);
+  border-color: rgba(100, 108, 255, 0.5);
   transform: translateY(-2px) scale(1.04);
 }
 .courses-mange-table .btn.delete {
@@ -104,16 +124,17 @@
   justify-content: center;
 }
 .courses-mange-modal {
-  background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(100, 108, 255, 0.1);
   border-radius: 16px;
   padding: 2rem;
   min-width: 320px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
   gap: 1rem;
   position: relative;
-  color: rgba(255,255,255,0.9);
+  color: #1f2937;
   font-family: 'Cairo', sans-serif;
 }
 .courses-mange-modal h3 {
@@ -125,18 +146,26 @@
 .courses-mange-modal label {
   font-size: 1rem;
   margin-bottom: 0.2rem;
-  color: rgba(255,255,255,0.8);
+  color: #374151;
 }
 .courses-mange-modal input,
 .courses-mange-modal select {
   width: 100%;
   padding: 0.5rem;
   border-radius: 8px;
-  border: 1px solid #646cff;
+  border: 1px solid rgba(100,108,255,0.3);
   margin-top: 0.3rem;
   background: #fff;
-  color: #000 !important;
+  color: #1f2937 !important;
   font-size: 1rem;
+}
+.courses-mange-modal select[multiple] {
+  min-height: 8rem;
+  white-space: nowrap;
+}
+.courses-mange-modal select option[disabled] {
+  color: #9ca3af;
+  font-style: italic;
 }
 .courses-mange-modal select:focus,
 .courses-mange-modal input:focus {

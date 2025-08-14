@@ -7,6 +7,7 @@ import { fetchFaculties } from '../../services/facultyApi';
 export default function Department() {
   const [departments, setDepartments] = useState([]);
   const [faculties, setFaculties] = useState([]);
+  const [facultiesLoaded, setFacultiesLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -14,7 +15,23 @@ export default function Department() {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('create'); // 'create' or 'update'
   const [selectedDept, setSelectedDept] = useState(null);
-  const [form, setForm] = useState({ name: '', faculty: '' });
+  const [form, setForm] = useState({ name: '', slug: '', faculty: '' });
+  const [submitting, setSubmitting] = useState(false);
+
+  const slugify = (text) => {
+    return text
+      .toString()
+      .trim()
+      .toLowerCase()
+      // Replace spaces with -
+      .replace(/\s+/g, '-')
+      // Remove all non-word chars except - and _
+      .replace(/[^a-z0-9-_]/g, '')
+      // Replace multiple - with single -
+      .replace(/-+/g, '-')
+      // Trim - from start and end
+      .replace(/^-+|-+$/g, '');
+  };
 
   useEffect(() => {
     loadDepartments();
@@ -53,9 +70,11 @@ export default function Department() {
     try {
       const data = await fetchFaculties();
       setFaculties(data.length ? data : mockFaculties);
+      setFacultiesLoaded(!!data.length);
     } catch (err) {
-      setFaculties(mockFaculties);
-      setError(err.message);
+      setFaculties([]);
+      setFacultiesLoaded(false);
+      setError('تعذر تحميل قائمة الكليات. لا يمكن إضافة/تعديل قسم بدون الكليات.');
     }
   };
 
@@ -74,32 +93,60 @@ export default function Department() {
   const handleUpdate = (dept) => {
     setModalType('update');
     setSelectedDept(dept);
-    setForm({ name: dept.name, faculty: dept.faculty.id });
+    setForm({ name: dept.name, slug: dept.slug, faculty: dept.faculty.id });
     setShowModal(true);
   };
 
   const handleCreate = () => {
     setModalType('create');
     setSelectedDept(null);
-    setForm({ name: '', faculty: '' });
+    setForm({ name: '', slug: '', faculty: '' });
     setShowModal(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    if (!facultiesLoaded) {
+      setError('تعذر تحميل الكليات. يرجى إعادة تحميل الصفحة أو التأكد من تشغيل السيرفر.');
+      return;
+    }
+    // Client-side validation
+    if (!form.name?.trim()) {
+      setError('اسم القسم مطلوب');
+      return;
+    }
+    if (!form.slug?.trim()) {
+      setError('المعرف (Slug) مطلوب');
+      return;
+    }
+    // Slug must be ASCII letters/numbers/-/_ to match Django SlugField default
+    const slugPattern = /^[A-Za-z0-9_-]+$/;
+    if (!slugPattern.test(form.slug)) {
+      setError('المعرف (Slug) يجب أن يحتوي على أحرف إنجليزية أو أرقام أو - أو _ فقط');
+      return;
+    }
+    if (!form.faculty) {
+      setError('يجب اختيار الكلية');
+      return;
+    }
     setLoading(true);
+    setSubmitting(true);
     try {
       if (modalType === 'create') {
-        await createProgram(form);
+        const payload = { name: form.name.trim(), slug: form.slug.trim(), faculty: Number(form.faculty) };
+        await createProgram(payload);
       } else if (modalType === 'update' && selectedDept) {
-        await updateProgram(selectedDept.slug, form);
+        const payload = { name: form.name, slug: form.slug.trim(), faculty: Number(form.faculty) };
+        await updateProgram(selectedDept.slug, payload);
       }
       setShowModal(false);
       await loadDepartments();
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'حدث خطأ أثناء حفظ القسم');
     }
     setLoading(false);
+    setSubmitting(false);
   };
 
   return (
@@ -146,18 +193,31 @@ export default function Department() {
             <h3>{modalType === 'create' ? 'اضافة قسم جديد' : 'تعديل القسم'}</h3>
             <label>
               اسم القسم:
-              <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
+              <input name="name" type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
+            </label>
+            <label>
+              المعرف (Slug):
+              <input
+                type="text"
+                name="slug"
+                value={form.slug}
+                onChange={e => setForm({ ...form, slug: e.target.value })}
+                placeholder="مثال: computer-science"
+                required
+              />
             </label>
             <label>
               الكلية:
-              <select value={form.faculty} onChange={e => setForm({ ...form, faculty: e.target.value })} required>
+              <select name="faculty" value={form.faculty} onChange={e => setForm({ ...form, faculty: e.target.value })} required disabled={!facultiesLoaded}>
                 <option value="">اختر الكلية</option>
-                {faculties.map(fac => (
+                {facultiesLoaded && faculties.map(fac => (
                   <option key={fac.id} value={fac.id}>{fac.name}</option>
                 ))}
               </select>
             </label>
-            <button type="submit" className="btn update">{modalType === 'create' ? 'اضافة القسم' : 'تحديث القسم'}</button>
+            <button type="submit" className="btn update" disabled={submitting || !facultiesLoaded}>
+              {submitting ? 'جارٍ الحفظ...' : (modalType === 'create' ? 'اضافة القسم' : 'تحديث القسم')}
+            </button>
           </form>
         </div>
       )}

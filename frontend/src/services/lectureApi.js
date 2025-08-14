@@ -20,7 +20,8 @@ export const fetchLectures = async () => {
     headers: api.getAuthHeaders(),
   });
   if (!res.ok) throw new Error("فشل في جلب المحاضرات");
-  return res.json();
+  const data = await res.json();
+  return Array.isArray(data) ? data : (data?.results ?? []);
 };
 
 export const getLecture = async (id) => {
@@ -41,7 +42,8 @@ export const createLecture = async (payload) => {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err?.detail || err?.non_field_errors?.[0] || err?.message || "فشل في إنشاء المحاضرة");
+    const firstFieldError = err && typeof err === 'object' ? Object.values(err)[0]?.[0] : null;
+    throw new Error(err?.detail || err?.non_field_errors?.[0] || firstFieldError || err?.message || "فشل في إنشاء المحاضرة");
   }
   return res.json();
 };
@@ -56,7 +58,8 @@ export const updateLecture = async (id, payload) => {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err?.detail || err?.non_field_errors?.[0] || err?.message || "فشل في تحديث المحاضرة");
+    const firstFieldError = err && typeof err === 'object' ? Object.values(err)[0]?.[0] : null;
+    throw new Error(err?.detail || err?.non_field_errors?.[0] || firstFieldError || err?.message || "فشل في تحديث المحاضرة");
   }
   return res.json();
 };

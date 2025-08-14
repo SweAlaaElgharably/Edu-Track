@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/coursesMange.css';
-import { fetchCourses, createCourse, updateCourse, deleteCourse } from '../services/courseApi';
+import './coursesMange.css';
+import { fetchCourses, createCourse, updateCourse, deleteCourse } from '../../services/courseApi';
+import { fetchPrograms } from '../../services/programApi';
 
 export default function CoursesMange() {
   const [courses, setCourses] = useState([]);
@@ -9,7 +10,9 @@ export default function CoursesMange() {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('create');
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [form, setForm] = useState({ name: '', code: '', credits: '' });
+  const [form, setForm] = useState({ title: '', slug: '', programs: [] });
+  const [programs, setPrograms] = useState([]);
+  const [programsLoaded, setProgramsLoaded] = useState(false);
 
   // MOCK DATA FOR DEMO/DEV - REMOVE THIS BLOCK FOR PRODUCTION
   // To show mock data, uncomment the following and comment out the useEffect below
@@ -25,8 +28,21 @@ export default function CoursesMange() {
   // END MOCK DATA
 
   useEffect(() => {
+    loadPrograms();
     loadCourses();
   }, []);
+
+  const loadPrograms = async () => {
+    try {
+      const data = await fetchPrograms();
+      setPrograms(Array.isArray(data) ? data : []);
+      setProgramsLoaded(!!(data && data.length));
+    } catch (err) {
+      setPrograms([]);
+      setProgramsLoaded(false);
+      setError('تعذر تحميل الأقسام الأكاديمية (البرامج). لا يمكن إضافة/تعديل مقرر بدون الأقسام.');
+    }
+  };
 
   const loadCourses = async () => {
     setLoading(true);
@@ -65,25 +81,52 @@ export default function CoursesMange() {
   const handleUpdate = (course) => {
     setModalType('update');
     setSelectedCourse(course);
-    setForm({ name: course.name, code: course.code, credits: course.credits });
+    setForm({ title: course.title || '', slug: course.slug || '', programs: (course.programs || []).map(p => p.id ?? p) });
     setShowModal(true);
   };
 
   const handleCreate = () => {
     setModalType('create');
     setSelectedCourse(null);
-    setForm({ name: '', code: '', credits: '' });
+    setForm({ title: '', slug: '', programs: [] });
     setShowModal(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    if (!programsLoaded) {
+      setError('تعذر تحميل الأقسام الأكاديمية. يرجى إعادة تحميل الصفحة أو التأكد من تشغيل السيرفر.');
+      return;
+    }
+    if (!form.title?.trim()) {
+      setError('اسم المقرر مطلوب');
+      return;
+    }
+    if (!form.slug?.trim()) {
+      setError('المعرف (Slug) مطلوب');
+      return;
+    }
+    const slugPattern = /^[A-Za-z0-9_-]+$/;
+    if (!slugPattern.test(form.slug)) {
+      setError('المعرف (Slug) يجب أن يحتوي على أحرف إنجليزية أو أرقام أو - أو _ فقط');
+      return;
+    }
+    if (!Array.isArray(form.programs) || form.programs.length === 0) {
+      setError('يجب اختيار برنامج واحد على الأقل');
+      return;
+    }
     setLoading(true);
     try {
+      const payload = {
+        title: form.title,
+        slug: form.slug,
+        programs: form.programs.map(Number),
+      };
       if (modalType === 'create') {
-        await createCourse(form);
+        await createCourse(payload);
       } else if (modalType === 'update' && selectedCourse) {
-        await updateCourse(selectedCourse.slug, form);
+        await updateCourse(selectedCourse.slug, payload);
       }
       setShowModal(false);
       await loadCourses();
@@ -97,7 +140,7 @@ export default function CoursesMange() {
     <div className="courses-mange-page">
       <h2 className="courses-mange-header">ادارة المقررات</h2>
       {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
-      <button className="courses-mange-add-btn" onClick={handleCreate}>اضافة مقرر جديد</button>
+      <button className="courses-mange-add-btn" onClick={handleCreate} disabled={!programsLoaded}>اضافة مقرر جديد</button>
       <div className="courses-mange-table-wrapper">
         {loading ? (
           <div style={{ textAlign: 'center', color: '#646cff' }}>جاري التحميل...</div>
@@ -106,8 +149,8 @@ export default function CoursesMange() {
             <thead>
               <tr>
                 <th>اسم المقرر</th>
-                <th>كود المقرر</th>
-                <th>عدد الساعات</th>
+                <th>المعرف (Slug)</th>
+                <th>البرامج المرتبطة</th>
                 <th>تعديل</th>
                 <th>حذف</th>
               </tr>
@@ -115,9 +158,9 @@ export default function CoursesMange() {
             <tbody>
               {courses.map(course => (
                 <tr key={course.slug}>
-                  <td>{course.name}</td>
-                  <td>{course.code}</td>
-                  <td>{course.credits}</td>
+                  <td>{course.title}</td>
+                  <td>{course.slug}</td>
+                  <td>{Array.isArray(course.programs) ? course.programs.map(p => p.name || p.title || p).join('، ') : '-'}</td>
                   <td>
                     <button className="btn update" onClick={() => handleUpdate(course)}>تعديل</button>
                   </td>
@@ -138,17 +181,41 @@ export default function CoursesMange() {
             <h3>{modalType === 'create' ? 'اضافة مقرر جديد' : 'تعديل المقرر'}</h3>
             <label>
               اسم المقرر:
-              <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
+              <input name="title" type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} required />
             </label>
             <label>
-              كود المقرر:
-              <input type="text" value={form.code} onChange={e => setForm({ ...form, code: e.target.value })} required />
+              المعرف (Slug):
+              <input name="slug" type="text" value={form.slug} onChange={e => setForm({ ...form, slug: e.target.value })} required />
             </label>
             <label>
-              عدد الساعات:
-              <input type="number" value={form.credits} onChange={e => setForm({ ...form, credits: e.target.value })} required />
+              اختر البرامج المرتبطة:
+              <select
+                name="programs"
+                multiple
+                size={Math.min(6, Math.max(3, programs.length || 3))}
+                value={(form.programs || []).map(String)}
+                onChange={e => {
+                  const opts = Array.from(e.target.selectedOptions).map(o => o.value);
+                  setForm({ ...form, programs: opts });
+                }}
+                disabled={!programsLoaded || !programs.length}
+                required
+              >
+                {!programsLoaded && (
+                  <option value="" disabled>جاري تحميل البرامج...</option>
+                )}
+                {programsLoaded && !programs.length && (
+                  <option value="" disabled>لا توجد برامج متاحة</option>
+                )}
+                {programsLoaded && programs.length > 0 && (
+                  <option value="" disabled>— اختر برنامج/برامج —</option>
+                )}
+                {programsLoaded && programs.map(p => (
+                  <option key={p.slug || p.id} value={String(p.id)}>{p.name || p.title}</option>
+                ))}
+              </select>
             </label>
-            <button type="submit" className="btn update">{modalType === 'create' ? 'اضافة المقرر' : 'تحديث المقرر'}</button>
+            <button type="submit" className="btn update" disabled={!programsLoaded}>{modalType === 'create' ? 'اضافة المقرر' : 'تحديث المقرر'}</button>
             <button type="button" className="btn cancel" onClick={() => setShowModal(false)}>الغاء</button>
           </form>
         </div>
