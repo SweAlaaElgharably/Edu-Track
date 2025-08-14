@@ -1,0 +1,51 @@
+/* Flickity base styles */
+@import 'flickity/css/flickity.css';
+
+.b-slider {
+  background-color: #f7f7f7;
+  overflow-x: hidden;
+  min-width: 100%;
+  outline: 0;
+  padding: 2rem 0;
+}
+
+
+
+/* Hide the Flickity viewport outline */
+.flickity-viewport {
+  outline: 0;
+  transition: none; /* Prevent transition jumps on wrapAround */
+}
+
+.b-slider__slide {
+  text-align: center;
+  width: 20rem; /* reduce width to decrease gap */
+  height: 4rem; /* smaller height as requested */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.b-slider__ref {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.b-slider__img {
+  max-height: 2.25rem; /* tighten logo height */
+  width: auto;
+  display: block;
+  margin: 0 auto;
+  filter: grayscale(0.8);
+  transition: filter 0.3s ease;
+}
+
+.b-slider__ref:hover .b-slider__img {
+  opacity: 1;
+  filter: grayscale(0);
+  transform: scale(1.05);
+}
