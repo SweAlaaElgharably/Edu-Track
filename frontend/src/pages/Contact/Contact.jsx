@@ -258,18 +258,6 @@ export default function Contact() {
                   </div>
                 </li>
               </ul>
-              <div className="mini-map-wrapper" aria-label="خريطة موقع جامعة بورسعيد">
-                <iframe
-                  title="Port Said University Location"
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2411.98878324528!2d32.3139404287668!3d31.24656161249347!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f99dc961ff1487%3A0xd647f6053ce7da2!2sPort%20Said%20University!5e0!3m2!1sen!2seg!4v1755083880183!5m2!1sen!2seg"
-                  width="600"
-                  height="450"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
               <div className="social-media">
                 <a href="#" className="social-link" title="Facebook" aria-label="Facebook">
                   <i className="fa-brands fa-facebook-f"></i>

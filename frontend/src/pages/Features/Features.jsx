@@ -4,7 +4,7 @@ import "./features.css";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import psu2 from "../../assets/psu2.jpg";
-import aboutImg from "../../assets/about-img.jpeg";
+import aboutImg from "../../assets/login.jpeg";
 
 // Minimal cn util (no Tailwind required here, kept for parity)
 const cn = (...classes) => classes.filter(Boolean).join(" ");

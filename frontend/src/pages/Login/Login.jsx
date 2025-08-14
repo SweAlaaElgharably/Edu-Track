@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './login.css';
-import image2 from '../../assets/psu2.jpg';
+import image2 from '../../assets/login.jpeg';
 import PlexusBackground from '../../components/PlexusBackground';
 
 
@@ -44,7 +44,14 @@ function Login() {
     <div className="login-split-page">
       <PlexusBackground />
       <div className="login-image-section">
-        <img src={image2} alt="Port Said University" className="login-bg-image" />
+        <img
+          src={image2}
+          alt="Port Said University"
+          className="login-bg-image"
+          decoding="async"
+          loading="eager"
+          fetchPriority="high"
+        />
         <div className="university-logo"></div>
       </div>
       <div className="login-form-section">
