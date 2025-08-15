@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import '../styles/navbar.css';
-import psuLogo from '../assets/psu-logo.svg';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import "../styles/navbar.css";
+import psuLogo from "../assets/psu-logo.svg";
 
 function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
@@ -24,9 +24,9 @@ function Navbar() {
           <h4>جامعة بورسعيد</h4>
         </Link>
       </div>
-      
-      <button 
-        className={`navbar-toggle ${isMenuOpen ? 'active' : ''}`}
+
+      <button
+        className={`navbar-toggle ${isMenuOpen ? "active" : ""}`}
         onClick={toggleMenu}
         aria-label="Toggle navigation menu"
       >
@@ -34,51 +34,143 @@ function Navbar() {
         <span></span>
         <span></span>
       </button>
-      
-      <div className={`navbar-menu ${isMenuOpen ? 'active' : ''}`}>
+
+      <div className={`navbar-menu ${isMenuOpen ? "active" : ""}`}>
         {!isAuthenticated ? (
           // Public navigation
           <>
-            <Link to="/contact" className="nav-link" onClick={closeMenu}>اتصل بنا</Link>
+            <Link
+              to="/contact"
+              className="nav-link"
+              onClick={() => {
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              اتصل بنا
+            </Link>
 
-            <Link to="/help" className="nav-link" onClick={closeMenu}>مركز المساعدة</Link>
-            <Link to="/about" className="nav-link" onClick={closeMenu}>حول</Link>
-            <Link to="/features" className="nav-link" onClick={closeMenu}>المميزات</Link>
-            <Link to="/" className="nav-link" onClick={closeMenu}>الرئيسية</Link>
+            <Link
+              to="/help"
+              className="nav-link"
+              onClick={() => {
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              مركز المساعدة
+            </Link>
+            <Link
+              to="/about"
+              className="nav-link"
+              onClick={() => {
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              حول
+            </Link>
+            <Link
+              to="/features"
+              className="nav-link"
+              onClick={() => {
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              المميزات
+            </Link>
+            <Link
+              to="/"
+              className="nav-link"
+              onClick={() => {
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              الرئيسية
+            </Link>
           </>
         ) : (
           // Authenticated navigation
           <>
-            <Link to="/dashboard" className="nav-link" onClick={closeMenu}>لوحة التحكم</Link>
-            <Link to="/" className="nav-link" onClick={closeMenu}>الصفحة الرئيسية</Link>
+            <Link
+              to="/dashboard"
+              className="nav-link"
+              onClick={() => {
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              لوحة التحكم
+            </Link>
+            <Link
+              to="/"
+              className="nav-link"
+              onClick={() => {
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              الصفحة الرئيسية
+            </Link>
           </>
         )}
       </div>
-      
+
       <div className="navbar-auth">
         {!isAuthenticated ? (
           <>
-            <Link to="/login" className="btn btn-outline" onClick={closeMenu}>تسجيل الدخول</Link>
+            <Link
+              to="/login"
+              className="btn btn-outline"
+              onClick={() => {
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              تسجيل الدخول
+            </Link>
             {/* <Link to="/register" className="btn btn-primary" onClick={closeMenu}>إنشاء حساب</Link> */}
           </>
         ) : (
           <div className="user-section">
-            <Link to="/profile" className="profile-icon" onClick={closeMenu}>
+            <Link
+              to="/profile"
+              className="profile-icon"
+              onClick={() => {
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
               {user?.picture ? (
                 (() => {
                   const p = user.picture;
-                  const normalized = p.startsWith('http')
+                  const normalized = p.startsWith("http")
                     ? p
-                    : p.startsWith('/')
-                      ? `http://localhost:8000${p}`
-                      : `http://localhost:8000/media/${p}`;
+                    : p.startsWith("/")
+                    ? `http://localhost:8000${p}`
+                    : `http://localhost:8000/media/${p}`;
                   return (
-                    <img className="profile-icon-img" alt="صورة الحساب" src={`${normalized}?t=${Date.now()}`} />
+                    <img
+                      className="profile-icon-img"
+                      alt="صورة الحساب"
+                      src={`${normalized}?t=${Date.now()}`}
+                    />
                   );
                 })()
               ) : (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
+                    fill="currentColor"
+                  />
                 </svg>
               )}
             </Link>
@@ -87,12 +179,40 @@ function Navbar() {
               className="logout-icon"
               title="تسجيل الخروج"
               aria-label="تسجيل الخروج"
-              onClick={() => { logout(); closeMenu(); }}
+              onClick={() => {
+                logout();
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M10 17l5-5-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M15 12H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h9"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M10 17l5-5-5-5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M15 12H3"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </button>
           </div>
@@ -102,4 +222,4 @@ function Navbar() {
   );
 }
 
-export default Navbar; 
+export default Navbar;

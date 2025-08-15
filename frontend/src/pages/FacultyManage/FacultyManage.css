@@ -6,7 +6,7 @@
 /* Enforce consistent font family across all text and controls in this page */
 .faculty-manage,
 .faculty-manage * {
-  font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Cairo", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .faculty-form-container {
@@ -182,7 +182,7 @@
 }
 
 .add-button {
-  font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Cairo", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 0.75rem 1.5rem;
   background: linear-gradient(90deg, #3182ce 0%, #2c5282 100%);
   color: white;
@@ -333,4 +333,94 @@
   .header-actions h1 {
     font-size: 1.5rem;
   }
+}
+
+/* Modal styles for FacultyManage - match other pages */
+.faculty-modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.faculty-modal {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(100, 108, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  min-width: 320px;
+  max-width: 480px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  color: #1f2937;
+  font-family: "Cairo", sans-serif;
+}
+
+.faculty-modal h3 {
+  text-align: center;
+  color: #646cff;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+/* Action buttons container inside modal */
+.faculty-modal .actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.faculty-modal .btn.delete {
+  background: #d63031;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+}
+.faculty-modal .btn.delete:hover {
+  background: #b71c1c;
+}
+
+.faculty-modal .btn.cancel {
+  background: #eee;
+  color: #333;
+  border: 1px solid #bbb;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+}
+.faculty-modal .btn.cancel:hover {
+  background: #f5c6cb;
+}
+
+/* Ensure modal sits above other page elements */
+.faculty-modal-bg {
+  z-index: 9999 !important;
+}
+.faculty-modal {
+  z-index: 10000 !important;
+}
+
+.faculty-modal .close-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #646cff;
+  cursor: pointer;
+}
+
+.faculty-modal .btn {
+  margin-top: 1rem;
 }

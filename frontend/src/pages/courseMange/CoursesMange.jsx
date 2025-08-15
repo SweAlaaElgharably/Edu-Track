@@ -1,16 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import './coursesMange.css';
-import { fetchCourses, createCourse, updateCourse, deleteCourse } from '../../services/courseApi';
-import { fetchPrograms } from '../../services/programApi';
+import React, { useEffect, useState } from "react";
+import "./coursesMange.css";
+import {
+  fetchCourses,
+  createCourse,
+  updateCourse,
+  deleteCourse,
+} from "../../services/courseApi";
+import { fetchPrograms } from "../../services/programApi";
 
 export default function CoursesMange() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState('create');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [courseToDelete, setCourseToDelete] = useState(null);
+  const [modalType, setModalType] = useState("create");
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [form, setForm] = useState({ title: '', slug: '', programs: [] });
+  const [form, setForm] = useState({ title: "", slug: "", programs: [] });
   const [programs, setPrograms] = useState([]);
   const [programsLoaded, setProgramsLoaded] = useState(false);
 
@@ -40,7 +47,10 @@ export default function CoursesMange() {
     } catch (err) {
       setPrograms([]);
       setProgramsLoaded(false);
-      setError('تعذر تحميل الأقسام الأكاديمية (البرامج). لا يمكن إضافة/تعديل مقرر بدون الأقسام.');
+      setError(
+        err?.message ||
+          "تعذر تحميل الاقسام الأكاديمية (البرامج). لا يمكن إضافة/تعديل مقرّر بدون الاقسام."
+      );
     }
   };
 
@@ -49,46 +59,90 @@ export default function CoursesMange() {
     try {
       const data = await fetchCourses();
       // If no real data, show mock data for demo
-      setCourses(data.length ? data : [
-        { slug: 'math-101', name: 'الرياضيات 101', code: 'MATH101', credits: 3 },
-        { slug: 'phys-lab', name: 'معمل الفيزياء', code: 'PHYS201', credits: 2 },
-        { slug: 'eng-lit', name: 'الأدب الإنجليزي', code: 'ENG301', credits: 2 },
-      ]);
+      setCourses(
+        data.length
+          ? data
+          : [
+              {
+                slug: "math-101",
+                name: "الرياضيات 101",
+                code: "MATH101",
+                credits: 3,
+              },
+              {
+                slug: "phys-lab",
+                name: "معمل الفيزياء",
+                code: "PHYS201",
+                credits: 2,
+              },
+              {
+                slug: "eng-lit",
+                name: "الأدب الإنجليزي",
+                code: "ENG301",
+                credits: 2,
+              },
+            ]
+      );
       setError(null);
     } catch (err) {
       setCourses([
-        { slug: 'math-101', name: 'الرياضيات 101', code: 'MATH101', credits: 3 },
-        { slug: 'phys-lab', name: 'معمل الفيزياء', code: 'PHYS201', credits: 2 },
-        { slug: 'eng-lit', name: 'الأدب الإنجليزي', code: 'ENG301', credits: 2 },
+        {
+          slug: "math-101",
+          name: "الرياضيات 101",
+          code: "MATH101",
+          credits: 3,
+        },
+        {
+          slug: "phys-lab",
+          name: "معمل الفيزياء",
+          code: "PHYS201",
+          credits: 2,
+        },
+        {
+          slug: "eng-lit",
+          name: "الأدب الإنجليزي",
+          code: "ENG301",
+          credits: 2,
+        },
       ]);
-      setError(err.message);
+      setError(err?.message || null);
     }
     setLoading(false);
   };
 
   const handleDelete = async (slug) => {
-    if (!window.confirm('هل أنت متأكد من حذف المقرر؟')) return;
     setLoading(true);
     try {
       await deleteCourse(slug);
       await loadCourses();
+      setShowDeleteModal(false);
+      setCourseToDelete(null);
     } catch (err) {
       setError(err.message);
     }
     setLoading(false);
   };
 
+  const openDeleteModal = (course) => {
+    setCourseToDelete(course);
+    setShowDeleteModal(true);
+  };
+
   const handleUpdate = (course) => {
-    setModalType('update');
+    setModalType("update");
     setSelectedCourse(course);
-    setForm({ title: course.title || '', slug: course.slug || '', programs: (course.programs || []).map(p => p.id ?? p) });
+    setForm({
+      title: course.title || "",
+      slug: course.slug || "",
+      programs: (course.programs || []).map((p) => p.id ?? p),
+    });
     setShowModal(true);
   };
 
   const handleCreate = () => {
-    setModalType('create');
+    setModalType("create");
     setSelectedCourse(null);
-    setForm({ title: '', slug: '', programs: [] });
+    setForm({ title: "", slug: "", programs: [] });
     setShowModal(true);
   };
 
@@ -96,24 +150,28 @@ export default function CoursesMange() {
     e.preventDefault();
     setError(null);
     if (!programsLoaded) {
-      setError('تعذر تحميل الأقسام الأكاديمية. يرجى إعادة تحميل الصفحة أو التأكد من تشغيل السيرفر.');
+      setError(
+        "تعذر تحميل الأقسام الأكاديمية. يرجى إعادة تحميل الصفحة أو التأكد من تشغيل السيرفر."
+      );
       return;
     }
     if (!form.title?.trim()) {
-      setError('اسم المقرر مطلوب');
+      setError("اسم المقرر مطلوب");
       return;
     }
     if (!form.slug?.trim()) {
-      setError('المعرف (Slug) مطلوب');
+      setError("المعرف (Slug) مطلوب");
       return;
     }
     const slugPattern = /^[A-Za-z0-9_-]+$/;
     if (!slugPattern.test(form.slug)) {
-      setError('المعرف (Slug) يجب أن يحتوي على أحرف إنجليزية أو أرقام أو - أو _ فقط');
+      setError(
+        "المعرف (Slug) يجب أن يحتوي على أحرف إنجليزية أو أرقام أو - أو _ فقط"
+      );
       return;
     }
     if (!Array.isArray(form.programs) || form.programs.length === 0) {
-      setError('يجب اختيار برنامج واحد على الأقل');
+      setError("يجب اختيار برنامج واحد على الأقل");
       return;
     }
     setLoading(true);
@@ -123,9 +181,9 @@ export default function CoursesMange() {
         slug: form.slug,
         programs: form.programs.map(Number),
       };
-      if (modalType === 'create') {
+      if (modalType === "create") {
         await createCourse(payload);
-      } else if (modalType === 'update' && selectedCourse) {
+      } else if (modalType === "update" && selectedCourse) {
         await updateCourse(selectedCourse.slug, payload);
       }
       setShowModal(false);
@@ -139,11 +197,25 @@ export default function CoursesMange() {
   return (
     <div className="courses-mange-page">
       <h2 className="courses-mange-header">ادارة المقررات</h2>
-      {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
-      <button className="courses-mange-add-btn" onClick={handleCreate} disabled={!programsLoaded}>اضافة مقرر جديد</button>
+      {error && (
+        <div
+          style={{ color: "red", textAlign: "center", marginBottom: "1rem" }}
+        >
+          {error}
+        </div>
+      )}
+      <button
+        className="courses-mange-add-btn"
+        onClick={handleCreate}
+        disabled={!programsLoaded}
+      >
+        اضافة مقرر جديد
+      </button>
       <div className="courses-mange-table-wrapper">
         {loading ? (
-          <div style={{ textAlign: 'center', color: '#646cff' }}>جاري التحميل...</div>
+          <div style={{ textAlign: "center", color: "#646cff" }}>
+            جاري التحميل...
+          </div>
         ) : (
           <table className="courses-mange-table">
             <thead>
@@ -156,16 +228,45 @@ export default function CoursesMange() {
               </tr>
             </thead>
             <tbody>
-              {courses.map(course => (
+              {courses.map((course) => (
                 <tr key={course.slug}>
                   <td>{course.title}</td>
                   <td>{course.slug}</td>
-                  <td>{Array.isArray(course.programs) ? course.programs.map(p => p.name || p.title || p).join('، ') : '-'}</td>
                   <td>
-                    <button className="btn update" onClick={() => handleUpdate(course)}>تعديل</button>
+                    {Array.isArray(course.programs)
+                      ? course.programs
+                          .map((p) => p.name || p.title || p)
+                          .join("، ")
+                      : "-"}
                   </td>
                   <td>
-                    <button className="btn delete" onClick={() => handleDelete(course.slug)}>حذف</button>
+                    <button
+                      className="btn update"
+                      onClick={() => handleUpdate(course)}
+                    >
+                      تعديل
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="btn delete"
+                      onClick={() => openDeleteModal(course)}
+                    >
+                      <span
+                        style={{ verticalAlign: "middle", marginRight: "4px" }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="18"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
+                        </svg>
+                      </span>
+                      حذف
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -175,17 +276,39 @@ export default function CoursesMange() {
       </div>
       {/* Modal for Create/Update */}
       {showModal && (
-        <div className="courses-mange-modal-bg">
-          <form className="courses-mange-modal" onSubmit={handleSubmit}>
-            <button type="button" className="close-btn" onClick={() => setShowModal(false)}>×</button>
-            <h3>{modalType === 'create' ? 'اضافة مقرر جديد' : 'تعديل المقرر'}</h3>
+        <div className="courses-mange-modal-bg" style={{ paddingTop: "80px" }}>
+          <form
+            className="courses-mange-modal"
+            onSubmit={handleSubmit}
+            style={{ maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}
+          >
+            <button
+              type="button"
+              className="close-btn"
+              onClick={() => setShowModal(false)}
+            ></button>
+            <h3>
+              {modalType === "create" ? "اضافة مقرر جديد" : "تعديل المقرر"}
+            </h3>
             <label>
               اسم المقرر:
-              <input name="title" type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} required />
+              <input
+                name="title"
+                type="text"
+                value={form.title}
+                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                required
+              />
             </label>
             <label>
               المعرف (Slug):
-              <input name="slug" type="text" value={form.slug} onChange={e => setForm({ ...form, slug: e.target.value })} required />
+              <input
+                name="slug"
+                type="text"
+                value={form.slug}
+                onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                required
+              />
             </label>
             <label>
               اختر البرامج المرتبطة:
@@ -194,30 +317,159 @@ export default function CoursesMange() {
                 multiple
                 size={Math.min(6, Math.max(3, programs.length || 3))}
                 value={(form.programs || []).map(String)}
-                onChange={e => {
-                  const opts = Array.from(e.target.selectedOptions).map(o => o.value);
+                onChange={(e) => {
+                  const opts = Array.from(e.target.selectedOptions).map(
+                    (o) => o.value
+                  );
                   setForm({ ...form, programs: opts });
                 }}
                 disabled={!programsLoaded || !programs.length}
                 required
               >
                 {!programsLoaded && (
-                  <option value="" disabled>جاري تحميل البرامج...</option>
+                  <option value="" disabled>
+                    جاري تحميل البرامج...
+                  </option>
                 )}
                 {programsLoaded && !programs.length && (
-                  <option value="" disabled>لا توجد برامج متاحة</option>
+                  <option value="" disabled>
+                    لا توجد برامج متاحة
+                  </option>
                 )}
                 {programsLoaded && programs.length > 0 && (
-                  <option value="" disabled>— اختر برنامج/برامج —</option>
+                  <option value="" disabled>
+                    — اختر برنامج/برامج —
+                  </option>
                 )}
-                {programsLoaded && programs.map(p => (
-                  <option key={p.slug || p.id} value={String(p.id)}>{p.name || p.title}</option>
-                ))}
+                {programsLoaded &&
+                  programs.map((p) => (
+                    <option key={p.slug || p.id} value={String(p.id)}>
+                      {p.name || p.title}
+                    </option>
+                  ))}
               </select>
             </label>
-            <button type="submit" className="btn update" disabled={!programsLoaded}>{modalType === 'create' ? 'اضافة المقرر' : 'تحديث المقرر'}</button>
-            <button type="button" className="btn cancel" onClick={() => setShowModal(false)}>الغاء</button>
+            <button
+              type="submit"
+              className="btn update"
+              disabled={!programsLoaded}
+            >
+              {modalType === "create" ? "اضافة المقرر" : "تحديث المقرر"}
+            </button>
+            <button
+              type="button"
+              className="btn cancel"
+              onClick={() => {
+                setShowModal(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              style={{
+                background: "#eee",
+                color: "#333",
+                border: "1px solid #bbb",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = "#f5c6cb")
+              }
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#eee")}
+            >
+              الغاء
+            </button>
           </form>
+        </div>
+      )}
+      {/* Custom Delete Confirmation Modal */}
+      {showDeleteModal && courseToDelete && (
+        <div className="courses-mange-modal-bg" style={{ paddingTop: "80px" }}>
+          <div
+            className="courses-mange-modal"
+            style={{
+              maxWidth: 400,
+              textAlign: "center",
+              maxHeight: "calc(100vh - 120px)",
+              overflowY: "auto",
+            }}
+          >
+            <button
+              type="button"
+              className="close-btn"
+              onClick={() => setShowDeleteModal(false)}
+            >
+              ×
+            </button>
+            <h3
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <span style={{ color: "#d32f2f", fontSize: "1.5rem" }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
+                </svg>
+              </span>
+              تأكيد حذف المقرر
+            </h3>
+            <p>
+              هل أنت متأكد من حذف المقرر <b>{courseToDelete.title}</b>؟ لا يمكن
+              التراجع عن هذا الإجراء.
+            </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "1rem",
+                marginTop: "1.5rem",
+              }}
+            >
+              <button
+                className="btn delete"
+                onClick={() => handleDelete(courseToDelete.slug)}
+                disabled={loading}
+              >
+                <span style={{ verticalAlign: "middle", marginRight: "4px" }}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
+                  </svg>
+                </span>
+                نعم، حذف
+              </button>
+              <button
+                className="btn cancel"
+                style={{
+                  background: "#eee",
+                  color: "#333",
+                  border: "1px solid #bbb",
+                }}
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = "#f5c6cb")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = "#eee")
+                }
+              >
+                إلغاء
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

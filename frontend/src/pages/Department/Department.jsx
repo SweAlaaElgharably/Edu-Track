@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import '../Department/department.css'
-import { fetchPrograms, createProgram, updateProgram, deleteProgram } from '../../services/programApi';
-import { fetchFaculties } from '../../services/facultyApi';
-
+import React, { useEffect, useState } from "react";
+import "../Department/department.css";
+import {
+  fetchPrograms,
+  createProgram,
+  updateProgram,
+  deleteProgram,
+} from "../../services/programApi";
+import { fetchFaculties } from "../../services/facultyApi";
 
 export default function Department() {
   const [departments, setDepartments] = useState([]);
@@ -13,46 +17,40 @@ export default function Department() {
 
   // For create/update modal
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState('create'); // 'create' or 'update'
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deptToDelete, setDeptToDelete] = useState(null);
+  const [modalType, setModalType] = useState("create"); // 'create' or 'update'
   const [selectedDept, setSelectedDept] = useState(null);
-  const [form, setForm] = useState({ name: '', slug: '', faculty: '' });
+  const [form, setForm] = useState({ name: "", slug: "", faculty: "" });
   const [submitting, setSubmitting] = useState(false);
 
-  const slugify = (text) => {
-    return text
-      .toString()
-      .trim()
-      .toLowerCase()
-      // Replace spaces with -
-      .replace(/\s+/g, '-')
-      // Remove all non-word chars except - and _
-      .replace(/[^a-z0-9-_]/g, '')
-      // Replace multiple - with single -
-      .replace(/-+/g, '-')
-      // Trim - from start and end
-      .replace(/^-+|-+$/g, '');
-  };
+  // slugify removed because not used in this module
 
-  useEffect(() => {
-    loadDepartments();
-    loadFaculties();
-  }, []);
+  // Mock data for style testing (memoized)
+  const mockFaculties = React.useMemo(
+    () => [
+      { id: 1, name: "كلية الهندسة" },
+      { id: 2, name: "كلية العلوم" },
+      { id: 3, name: "كلية التجارة" },
+    ],
+    []
+  );
+  const mockDepartments = React.useMemo(
+    () => [
+      { slug: "cs", name: "قسم الحاسبات", faculty: mockFaculties[0] },
+      { slug: "physics", name: "قسم الفيزياء", faculty: mockFaculties[1] },
+      { slug: "chemistry", name: "قسم الكيمياء", faculty: mockFaculties[1] },
+      {
+        slug: "business",
+        name: "قسم إدارة الأعمال",
+        faculty: mockFaculties[2],
+      },
+    ],
+    [mockFaculties]
+  );
 
-
-  // Mock data for style testing
-  const mockFaculties = [
-    { id: 1, name: 'كلية الهندسة' },
-    { id: 2, name: 'كلية العلوم' },
-    { id: 3, name: 'كلية التجارة' },
-  ];
-  const mockDepartments = [
-    { slug: 'cs', name: 'قسم الحاسبات', faculty: mockFaculties[0] },
-    { slug: 'physics', name: 'قسم الفيزياء', faculty: mockFaculties[1] },
-    { slug: 'chemistry', name: 'قسم الكيمياء', faculty: mockFaculties[1] },
-    { slug: 'business', name: 'قسم إدارة الأعمال', faculty: mockFaculties[2] },
-  ];
-
-  const loadDepartments = async () => {
+  // Wrap loaders in useCallback and include them as deps to satisfy hooks lint rules
+  const loadDepartmentsCb = React.useCallback(async () => {
     setLoading(true);
     try {
       const data = await fetchPrograms();
@@ -60,13 +58,12 @@ export default function Department() {
       setError(null);
     } catch (err) {
       setDepartments(mockDepartments);
-      setError(err.message);
+      setError(err?.message || null);
     }
     setLoading(false);
-  };
+  }, [mockDepartments]);
 
-
-  const loadFaculties = async () => {
+  const loadFacultiesCb = React.useCallback(async () => {
     try {
       const data = await fetchFaculties();
       setFaculties(data.length ? data : mockFaculties);
@@ -74,33 +71,48 @@ export default function Department() {
     } catch (err) {
       setFaculties([]);
       setFacultiesLoaded(false);
-      setError('تعذر تحميل قائمة الكليات. لا يمكن إضافة/تعديل قسم بدون الكليات.');
+      setError(
+        err?.message ||
+          "تعذر تحميل قائمة الكليات. لا يمكن إضافة/تعديل قسم بدون الكليات."
+      );
     }
-  };
+  }, [mockFaculties]);
+
+  useEffect(() => {
+    loadDepartmentsCb();
+    loadFacultiesCb();
+  }, [loadDepartmentsCb, loadFacultiesCb]);
+  // loaders replaced by useCallbacks above
 
   const handleDelete = async (slug) => {
-    if (!window.confirm('هل أنت متأكد من حذف القسم؟')) return;
     setLoading(true);
     try {
       await deleteProgram(slug);
-      await loadDepartments();
+      await loadDepartmentsCb();
+      setShowDeleteModal(false);
+      setDeptToDelete(null);
     } catch (err) {
       setError(err.message);
     }
     setLoading(false);
   };
 
+  const openDeleteModal = (dept) => {
+    setDeptToDelete(dept);
+    setShowDeleteModal(true);
+  };
+
   const handleUpdate = (dept) => {
-    setModalType('update');
+    setModalType("update");
     setSelectedDept(dept);
     setForm({ name: dept.name, slug: dept.slug, faculty: dept.faculty.id });
     setShowModal(true);
   };
 
   const handleCreate = () => {
-    setModalType('create');
+    setModalType("create");
     setSelectedDept(null);
-    setForm({ name: '', slug: '', faculty: '' });
+    setForm({ name: "", slug: "", faculty: "" });
     setShowModal(true);
   };
 
@@ -108,42 +120,54 @@ export default function Department() {
     e.preventDefault();
     setError(null);
     if (!facultiesLoaded) {
-      setError('تعذر تحميل الكليات. يرجى إعادة تحميل الصفحة أو التأكد من تشغيل السيرفر.');
+      setError(
+        "تعذر تحميل الكليات. يرجى إعادة تحميل الصفحة أو التأكد من تشغيل السيرفر."
+      );
       return;
     }
     // Client-side validation
     if (!form.name?.trim()) {
-      setError('اسم القسم مطلوب');
+      setError("اسم القسم مطلوب");
       return;
     }
     if (!form.slug?.trim()) {
-      setError('المعرف (Slug) مطلوب');
+      setError("المعرف (Slug) مطلوب");
       return;
     }
     // Slug must be ASCII letters/numbers/-/_ to match Django SlugField default
     const slugPattern = /^[A-Za-z0-9_-]+$/;
     if (!slugPattern.test(form.slug)) {
-      setError('المعرف (Slug) يجب أن يحتوي على أحرف إنجليزية أو أرقام أو - أو _ فقط');
+      setError(
+        "المعرف (Slug) يجب أن يحتوي على أحرف إنجليزية أو أرقام أو - أو _ فقط"
+      );
       return;
     }
     if (!form.faculty) {
-      setError('يجب اختيار الكلية');
+      setError("يجب اختيار الكلية");
       return;
     }
     setLoading(true);
     setSubmitting(true);
     try {
-      if (modalType === 'create') {
-        const payload = { name: form.name.trim(), slug: form.slug.trim(), faculty: Number(form.faculty) };
+      if (modalType === "create") {
+        const payload = {
+          name: form.name.trim(),
+          slug: form.slug.trim(),
+          faculty: Number(form.faculty),
+        };
         await createProgram(payload);
-      } else if (modalType === 'update' && selectedDept) {
-        const payload = { name: form.name, slug: form.slug.trim(), faculty: Number(form.faculty) };
+      } else if (modalType === "update" && selectedDept) {
+        const payload = {
+          name: form.name,
+          slug: form.slug.trim(),
+          faculty: Number(form.faculty),
+        };
         await updateProgram(selectedDept.slug, payload);
       }
       setShowModal(false);
-      await loadDepartments();
+      await loadDepartmentsCb();
     } catch (err) {
-      setError(err.message || 'حدث خطأ أثناء حفظ القسم');
+      setError(err.message || "حدث خطأ أثناء حفظ القسم");
     }
     setLoading(false);
     setSubmitting(false);
@@ -152,19 +176,59 @@ export default function Department() {
   return (
     <div className="department-page">
       <h2 className="department-header">الأقسام</h2>
-      {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
-      <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'flex-start' }}>
-        <div className="add-department-card" onClick={handleCreate} style={{
-          minWidth: '140px', minHeight: '80px', padding: '1rem 0.7rem', flexDirection: 'row', alignItems: 'center', gap: '0.5rem', boxSizing: 'border-box'
-        }}>
-          <span style={{ fontSize: '1.5rem', marginBottom: 0, marginLeft: '0.5rem' }}>+</span>
-          <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>اضافه قسم</span>
+      {error && (
+        <div
+          style={{ color: "red", textAlign: "center", marginBottom: "1rem" }}
+        >
+          {error}
+        </div>
+      )}
+      <div
+        style={{
+          marginBottom: "2rem",
+          display: "flex",
+          justifyContent: "flex-start",
+        }}
+      >
+        <div
+          className="add-department-card"
+          onClick={handleCreate}
+          style={{
+            minWidth: "140px",
+            minHeight: "80px",
+            padding: "1rem 0.7rem",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "0.5rem",
+            boxSizing: "border-box",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "1.5rem",
+              marginBottom: 0,
+              marginLeft: "0.5rem",
+            }}
+          >
+            +
+          </span>
+          <span style={{ fontWeight: "bold", fontSize: "1rem" }}>
+            اضافه قسم
+          </span>
         </div>
       </div>
       <div className="department-grid">
         {/* Department Cards */}
         {loading ? (
-          <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#646cff' }}>جاري التحميل...</div>
+          <div
+            style={{
+              gridColumn: "1/-1",
+              textAlign: "center",
+              color: "#646cff",
+            }}
+          >
+            جاري التحميل...
+          </div>
         ) : (
           departments.map((dept) => (
             <div key={dept.slug} className="department-card">
@@ -177,8 +241,29 @@ export default function Department() {
                 </div>
               </div>
               <div className="department-actions">
-                <button className="btn update" onClick={() => handleUpdate(dept)}>تعديل </button>
-                <button className="btn delete" onClick={() => handleDelete(dept.slug)}>حذف</button>
+                <button
+                  className="btn update"
+                  onClick={() => handleUpdate(dept)}
+                >
+                  تعديل{" "}
+                </button>
+                <button
+                  className="btn delete"
+                  onClick={() => openDeleteModal(dept)}
+                >
+                  <span style={{ verticalAlign: "middle", marginRight: "4px" }}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
+                    </svg>
+                  </span>
+                  حذف
+                </button>
               </div>
             </div>
           ))
@@ -187,13 +272,29 @@ export default function Department() {
 
       {/* Modal for Create/Update */}
       {showModal && (
-        <div className="department-modal-bg">
-          <form className="department-modal" onSubmit={handleSubmit}>
-            <button type="button" className="close-btn" onClick={() => setShowModal(false)}>×</button>
-            <h3>{modalType === 'create' ? 'اضافة قسم جديد' : 'تعديل القسم'}</h3>
+        <div className="department-modal-bg" style={{ paddingTop: "80px" }}>
+          <form
+            className="department-modal"
+            onSubmit={handleSubmit}
+            style={{ maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}
+          >
+            <button
+              type="button"
+              className="close-btn"
+              onClick={() => setShowModal(false)}
+            >
+              ×
+            </button>
+            <h3>{modalType === "create" ? "اضافة قسم جديد" : "تعديل القسم"}</h3>
             <label>
               اسم القسم:
-              <input name="name" type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
+              <input
+                name="name"
+                type="text"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                required
+              />
             </label>
             <label>
               المعرف (Slug):
@@ -201,24 +302,157 @@ export default function Department() {
                 type="text"
                 name="slug"
                 value={form.slug}
-                onChange={e => setForm({ ...form, slug: e.target.value })}
+                onChange={(e) => setForm({ ...form, slug: e.target.value })}
                 placeholder="مثال: computer-science"
                 required
               />
             </label>
             <label>
               الكلية:
-              <select name="faculty" value={form.faculty} onChange={e => setForm({ ...form, faculty: e.target.value })} required disabled={!facultiesLoaded}>
+              <select
+                name="faculty"
+                value={form.faculty}
+                onChange={(e) => setForm({ ...form, faculty: e.target.value })}
+                required
+                disabled={!facultiesLoaded}
+              >
                 <option value="">اختر الكلية</option>
-                {facultiesLoaded && faculties.map(fac => (
-                  <option key={fac.id} value={fac.id}>{fac.name}</option>
-                ))}
+                {facultiesLoaded &&
+                  faculties.map((fac) => (
+                    <option key={fac.id} value={fac.id}>
+                      {fac.name}
+                    </option>
+                  ))}
               </select>
             </label>
-            <button type="submit" className="btn update" disabled={submitting || !facultiesLoaded}>
-              {submitting ? 'جارٍ الحفظ...' : (modalType === 'create' ? 'اضافة القسم' : 'تحديث القسم')}
+            <button
+              type="submit"
+              className="btn update"
+              disabled={submitting || !facultiesLoaded}
+            >
+              {submitting
+                ? "جارٍ الحفظ..."
+                : modalType === "create"
+                ? "اضافة القسم"
+                : "تحديث القسم"}
+            </button>
+            <button
+              type="button"
+              className="btn cancel"
+              onClick={() => {
+                setShowModal(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              style={{
+                background: "#eee",
+                color: "#333",
+                border: "1px solid #bbb",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = "#f5c6cb")
+              }
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#eee")}
+            >
+              الغاء
             </button>
           </form>
+        </div>
+      )}
+      {/* Custom Delete Confirmation Modal */}
+      {showDeleteModal && deptToDelete && (
+        <div className="department-modal-bg" style={{ paddingTop: "80px" }}>
+          <div
+            className="department-modal"
+            style={{
+              maxWidth: 400,
+              textAlign: "center",
+              maxHeight: "calc(100vh - 120px)",
+              overflowY: "auto",
+            }}
+          >
+            <button
+              type="button"
+              className="close-btn"
+              onClick={() => {
+                setShowDeleteModal(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              ×
+            </button>
+            <h3
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <span style={{ color: "#d32f2f", fontSize: "1.5rem" }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
+                </svg>
+              </span>
+              تأكيد حذف القسم
+            </h3>
+            <p>
+              هل أنت متأكد من حذف القسم <b>{deptToDelete.name}</b>؟ لا يمكن
+              التراجع عن هذا الإجراء.
+            </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "1rem",
+                marginTop: "1.5rem",
+              }}
+            >
+              <button
+                className="btn delete"
+                onClick={() => handleDelete(deptToDelete.slug)}
+                disabled={loading}
+              >
+                <span style={{ verticalAlign: "middle", marginRight: "4px" }}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
+                  </svg>
+                </span>
+                نعم، حذف
+              </button>
+              <button
+                className="btn cancel"
+                style={{
+                  background: "#eee",
+                  color: "#333",
+                  border: "1px solid #bbb",
+                }}
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = "#f5c6cb")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = "#eee")
+                }
+              >
+                إلغاء
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

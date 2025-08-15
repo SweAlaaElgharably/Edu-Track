@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import './hall.css';
-import { fetchLocations, createLocation, updateLocation, deleteLocation } from '../../services/locationApi';
-import { fetchFaculties } from '../../services/facultyApi';
+import React, { useEffect, useState } from "react";
+import "./hall.css";
+import {
+  fetchLocations,
+  createLocation,
+  updateLocation,
+  deleteLocation,
+} from "../../services/locationApi";
+import { fetchFaculties } from "../../services/facultyApi";
 
 export default function Hall() {
   const [halls, setHalls] = useState([]);
@@ -10,9 +15,16 @@ export default function Hall() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState('create');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [hallToDelete, setHallToDelete] = useState(null);
+  const [modalType, setModalType] = useState("create");
   const [selectedHall, setSelectedHall] = useState(null);
-  const [form, setForm] = useState({ name: '', faculty: '', slug: '', capacity: '' });
+  const [form, setForm] = useState({
+    name: "",
+    faculty: "",
+    slug: "",
+    capacity: "",
+  });
 
   // MOCK DATA FOR DEMO/DEV - REMOVE THIS BLOCK FOR PRODUCTION
   // To show mock data, uncomment the following and comment out the useEffect below
@@ -42,19 +54,53 @@ export default function Hall() {
     try {
       const data = await fetchLocations();
       // If no real data, show mock data for demo
-      setHalls(data.length ? data : [
-        { slug: 'hall-101', name: 'قاعة 101', faculty: { id: 1, name: 'كلية الهندسة' }, capacity: 120 },
-        { slug: 'hall-202', name: 'قاعة 202', faculty: { id: 2, name: 'كلية العلوم' }, capacity: 80 },
-        { slug: 'hall-303', name: 'قاعة 303', faculty: { id: 3, name: 'كلية التجارة' }, capacity: 60 },
-      ]);
+      setHalls(
+        data.length
+          ? data
+          : [
+              {
+                slug: "hall-101",
+                name: "قاعة 101",
+                faculty: { id: 1, name: "كلية الهندسة" },
+                capacity: 120,
+              },
+              {
+                slug: "hall-202",
+                name: "قاعة 202",
+                faculty: { id: 2, name: "كلية العلوم" },
+                capacity: 80,
+              },
+              {
+                slug: "hall-303",
+                name: "قاعة 303",
+                faculty: { id: 3, name: "كلية التجارة" },
+                capacity: 60,
+              },
+            ]
+      );
       setError(null);
     } catch (err) {
       setHalls([
-        { slug: 'hall-101', name: 'قاعة 101', faculty: { id: 1, name: 'كلية الهندسة' }, capacity: 120 },
-        { slug: 'hall-202', name: 'قاعة 202', faculty: { id: 2, name: 'كلية العلوم' }, capacity: 80 },
-        { slug: 'hall-303', name: 'قاعة 303', faculty: { id: 3, name: 'كلية التجارة' }, capacity: 60 },
+        {
+          slug: "hall-101",
+          name: "قاعة 101",
+          faculty: { id: 1, name: "كلية الهندسة" },
+          capacity: 120,
+        },
+        {
+          slug: "hall-202",
+          name: "قاعة 202",
+          faculty: { id: 2, name: "كلية العلوم" },
+          capacity: 80,
+        },
+        {
+          slug: "hall-303",
+          name: "قاعة 303",
+          faculty: { id: 3, name: "كلية التجارة" },
+          capacity: 60,
+        },
       ]);
-      setError(err.message);
+      setError(err?.message || null);
     }
     setLoading(false);
   };
@@ -67,33 +113,47 @@ export default function Hall() {
     } catch (err) {
       setFaculties([]);
       setFacultiesLoaded(false);
-      setError('تعذر تحميل قائمة الكليات. لا يمكن إضافة/تعديل قاعة بدون الكليات.');
+      setError(
+        err?.message ||
+          "تعذر تحميل قائمة الكليات. لا يمكن إضافة/تعديل قاعة بدون الكليات."
+      );
     }
   };
 
   const handleDelete = async (slug) => {
-    if (!window.confirm('هل أنت متأكد من حذف القاعة؟')) return;
     setLoading(true);
     try {
       await deleteLocation(slug);
       await loadHalls();
+      setShowDeleteModal(false);
+      setHallToDelete(null);
     } catch (err) {
-      setError(err.message);
+      setError(err?.message);
     }
     setLoading(false);
   };
 
+  const openDeleteModal = (hall) => {
+    setHallToDelete(hall);
+    setShowDeleteModal(true);
+  };
+
   const handleUpdate = (hall) => {
-    setModalType('update');
+    setModalType("update");
     setSelectedHall(hall);
-    setForm({ name: hall.name, faculty: hall.faculty.id, slug: hall.slug, capacity: hall.capacity });
+    setForm({
+      name: hall.name,
+      faculty: hall.faculty.id,
+      slug: hall.slug,
+      capacity: hall.capacity,
+    });
     setShowModal(true);
   };
 
   const handleCreate = () => {
-    setModalType('create');
+    setModalType("create");
     setSelectedHall(null);
-    setForm({ name: '', faculty: '', slug: '', capacity: '' });
+    setForm({ name: "", faculty: "", slug: "", capacity: "" });
     setShowModal(true);
   };
 
@@ -101,36 +161,40 @@ export default function Hall() {
     e.preventDefault();
     setError(null);
     if (!facultiesLoaded) {
-      setError('تعذر تحميل الكليات. يرجى إعادة تحميل الصفحة أو التأكد من تشغيل السيرفر.');
+      setError(
+        "تعذر تحميل الكليات. يرجى إعادة تحميل الصفحة أو التأكد من تشغيل السيرفر."
+      );
       return;
     }
     // Client-side validations to prevent 500 from NOT NULL at DB level
     if (!form.name?.trim()) {
-      setError('اسم القاعة مطلوب');
+      setError("اسم القاعة مطلوب");
       return;
     }
     if (!form.slug?.trim()) {
-      setError('المعرف (Slug) مطلوب');
+      setError("المعرف (Slug) مطلوب");
       return;
     }
     const slugPattern = /^[A-Za-z0-9_-]+$/;
     if (!slugPattern.test(form.slug)) {
-      setError('المعرف (Slug) يجب أن يحتوي على أحرف إنجليزية أو أرقام أو - أو _ فقط');
+      setError(
+        "المعرف (Slug) يجب أن يحتوي على أحرف إنجليزية أو أرقام أو - أو _ فقط"
+      );
       return;
     }
     const facultyId = Number(form.faculty);
     if (!facultyId) {
-      setError('يجب اختيار الكلية');
+      setError("يجب اختيار الكلية");
       return;
     }
     const cap = Number(form.capacity ?? 1);
     if (!Number.isFinite(cap) || cap <= 0) {
-      setError('مساحة القاعة يجب أن تكون رقمًا أكبر من 0');
+      setError("مساحة القاعة يجب أن تكون رقمًا أكبر من 0");
       return;
     }
     setLoading(true);
     try {
-      if (modalType === 'create') {
+      if (modalType === "create") {
         await createLocation({
           name: form.name.trim(),
           slug: form.slug?.trim(),
@@ -148,7 +212,7 @@ export default function Hall() {
       setShowModal(false);
       await loadHalls();
     } catch (err) {
-      setError(err.message);
+      setError(err?.message);
     }
     setLoading(false);
   };
@@ -156,18 +220,54 @@ export default function Hall() {
   return (
     <div className="hall-page">
       <h2 className="hall-header">القاعات</h2>
-      {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
-      <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'flex-start' }}>
-        <div className="add-hall-btn" onClick={handleCreate} style={{
-          minWidth: '140px', minHeight: '80px', padding: '1rem 0.7rem', flexDirection: 'row', alignItems: 'center', gap: '0.5rem', boxSizing: 'border-box', display: 'flex', cursor: 'pointer',
-        }}>
-          <span style={{ fontSize: '1.5rem', marginBottom: 0, marginLeft: '0.5rem' }}>+</span>
-          <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>اضافه قاعة</span>
+      {error && (
+        <div
+          style={{ color: "red", textAlign: "center", marginBottom: "1rem" }}
+        >
+          {error}
+        </div>
+      )}
+      <div
+        style={{
+          marginBottom: "2rem",
+          display: "flex",
+          justifyContent: "flex-start",
+        }}
+      >
+        <div
+          className="add-hall-btn"
+          onClick={handleCreate}
+          style={{
+            minWidth: "140px",
+            minHeight: "80px",
+            padding: "1rem 0.7rem",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "0.5rem",
+            boxSizing: "border-box",
+            display: "flex",
+            cursor: "pointer",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "1.5rem",
+              marginBottom: 0,
+              marginLeft: "0.5rem",
+            }}
+          >
+            +
+          </span>
+          <span style={{ fontWeight: "bold", fontSize: "1rem" }}>
+            اضافه قاعة
+          </span>
         </div>
       </div>
       <div className="hall-table-wrapper">
         {loading ? (
-          <div style={{ textAlign: 'center', color: '#646cff' }}>جاري التحميل...</div>
+          <div style={{ textAlign: "center", color: "#646cff" }}>
+            جاري التحميل...
+          </div>
         ) : (
           <table className="hall-table">
             <thead>
@@ -181,17 +281,40 @@ export default function Hall() {
               </tr>
             </thead>
             <tbody>
-              {halls.map(hall => (
+              {halls.map((hall) => (
                 <tr key={hall.slug} className="hall-row">
                   <td>{hall.name}</td>
                   <td>{hall.faculty?.name}</td>
                   <td>{hall.slug}</td>
                   <td>{hall.capacity}</td>
                   <td>
-                    <button className="btn update" onClick={() => handleUpdate(hall)}>تعديل </button>
+                    <button
+                      className="btn update"
+                      onClick={() => handleUpdate(hall)}
+                    >
+                      تعديل{" "}
+                    </button>
                   </td>
                   <td>
-                    <button className="btn delete" onClick={() => handleDelete(hall.slug)}>مسح </button>
+                    <button
+                      className="btn delete"
+                      onClick={() => openDeleteModal(hall)}
+                    >
+                      <span
+                        style={{ verticalAlign: "middle", marginRight: "4px" }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="18"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
+                        </svg>
+                      </span>
+                      مسح
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -201,34 +324,192 @@ export default function Hall() {
       </div>
       {/* Modal for Create/Update */}
       {showModal && (
-        <div className="hall-modal-bg">
-          <form className="hall-modal" onSubmit={handleSubmit}>
-            <button type="button" className="close-btn" onClick={() => setShowModal(false)}>×</button>
-            <h3>{modalType === 'create' ? 'اضافة قاعة جديدة' : 'تعديل القاعة'}</h3>
+        <div className="hall-modal-bg" style={{ paddingTop: "80px" }}>
+          <form
+            className="hall-modal"
+            onSubmit={handleSubmit}
+            style={{ maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}
+          >
+            <button
+              type="button"
+              className="close-btn"
+              onClick={() => setShowModal(false)}
+            ></button>
+            <h3>
+              {modalType === "create" ? "اضافة قاعة جديدة" : "تعديل القاعة"}
+            </h3>
             <label>
               اسم القاعة:
-              <input name="name" type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
+              <input
+                name="name"
+                type="text"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                required
+              />
             </label>
             <label>
               اسم الكلية:
-              <select name="faculty" value={form.faculty} onChange={e => setForm({ ...form, faculty: e.target.value })} required disabled={!facultiesLoaded}>
+              <select
+                name="faculty"
+                value={form.faculty}
+                onChange={(e) => setForm({ ...form, faculty: e.target.value })}
+                required
+                disabled={!facultiesLoaded}
+              >
                 <option value="">اختر الكلية</option>
-                {facultiesLoaded && faculties.map(fac => (
-                  <option key={fac.id} value={fac.id}>{fac.name}</option>
-                ))}
+                {facultiesLoaded &&
+                  faculties.map((fac) => (
+                    <option key={fac.id} value={fac.id}>
+                      {fac.name}
+                    </option>
+                  ))}
               </select>
             </label>
             <label>
               slug:
-              <input name="slug" type="text" value={form.slug} onChange={e => setForm({ ...form, slug: e.target.value })} required />
+              <input
+                name="slug"
+                type="text"
+                value={form.slug}
+                onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                required
+              />
             </label>
             <label>
               مساحه القاعة:
-              <input name="capacity" type="number" value={form.capacity} onChange={e => setForm({ ...form, capacity: e.target.value })} required />
+              <input
+                name="capacity"
+                type="number"
+                value={form.capacity}
+                onChange={(e) => setForm({ ...form, capacity: e.target.value })}
+                required
+              />
             </label>
-            <button type="submit" className="btn update" disabled={!facultiesLoaded}>{modalType === 'create' ? 'اضافة القاعة' : 'تحديث القاعة'}</button>
-            <button type="button" className="btn cancel" onClick={() => setShowModal(false)}>الغاء</button>
+            <button
+              type="submit"
+              className="btn update"
+              disabled={!facultiesLoaded}
+            >
+              {modalType === "create" ? "اضافة القاعة" : "تحديث القاعة"}
+            </button>
+            <button
+              type="button"
+              className="btn cancel"
+              onClick={() => {
+                setShowModal(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              style={{
+                background: "#eee",
+                color: "#333",
+                border: "1px solid #bbb",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = "#f5c6cb")
+              }
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#eee")}
+            >
+              الغاء
+            </button>
           </form>
+        </div>
+      )}
+      {/* Custom Delete Confirmation Modal */}
+      {showDeleteModal && hallToDelete && (
+        <div className="hall-modal-bg" style={{ paddingTop: "80px" }}>
+          <div
+            className="hall-modal"
+            style={{
+              maxWidth: 400,
+              textAlign: "center",
+              maxHeight: "calc(100vh - 120px)",
+              overflowY: "auto",
+            }}
+          >
+            <button
+              type="button"
+              className="close-btn"
+              onClick={() => {
+                setShowDeleteModal(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              ×
+            </button>
+            <h3
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <span style={{ color: "#d32f2f", fontSize: "1.5rem" }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
+                </svg>
+              </span>
+              تأكيد حذف القاعة
+            </h3>
+            <p>
+              هل أنت متأكد من حذف القاعة <b>{hallToDelete.name}</b>؟ لا يمكن
+              التراجع عن هذا الإجراء.
+            </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "1rem",
+                marginTop: "1.5rem",
+              }}
+            >
+              <button
+                className="btn delete"
+                onClick={() => handleDelete(hallToDelete.slug)}
+                disabled={loading}
+              >
+                <span style={{ verticalAlign: "middle", marginRight: "4px" }}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
+                  </svg>
+                </span>
+                نعم، حذف
+              </button>
+              <button
+                className="btn cancel"
+                style={{
+                  background: "#eee",
+                  color: "#333",
+                  border: "1px solid #bbb",
+                }}
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = "#f5c6cb")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = "#eee")
+                }
+              >
+                إلغاء
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
