@@ -21,6 +21,7 @@
 
 /* Better Arabic text rendering */
 * {
+  font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-feature-settings: "liga" 1, "kern" 1;
   margin: 0;
   padding: 0;

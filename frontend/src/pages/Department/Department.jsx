@@ -177,8 +177,8 @@ export default function Department() {
                 </div>
               </div>
               <div className="department-actions">
-                <button className="btn update" onClick={() => handleUpdate(dept)}>تعديل القسم</button>
-                <button className="btn delete" onClick={() => handleDelete(dept.slug)}>حذف القسم</button>
+                <button className="btn update" onClick={() => handleUpdate(dept)}>تعديل </button>
+                <button className="btn delete" onClick={() => handleDelete(dept.slug)}>حذف</button>
               </div>
             </div>
           ))

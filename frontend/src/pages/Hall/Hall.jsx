@@ -188,10 +188,10 @@ export default function Hall() {
                   <td>{hall.slug}</td>
                   <td>{hall.capacity}</td>
                   <td>
-                    <button className="btn update" onClick={() => handleUpdate(hall)}>تعديل القاعة</button>
+                    <button className="btn update" onClick={() => handleUpdate(hall)}>تعديل </button>
                   </td>
                   <td>
-                    <button className="btn delete" onClick={() => handleDelete(hall.slug)}>مسح القاعة</button>
+                    <button className="btn delete" onClick={() => handleDelete(hall.slug)}>مسح </button>
                   </td>
                 </tr>
               ))}

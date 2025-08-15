@@ -14,7 +14,7 @@ input, textarea, select, button {
 
 .help-header {
 	text-align: center;
-	margin-bottom: 3rem;
+	margin: 12vh 0 4vh 0;
 	color: #333;
 }
 
@@ -556,11 +556,8 @@ input, textarea, select, button {
  margin-top: 1vh;  
 }
 
-.help-header {
 
-  text-align: center;
-  margin: 3rem;
-}
+
 
 .help-header h1 {
   font-size: 3rem;

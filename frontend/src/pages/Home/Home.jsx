@@ -182,7 +182,7 @@ function Home() {
           <p className="hero-subtitle typewriter">{typedSubTitle}</p>
           <div className="cta-buttons">
             {!isAuthenticated ? (
-              <Link to="/features" className="hero-primary">ابدأ التعلّم</Link>
+              <Link to="/dashboard" className="hero-primary">ابدأ التعلّم</Link>
             ) : (
               <Link to="/dashboard" className="hero-primary">لوحة التحكم</Link>
             )}
