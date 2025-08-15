@@ -60,13 +60,13 @@
   grid-column: 1;
   justify-items: start;
   padding-left: 10px;
-  margin-left: 20px;
+  margin-right: 12px;
 }
 .stack-right {
   grid-column: 3;
   justify-items: end;
   padding-right: 10px;
-  margin-right: 20px;
+  margin-left: 12px;
 }
 
 /* Logo-only badge that expands to show logo + name on hover */

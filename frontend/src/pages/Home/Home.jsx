@@ -177,7 +177,7 @@ function Home() {
           <img src={uniLogo} alt="شعار الجامعة" className="hero-logo" />
           <h1 className="hero-title typewriter">
             {typedTitle}
-            <span className="cursor" aria-hidden="true">|</span>
+            {/* <span className="cursor" aria-hidden="true">|</span> */}
           </h1>
           <p className="hero-subtitle typewriter">{typedSubTitle}</p>
           <div className="cta-buttons">

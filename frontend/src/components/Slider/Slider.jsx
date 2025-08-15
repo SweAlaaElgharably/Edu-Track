@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import '../../styles/slider.css';
 import { initFlickity } from './slider.js';
+import phaImage from '../../assets/pha.png';
+import oloomImage from '../../assets/3loom.png';
+import medImage from '../../assets/med.png';
 
 // Each logo with its specific faculty URL
 const logos = [
@@ -10,7 +13,7 @@ const logos = [
         alt: 'كلية الهندسة',
     },
     {
-        src: 'https://sci.psu.edu.eg/wp-content/uploads/2021/12/%D8%B9%D9%84%D9%88%D9%85.zip.png',
+        src: oloomImage,
         href: 'https://sci.psu.edu.eg/',
         alt: 'كلية العلوم',
     },
@@ -20,12 +23,12 @@ const logos = [
         alt: 'تكنولوجيا الادارة ونظم المعلومات',
     },
     {
-        src: 'https://med.psu.edu.eg/wp-content/uploads/2021/12/Untitled-20221027-072807-e1666855782219.png',
+        src: medImage,
         href: 'https://med.psu.edu.eg/',
         alt: 'كلية الطب',
     },
     {
-        src: 'https://pharm.psu.edu.eg/wp-content/uploads/2021/12/Picture1-1.jpg',
+        src: phaImage,
         href: 'https://pharm.psu.edu.eg/',
         alt: 'كلية الصيدلة',
     },
