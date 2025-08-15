@@ -4,6 +4,7 @@ import { initFlickity } from './slider.js';
 import phaImage from '../../assets/pha.png';
 import oloomImage from '../../assets/3loom.png';
 import medImage from '../../assets/med.png';
+import lawImage from '../../assets/law.png';
 
 // Each logo with its specific faculty URL
 const logos = [
@@ -73,7 +74,7 @@ const logos = [
         alt: 'كلية الآداب',
     },
     {
-        src: 'https://law.psu.edu.eg/wp-content/uploads/2022/10/law-logo.png',
+        src: lawImage,
         href: 'https://law.psu.edu.eg/',
         alt: 'كلية الحقوق',
     },
