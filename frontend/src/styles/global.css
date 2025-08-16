@@ -42,6 +42,34 @@ body {
   color: #ffffff;
 }
 
+body {
+  background: transparent; /* Or any color you want behind the scrollbar */
+}
+
+body {
+  --sb-track-color: transparent;
+  --sb-thumb-color: #6696c7;
+  --sb-size: 7px;
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent; /* transparent track */
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) transparent;
+  }
+}
+
 /* Ensure proper RTL for specific elements */
 .auth-form {
   direction: rtl;

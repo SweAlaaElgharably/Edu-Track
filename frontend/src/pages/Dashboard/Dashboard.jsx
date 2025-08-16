@@ -130,7 +130,7 @@ function Dashboard() {
       {/* Sidebar */}
       <aside className="dashboard-sidebar">
         <nav className="sidebar-nav">
-          <h3 style={{ marginBottom: "10px" }}>لوحة التحكم</h3>
+          <h3 style={{ margin: "20px" }}>لوحة التحكم</h3>
           <button
             className={`sidebar-tab ${activeTab === "overview" ? "active" : ""
               }`}
@@ -203,6 +203,8 @@ function Dashboard() {
           </button>
         </nav>
         <div className="sidebar-header">
+          {/* Mobile-only header title; styled to show only on small screens in CSS */}
+          <h2 className="dashboard-title">لوحة التحكم</h2>
           <div className="user-info">
             <span>مرحباً بك، {user?.first_name || "طالب"}!</span>
           </div>
@@ -223,10 +225,10 @@ function Dashboard() {
             <div className="calendar-overview" style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 16 }}>
               {/* Calendar (month view) */}
               <div className="stats-card" style={{ padding: 0, overflow: "hidden" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderBottom: "1px solid #eee" }}>
-                  <button aria-label="الشهر السابق" onClick={prevMonth} className="btn btn-secondary-calender" style={{ padding: "4px 8px" }}>‹</button>
+                <div className="calendar-toolbar">
+                  <button aria-label="الشهر السابق" onClick={prevMonth} className="btn btn-secondary-calender">‹</button>
                   <h3 style={{ margin: 0 }}>{monthNames[viewDate.getMonth()]} {viewDate.getFullYear()}</h3>
-                  <button aria-label="الشهر التالي" onClick={nextMonth} className="btn btn-secondary-calender" style={{ padding: "4px 8px" }}>›</button>
+                  <button aria-label="الشهر التالي" onClick={nextMonth} className="btn btn-secondary-calender">›</button>
                 </div>
                 <div style={{ padding: "12px 16px" }}>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 6, marginBottom: 8 }}>

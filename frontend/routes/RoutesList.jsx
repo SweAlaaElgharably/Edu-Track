@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "../src/pages/Home/Home";
 import Login from "../src/pages/Login/Login";
@@ -15,19 +15,32 @@ import HelpCenter from "../src/pages/HelpCenter/HelpCenter";
 import ChangePassword from "../src/pages/ChangePassword/ChangePassword";
 import About from "../src/pages/About/About";
 
+// Small helper to set the page title per route
+const Page = ({ title, children }) => {
+  useEffect(() => {
+    const prev = document.title;
+    const base = "جامعة بورسعيد";
+    document.title = title ? `${title} - ${base}` : base;
+    return () => {
+      document.title = prev;
+    };
+  }, [title]);
+  return children;
+};
+
 
 const RoutesList = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/register" element={<Register />} />
+  <Route path="/" element={<Page title="الرئيسية"><Home /></Page>} />
+  <Route path="/login" element={<Page title="تسجيل الدخول"><Login /></Page>} />
+  <Route path="/forgot-password" element={<Page title="استعادة كلمة المرور"><ForgotPassword /></Page>} />
+  <Route path="/register" element={<Page title="إنشاء حساب"><Register /></Page>} />
       <Route
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <Page title="لوحة التحكم"><Dashboard /></Page>
           </ProtectedRoute>
         }
       />
@@ -35,7 +48,7 @@ const RoutesList = () => {
         path="/profile"
         element={
           <ProtectedRoute>
-            <Profile />
+            <Page title="الملف الشخصي"><Profile /></Page>
           </ProtectedRoute>
         }
       />
@@ -43,24 +56,24 @@ const RoutesList = () => {
         path="/change-password"
         element={
           <ProtectedRoute>
-            <ChangePassword />
+            <Page title="تغيير كلمة المرور"><ChangePassword /></Page>
           </ProtectedRoute>
         }
       />
-      <Route path="/features" element={<Features />} />
-      <Route path="/contact" element={<Contact />} />
+      <Route path="/features" element={<Page title="المميزات"><Features /></Page>} />
+      <Route path="/contact" element={<Page title="اتصل بنا"><Contact /></Page>} />
   
       <Route
         path="/universities/:slug/faculties"
         element={
           <ProtectedRoute>
-            <FacultyManage />
+            <Page title="إدارة الكليات"><FacultyManage /></Page>
           </ProtectedRoute>
         }
       />
-      <Route path="/help" element={<HelpCenter />} />    
-      <Route path="*" element={<PageNotFound />} />
-      <Route path="/about" element={<About />} />
+      <Route path="/help" element={<Page title="مركز المساعدة"><HelpCenter /></Page>} />    
+      <Route path="*" element={<Page title="الصفحة غير موجودة"><PageNotFound /></Page>} />
+      <Route path="/about" element={<Page title="حول"><About /></Page>} />
 
     </Routes>
   );

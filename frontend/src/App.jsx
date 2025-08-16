@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Navbar from './components/Navbar.jsx';
@@ -10,8 +9,6 @@ import ScrollToTop from './components/ScrollToTop'; //
 const queryClient = new QueryClient();
 
 function AppContent() {
-  const location = useLocation();
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/forgot-password';
 
   return (
     <div className="App">
@@ -20,7 +17,7 @@ function AppContent() {
       <main className="main-content">
         <ScrollToTop />
         <RoutesList />
-      <Footer />
+        <Footer />
       </main>
     </div>
   );

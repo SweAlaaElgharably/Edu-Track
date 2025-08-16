@@ -19,7 +19,7 @@
 }
 
 .content-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -34,7 +34,7 @@
   color: #1f2937;
   margin-bottom: 1rem;
   font-weight: 600;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   text-align: center;
 }
 
@@ -43,12 +43,18 @@
 .content-card span,
 .content-card th,
 .content-card td {
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Sidebar Styles */
@@ -76,19 +82,24 @@
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
   font-weight: 600;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   text-align: center;
 }
 
 .sidebar-header .user-info {
   text-align: center;
-  
 }
 
 .sidebar-header .user-info span {
   color: rgba(255, 255, 255, 0.8);
   font-size: 20px;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
+}
+
+/* Hidden by default; shown/styled in mobile */
+/* Hidden by default; shown as real header in mobile queries */
+.dashboard-title {
+  display: none;
 }
 
 /* Sidebar Navigation */
@@ -115,7 +126,7 @@
   cursor: pointer;
   font-weight: 500;
   transition: all 0.3s ease;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   text-align: right;
   width: 100%;
   position: relative;
@@ -126,13 +137,17 @@
 }
 
 .sidebar-tab::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(100, 108, 255, 0.1) 0%, rgba(83, 91, 242, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(100, 108, 255, 0.1) 0%,
+    rgba(83, 91, 242, 0.1) 100%
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
   border-radius: 12px;
@@ -148,7 +163,11 @@
 }
 
 .sidebar-tab.active {
-  background: linear-gradient(135deg, rgba(100, 108, 255, 0.2) 0%, rgba(83, 91, 242, 0.2) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(100, 108, 255, 0.2) 0%,
+    rgba(83, 91, 242, 0.2) 100%
+  );
   color: white;
   box-shadow: 0 4px 15px rgba(100, 108, 255, 0.3);
   border: 1px solid rgba(100, 108, 255, 0.3);
@@ -179,7 +198,11 @@
 .sidebar-footer .btn {
   width: 100%;
   padding: 0.75rem 1rem;
-  background: linear-gradient(135deg, rgba(100, 108, 255, 0.2) 0%, rgba(83, 91, 242, 0.2) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(100, 108, 255, 0.2) 0%,
+    rgba(83, 91, 242, 0.2) 100%
+  );
   border: 1px solid rgba(100, 108, 255, 0.3);
   color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
@@ -188,11 +211,15 @@
   text-align: center;
   font-weight: 500;
   transition: all 0.3s ease;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
 }
 
 .sidebar-footer .btn:hover {
-  background: linear-gradient(135deg, rgba(100, 108, 255, 0.3) 0%, rgba(83, 91, 242, 0.3) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(100, 108, 255, 0.3) 0%,
+    rgba(83, 91, 242, 0.3) 100%
+  );
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(100, 108, 255, 0.3);
 }
@@ -232,7 +259,7 @@
 }
 
 .stats-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -251,7 +278,7 @@
   margin-bottom: 0.75rem;
   font-size: 0.9rem;
   font-weight: 600;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   text-align: center;
 }
 
@@ -260,19 +287,20 @@
   font-weight: bold;
   color: #1e1e2e;
   margin-bottom: 0.5rem;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
 }
 
 .stats-card p {
   color: #6b7280;
   margin: 0;
   font-size: 0.85rem;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   text-align: center;
 }
 
 /* Content Sections */
-.courses-section, .schedule-section{
+.courses-section,
+.schedule-section {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid rgba(100, 108, 255, 0.1);
   border-radius: 16px;
@@ -281,19 +309,21 @@
   backdrop-filter: blur(10px);
 }
 
-.courses-section h2, .schedule-section h2 {
+.courses-section h2,
+.schedule-section h2 {
   color: #1f2937;
   margin-bottom: 1rem;
   font-weight: 600;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   text-align: center;
 }
 
-.courses-section p, .schedule-section p {
+.courses-section p,
+.schedule-section p {
   color: #6b7280;
   margin-bottom: 1.5rem;
   text-align: center;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
 }
 
 /* Buttons */
@@ -304,7 +334,7 @@
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s ease;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   border: none;
   cursor: pointer;
 }
@@ -339,11 +369,30 @@
   border: 2px dashed rgba(100, 108, 255, 0.2);
 }
 
+/* Calendar toolbar (desktop/base) */
+.calendar-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+.calendar-toolbar .btn.btn-secondary-calender {
+  padding: 10px 20px; /* compact arrows on desktop */
+  font-size: 0.9rem;
+  width: auto;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
 .chart-placeholder p {
   color: #6b7280;
   margin: 0;
   font-size: 1.1rem;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
 }
 
 /* Mobile Responsive */
@@ -351,12 +400,12 @@
   .dashboard-sidebar {
     width: 240px;
   }
-  
+
   .dashboard-main {
     margin-left: 240px;
     padding: 1rem;
   }
-  
+
   .overview-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1rem;
@@ -367,6 +416,7 @@
   .dashboard-container {
     flex-direction: column;
   }
+
   .dashboard-sidebar {
     width: 100%;
     height: auto;
@@ -374,41 +424,164 @@
     border-right: none;
     border-bottom: 1px solid rgba(100, 108, 255, 0.2);
     min-height: unset;
-    max-height: 40vh;
-    overflow-y: auto;
+    max-height: none;
+    overflow: visible;
   }
-  .dashboard-main {
-    margin-left: 0;
-    padding: 1rem;
+
+  .sidebar-header {
+    padding: 0.5rem 0.75rem;
+    order: 1;
+    text-align: center;
   }
+  /* Show dashboard title as a normal header on mobile */
+  .sidebar-header .dashboard-title {
+    display: block;
+    margin: 0 0 0.25rem 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .sidebar-header h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .sidebar-header .user-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .sidebar-header .user-info span {
+    font-size: 13px;
+  }
+  /* Calendar toolbar for mobile */
+  .calendar-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+  }
+
   .sidebar-nav {
+    margin-top: 0;
     flex-direction: row;
     overflow-x: auto;
+    overflow-y: visible;
     padding: 0.5rem;
-    min-height: 0;
-    max-height: 40vh;
-  }
-  .sidebar-tab {
-    min-width: 100px;
-    flex-direction: column;
     gap: 0.5rem;
-    padding: 0.5rem 0.7rem;
-    flex: 1 1 0;
-    min-height: 0;
-    box-sizing: border-box;
+    order: 2;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 108, 255, 0.3) transparent;
+    display: flex;
+    justify-content: flex-start;
   }
+
+  .sidebar-nav::-webkit-scrollbar {
+    height: 3px;
+  }
+
+  .sidebar-nav::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+  }
+
+  .sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(100, 108, 255, 0.3);
+    border-radius: 2px;
+  }
+
+  .sidebar-nav h3 {
+    display: none;
+  }
+
+  .sidebar-tab {
+    min-width: 60px;
+    max-width: 70px;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.4rem 0.3rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-align: center;
+    font-size: 0.7rem;
+  }
+
+  .tab-icon {
+    font-size: 0.9rem;
+  }
+
   .tab-text {
-    font-size: 0.8rem;
+    font-size: 0.65rem;
+    line-height: 1.1;
+    font-weight: 500;
   }
+
+  .sidebar-footer {
+    padding: 0.75rem 1rem;
+    order: 3;
+  }
+
+  .sidebar-footer .btn {
+    display: none;
+  }
+
+  .dashboard-main {
+    margin-left: 0;
+    padding: 0.75rem;
+  }
+
   .overview-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+
   .stats-card {
     padding: 1rem;
   }
+
   .stat-number-dashboard {
     font-size: 2rem;
+  }
+
+  /* Calendar overview mobile layout - Clock above calendar */
+  .calendar-overview {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto 1fr !important;
+    gap: 1rem !important;
+    margin-top: 1rem !important;
+  }
+
+  .calendar-overview .stats-card:last-child {
+    order: -1 !important;
+  }
+
+  /* Calendar button improvements */
+  .calendar-toolbar .btn.btn-secondary-calender {
+    padding: 6px 10px !important;
+    font-size: 0.7rem !important;
+    width: auto !important;
+    min-width: 0 !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    line-height: 1 !important;
+  }
+
+  /* Content cards mobile optimization */
+  .content-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .courses-section,
+  .schedule-section {
+    padding: 1rem;
   }
 }
 
@@ -416,22 +589,182 @@
   .dashboard-main {
     padding: 0.5rem;
   }
-  
+
+  .sidebar-nav {
+    padding: 0.4rem;
+    gap: 0.4rem;
+  }
+
+  .sidebar-tab {
+    min-width: 55px;
+    max-width: 65px;
+    padding: 0.35rem 0.25rem;
+  }
+
+  .tab-icon {
+    font-size: 0.8rem;
+  }
+
+  .tab-text {
+    font-size: 0.6rem;
+    line-height: 1;
+  }
+
+  .sidebar-header {
+    padding: 0.5rem;
+  }
+
+  .sidebar-header h2 {
+    font-size: 1rem;
+  }
+
+  .sidebar-header .user-info {
+    gap: 0.4rem;
+  }
+  .sidebar-header .user-info span {
+    font-size: 12px;
+  }
+  .sidebar-header .dashboard-title {
+    font-size: 1.4rem;
+  }
+
+  .sidebar-footer {
+    padding: 0.6rem;
+  }
+
+  .sidebar-footer .btn {
+    display: none;
+  }
+
   .overview-grid {
     gap: 0.75rem;
   }
-  
+
   .stats-card {
     padding: 0.75rem;
   }
-  
+
   .stat-number-dashboard {
     font-size: 1.75rem;
   }
-} 
 
+  .content-card {
+    padding: 0.75rem;
+  }
 
-.progress-section-applying h2{
+  .courses-section,
+  .schedule-section {
+    padding: 0.75rem;
+  }
+
+  /* Calendar mobile improvements */
+  .calendar-overview .stats-card {
+    padding: 0.5rem;
+  }
+
+  /* Much smaller calendar buttons */
+  .calendar-toolbar .btn.btn-secondary-calender {
+    padding: 6px 10px !important;
+    font-size: 0.66rem !important;
+    width: auto !important;
+    min-width: 0 !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    line-height: 1 !important;
+  }
+
+  /* Button improvements for mobile */
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .dashboard-main {
+    padding: 0.4rem;
+  }
+
+  .sidebar-nav {
+    padding: 0.3rem;
+    gap: 0.3rem;
+  }
+
+  .sidebar-tab {
+    min-width: 50px;
+    max-width: 60px;
+    padding: 0.3rem 0.2rem;
+  }
+
+  .tab-icon {
+    font-size: 0.75rem;
+  }
+
+  .tab-text {
+    font-size: 0.55rem;
+    line-height: 1;
+  }
+
+  .sidebar-header {
+    padding: 0.45rem;
+  }
+
+  .sidebar-header h2 {
+    font-size: 0.9rem;
+  }
+
+  .sidebar-header .user-info {
+    gap: 0.35rem;
+  }
+  .sidebar-header .user-info span {
+    font-size: 11px;
+  }
+  .sidebar-header .dashboard-title {
+    font-size: 0.95rem;
+  }
+
+  .sidebar-footer {
+    padding: 0.5rem;
+  }
+
+  .sidebar-footer .btn {
+    display: none;
+  }
+
+  .stats-card {
+    padding: 0.5rem;
+  }
+
+  .stat-number-dashboard {
+    font-size: 1.5rem;
+  }
+
+  .content-card {
+    padding: 0.5rem;
+  }
+
+  /* Extra small calendar buttons */
+  .calendar-toolbar .btn.btn-secondary-calender {
+    padding: 1px 4px !important;
+    font-size: 0.64rem !important;
+    width: auto !important;
+    min-width: 0 !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    line-height: 1 !important;
+  }
+
+  /* Calendar grid improvements for very small screens */
+  .calendar-overview .stats-card {
+    padding: 0.4rem;
+  }
+}
+
+.progress-section-applying h2 {
   color: #222e8d;
-
 }

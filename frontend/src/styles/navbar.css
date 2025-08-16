@@ -5,13 +5,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.8rem 2.5rem;
+  padding: 0.3rem 2.5rem;
   background: linear-gradient(135deg, #1e1e2e 0%, #282c4e 50%, #2d3748 100%);
   backdrop-filter: blur(15px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
+}
+
+/* Shrink on scroll */
+.navbar.scrolled {
+  padding: 0.4rem 2rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  transition: padding 120ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
 /* Navbar Brand */
@@ -42,12 +49,20 @@
   font-family: 'Cairo', sans-serif;
 }
 
+.navbar.scrolled .navbar-brand .navbar-logo h4 {
+  font-size: 1.05rem;
+}
+
 .navbar-logo-img {
   height: 60px;
   width: auto;
   max-width: 100px;
   filter: brightness(1.15) contrast(1.15) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
   transition: all 0.3s ease;
+}
+
+.navbar.scrolled .navbar-logo-img {
+  height: 46px;
 }
 
 .navbar-logo-img:hover {
@@ -95,8 +110,8 @@
 .navbar-menu {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
+  justify-content: center; /* center items within the pill */
+  gap: 2.2rem;
   direction: ltr;
   font-family: 'Cairo', sans-serif;
   padding: 0.5rem 1rem;
@@ -104,6 +119,24 @@
   border-radius: 12px;
   backdrop-filter: blur(10px);
 
+}
+
+/* Truly center the pill horizontally on desktop */
+@media (min-width: 769px) {
+  .navbar {
+    position: sticky; /* behaves like relative for absolute children */
+  }
+  .navbar-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Slightly tighten link padding when scrolled */
+.navbar.scrolled .nav-link {
+  padding: 0.35rem 0.8rem;
+  font-size: 1rem;
 }
 
 .nav-link {
@@ -147,6 +180,12 @@
   align-items: center;
   justify-content: flex-end;
   font-family: 'Cairo', sans-serif;
+}
+
+.navbar.scrolled .profile-icon,
+.navbar.scrolled .logout-icon {
+  width: 40px;
+  height: 40px;
 }
 
 .navbar-auth .btn {

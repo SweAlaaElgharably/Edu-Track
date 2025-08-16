@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/navbar.css";
@@ -7,6 +7,32 @@ import psuLogo from "../assets/psu-logo.svg";
 function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    // Use hysteresis to prevent rapid toggling near the top edge
+    const SHOW_AT = 60; // px: add .scrolled when beyond this value
+    const HIDE_AT = 20; // px: remove .scrolled only when back above this value
+    let ticking = false;
+
+    const onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        setScrolled(prev => {
+          if (!prev && y > SHOW_AT) return true;
+          if (prev && y < HIDE_AT) return false;
+          return prev;
+        });
+        ticking = false;
+      });
+    };
+
+    onScroll(); // initialize in case page loads mid-scroll
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -17,7 +43,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-brand">
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
           <img src={psuLogo} alt="جامعة بورسعيد" className="navbar-logo-img" />

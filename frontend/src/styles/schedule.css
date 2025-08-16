@@ -105,6 +105,21 @@
   transition: all 0.3s ease;
 }
 
+/* Add top navy strip to match theme */
+.week-schedule {
+  position: relative;
+  overflow: hidden;
+}
+.week-schedule::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3182ce, #1a365d, #2c5aa0);
+}
+
 .today-schedule {
   padding: 0.7rem 0.5rem;
   border-radius: 10px;
