@@ -2,12 +2,10 @@ from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView,
 from .models import University
 from .serializers import UniversitySerializer
 from  user.permissions import GroupPermission
-from rest_framework.permissions import AllowAny
-
 class ListUniversity(ListAPIView):
     queryset =  University.objects.all()
     serializer_class = UniversitySerializer
-    permission_classes = [AllowAny]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'university.get_university'})]
 
 class CreateUniversity(CreateAPIView):
     queryset =  University.objects.all()
