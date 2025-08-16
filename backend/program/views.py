@@ -30,6 +30,3 @@ class DestoryProgram(DestroyAPIView):
     serializer_class = ProgramSerializer
     lookup_field = "slug"
     permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'program.delete_program'})]
-
-
-

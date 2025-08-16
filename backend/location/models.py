@@ -9,4 +9,4 @@ class Location(models.Model):
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='locations')
 
     def __str__(self):
-        return f"{self.name} ({self.faculty.name})"
+        return f"{self.name} ({self.faculty.name} - {self.faculty.university.name})"

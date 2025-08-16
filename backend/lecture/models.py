@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import User
+from course.models import Course
 from location.models import Location
 
 # Create your models here.
@@ -9,16 +10,16 @@ days = [
 ]
 
 class Lecture(models.Model):
-    title = models.CharField(max_length=100)
-    instructor = models.ForeignKey(User, on_delete=models.CASCADE)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="lectures")
+    instructor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="lectures_taught")
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="lectures")
     day = models.CharField(max_length=10, choices=days)
     starttime = models.TimeField()
     endtime = models.TimeField()
-    students = models.ManyToManyField(User, related_name='lectures', null=True)
+    students = models.ManyToManyField(User, related_name='lectures_attended')
 
     def __str__(self):
-        return self.title
+        return f"{self.course.title} - {self.location.name}"
     
 
 
