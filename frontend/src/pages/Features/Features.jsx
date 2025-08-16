@@ -119,9 +119,9 @@ function SplitCard({ dirFlip = false, title, points, variant = "charts", imageSr
   };
   const items = (textsByVariant[variant] || ["عنصر 1", "عنصر 2", "عنصر 3", "عنصر 4", "عنصر 5"]).slice(0, 5);
   return (
-    <section className={cn("split-section", dirFlip && "split-section--flip")}> 
+    <section className={cn("split-section", dirFlip && "split-section--flip", `split-section--${variant}`)}> 
       <motion.div
-        className="split-card "
+        className={cn("split-card", `split-card--${variant}`)}
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.25 }}

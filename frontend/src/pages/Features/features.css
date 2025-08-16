@@ -667,7 +667,7 @@ body.dark .tl-rail, .ft-page.dark .tl-rail {
   overflow: hidden;
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
   position: relative;
-  height: 500px;
+  height: auto; /* let content define height */
 }
 
 .split-card::before {
@@ -681,16 +681,127 @@ body.dark .tl-rail, .ft-page.dark .tl-rail {
 
 .split-section--flip .split-card {
   grid-template-areas: 'media text';
-  grid-template-columns: 1fr 1.1fr;
+}
+
+/* Allow grid children to shrink and wrap correctly */
+.split-text, .split-media { min-width: 0; }
+
+/* Responsive behavior for split cards and layout */
+@media (max-width: 1024px) {
+  .split-card {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'media' 'text';
+    height: auto; /* remove fixed height on tablets/phones */
+  }
+  .split-section--flip .split-card { grid-template-areas: 'media' 'text'; }
+  .split-text, .split-media { min-width: 0; }
+  /* strong wrapping to avoid ellipsis from base rule */
+  .split-list li { 
+    white-space: normal !important; 
+    overflow: visible !important; 
+    text-overflow: clip !important; 
+    overflow-wrap: anywhere; 
+    word-break: break-word;
+    line-height: 1.8;
+  }
+}
+
+@media (max-width: 768px) {
+  /* container and section spacing */
+  .ft-page { padding: 1rem; }
+  .ft-section { width: 100%; min-height: auto; padding: 1.25rem; }
+
+  /* stack cards and emphasize image */
+  .split-card { gap: 1rem; padding: 1rem; }
+  .split-title { text-align: center; font-size: 1.5rem; }
+  .demo-surface { aspect-ratio: 4/3; }
+  .demo-surface::after { background: rgba(0,0,0,0.2); }
+
+  /* wrap long list items on phones */
+  .split-list li { 
+    white-space: normal !important; 
+    overflow: visible !important; 
+    text-overflow: clip !important; 
+    overflow-wrap: break-word; 
+    word-break: normal; 
+    line-height: 1.6;
+    margin-block: 0.25rem;
+  }
+
+  /* grid collapses to one column on phones */
+  .ft-grid { grid-template-columns: 1fr; gap: 1rem; }
+
+  /* modal must fit viewport width */
+  .ft-modal { width: 95vw !important; max-width: 95vw; }
 }
 
 @media (max-width: 900px) {
-  .split-card { grid-template-columns: 1fr; }
+  .split-card { grid-template-columns: 1fr; gap: 0.75rem; }
+  /* ensure section uses full width on tablets/phones to avoid side whitespace */
+  .ft-section { width: 100%; margin: 0 auto; padding-inline: 1rem; }
+}
+
+/* Target the second split-card type (variant="cards") for better low-width layout */
+@media (max-width: 900px) {
+  .split-card--cards {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'media' 'text';
+    grid-auto-flow: row;
+    align-items: start;
+    gap: 0.75rem;
+    height: auto;
+  }
+  .split-section--flip .split-card--cards { grid-template-areas: 'media' 'text'; }
+  /* if the badge grid is present, make it compact */
+  .media-rows--cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  .split-card--cards .split-text { padding: 1rem; }
+}
+
+@media (max-width: 600px) {
+  .media-rows--cards { grid-template-columns: 1fr; }
+}
+
+/* Phone-first rules: 600px and below */
+@media (max-width: 600px) {
+  /* Container + sections */
+  .ft-page { padding: 0.875rem; }
+  .ft-section { width: 100%; padding: 1rem; min-height: auto; }
+
+  /* Split cards: stack both types, image first */
+  .split-card {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'media' 'text';
+    gap: 0.875rem;
+    padding: 0.875rem;
+    height: auto; /* override fixed height */
+  }
+  .split-section--flip .split-card { grid-template-areas: 'media' 'text'; }
+
+  /* Media sizing */
+  .demo-surface { aspect-ratio: 4/3; }
+  .demo-surface::after { background: rgba(0,0,0,0.2); }
+
+  /* Typography + wrapping */
+  .split-title { font-size: 1.35rem; text-align: center; }
+  .split-list li { 
+    white-space: normal !important; 
+    overflow: visible !important; 
+    text-overflow: clip !important; 
+    overflow-wrap: break-word; 
+    word-break: normal; 
+    line-height: 1.6;
+    margin-block: 0.2rem;
+  }
+  /* Feature grids */
+  .ft-grid { grid-template-columns: 1fr; gap: 0.875rem; }
+
+  /* Modal must fit viewport */
+  .ft-modal { width: 96vw !important; max-width: 96vw; }
 }
 
 .split-text {
   padding: 2rem;
-  color: #fff;
+  color: #182e8d; /* ensure readable on light card */
   grid-area: text;
 }
 
@@ -778,7 +889,10 @@ body.dark .tl-rail, .ft-page.dark .tl-rail {
   .split-cta { width: 100%; }
 }
 
-.split-media { padding: 1rem 1rem 1rem 0; grid-area: media; }
+.split-media { padding: 1rem 0 1rem 0; grid-area: media;
+  
+
+}
 
 /* ==========================
    Feature Details Modal
@@ -803,6 +917,7 @@ body.dark .tl-rail, .ft-page.dark .tl-rail {
   box-shadow: 0 24px 60px rgba(0,0,0,0.55);
   display: flex;
   flex-direction: column;
+  width: fit-content;
 }
 
 .ft-modal::before {
@@ -859,13 +974,14 @@ body.dark .tl-rail, .ft-page.dark .tl-rail {
   margin: 0 0 0.75rem 0;
   font-weight: 800;
   color: #182e8d;
+  font-size: 1.4rem;
 }
 
 .ft-modal-paragraph {
   margin: 0;
   color: #182e8d;
-  font-size: 1.05rem;
-  line-height: 1.9;
+  font-size: 1.2rem;
+  line-height: 2;
   white-space: pre-line;
 }
 
@@ -873,7 +989,7 @@ body.dark .tl-rail, .ft-page.dark .tl-rail {
 
 .demo-surface {
   height: 100%;
-  min-height: 260px;
+  min-height: 200px;
   border-radius: 14px;
   background: linear-gradient(135deg, rgba(49,130,206,0.15), rgba(26,54,93,0.35));
   border: 1px dashed rgba(255,255,255,0.15);
@@ -1026,9 +1142,11 @@ body.dark .tl-rail, .ft-page.dark .tl-rail {
 /* Variant-specific layouts removed to enforce a single unified 3-row layout across all cards */
 
 @media (max-width: 600px) {
-  .media-rows { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(6, 1fr); }
+  .media-rows { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(6, 1fr); 
+  }
   .media-rows .tile { min-height: 60px; }
-  /* Reset spans for small screens */
+
+
   .media-rows[class*='media-rows--'] .tile { grid-column: auto / span 1 !important; grid-row: auto !important; }
 }
 
@@ -1056,3 +1174,6 @@ body.dark .tl-rail, .ft-page.dark .tl-rail {
 .demo-surface--grid .demo-c {
   width: 44%; height: 86px; left: 1rem; right: auto; top: 8.5rem;
 }
+
+
+
