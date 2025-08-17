@@ -166,7 +166,7 @@
 
 .hall-modal h3 {
   text-align: center;
-  color: #646cff;
+  color: #3182ce;
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
@@ -207,31 +207,6 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #646cff;
+  color: #3182ce;
   cursor: pointer;
-}
-
-/* Mobile responsive: table -> stacked cards */
-@media (max-width: 800px) {
-  .hall-table thead { display: none; }
-  .hall-table, .hall-table tbody, .hall-table tr { display: block; width: 100%; }
-  .hall-table tr { margin-bottom: 1rem; border-radius: 12px; background: #fff; box-shadow: 0 6px 18px rgba(15,23,42,0.04); padding: 0.75rem; border: 1px solid rgba(0,0,0,0.04); }
-  .hall-table td { display: flex; justify-content: space-between; padding: 0.6rem 0.4rem; text-align: right; border-bottom: none; font-size: 0.95rem; }
-  .hall-table td::before { content: ''; font-weight: 700; margin-left: 1rem; color: #374151; }
-  .hall-table td:nth-child(1)::before { content: 'اسم القاعه'; }
-  .hall-table td:nth-child(2)::before { content: 'اسم الكلية'; }
-  .hall-table td:nth-child(3)::before { content: 'slug'; }
-  .hall-table td:nth-child(4)::before { content: 'السعه'; }
-  .hall-table td:nth-child(5)::before { content: 'تعديل'; }
-  .hall-table td:nth-child(6)::before { content: 'ازاله'; }
-
-  .hall-row .btn { width: 100%; display: block; margin: 0.35rem 0; }
-
-  .hall-modal { min-width: 95vw; padding: 1rem; border-radius: 12px; }
-  .hall-modal .btn { width: 100%; }
-}
-
-@media (max-width: 1024px) and (min-width: 801px) {
-  .hall-table-wrapper { padding: 1rem; }
-  .hall-modal { max-width: 720px; width: calc(100% - 48px); }
 }

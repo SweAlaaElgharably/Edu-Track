@@ -38,16 +38,21 @@ const validateForm = (form) => {
 const AddEditForm = memo(
   ({ isClosing, editSlug, form, error, onClose, onSubmit, onChange }) => {
     return (
-      <div className={`faculty-form-container ${isClosing ? "fadeOut" : ""}`}>
-        <div className="faculty-form-card content-card">
-          <div className="form-header">
-            <h2 className="form-title">
-              {editSlug ? "تعديل كلية" : "إضافة كلية"}
-            </h2>
-            <button className="close-button" onClick={onClose}>
-              ✕
-            </button>
-          </div>
+      <div className={`faculty-modal-bg ${isClosing ? "fadeOut" : ""}`}>
+        <div className="faculty-modal">
+          <button
+            type="button"
+            className="close-btn"
+            onClick={() => {
+              onClose();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            ×
+          </button>
+
+          <h3>{editSlug ? "تعديل كلية" : "إضافة كلية"}</h3>
+
           <form onSubmit={onSubmit} dir="rtl" autoComplete="off">
             <div className="form-group">
               <label htmlFor="faculty-name" className="themed-label">
@@ -66,6 +71,7 @@ const AddEditForm = memo(
               />
               <small className="input-helper">{form.name.length}/30</small>
             </div>
+
             <div className="form-group">
               <label htmlFor="faculty-slug" className="themed-label">
                 الرابط المختصر
@@ -86,6 +92,7 @@ const AddEditForm = memo(
                 {form.slug.length}/30 - سيتم استخدامه في الرابط
               </small>
             </div>
+
             <div className="form-group">
               <label htmlFor="faculty-logo" className="themed-label">
                 شعار الكلية
@@ -101,10 +108,25 @@ const AddEditForm = memo(
               />
               <small className="input-helper">الحد الأقصى: 5 ميجابايت</small>
             </div>
+
             {error && <div className="error-message">{error}</div>}
+
             <button type="submit" className="submit-button">
               {editSlug ? "حفظ التغييرات" : "إضافة الكلية"}
             </button>
+
+            <div className="actions">
+              <button
+                type="button"
+                className="btn cancel"
+                onClick={() => {
+                  onClose();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              >
+                إلغاء
+              </button>
+            </div>
           </form>
         </div>
       </div>

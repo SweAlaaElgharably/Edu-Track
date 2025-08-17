@@ -161,7 +161,8 @@
 
 .lecture-modal h3 {
   text-align: center;
-  color: #646cff;
+  color: #3182ce;
+  font-size: 1.5rem;
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
@@ -202,7 +203,7 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #646cff;
+  color: #3182ce;
   cursor: pointer;
 }
 
@@ -210,32 +211,4 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-}
-
-/* Mobile responsive: table -> card layout */
-@media (max-width: 800px) {
-  .lecture-table thead { display: none; }
-  .lecture-table, .lecture-table tbody, .lecture-table tr { display: block; width: 100%; }
-  .lecture-table tr { margin-bottom: 1rem; border-radius: 12px; background: #fff; box-shadow: 0 6px 18px rgba(15,23,42,0.04); padding: 0.75rem; border: 1px solid rgba(0,0,0,0.04); }
-  .lecture-table td { display: flex; justify-content: space-between; padding: 0.6rem 0.4rem; text-align: right; border-bottom: none; font-size: 0.95rem; }
-  .lecture-table td::before { content: ''; font-weight: 700; margin-left: 1rem; color: #374151; }
-  .lecture-table td:nth-child(1)::before { content: 'المحاضر'; }
-  .lecture-table td:nth-child(2)::before { content: 'المحاضر (ID)'; }
-  .lecture-table td:nth-child(3)::before { content: 'القاعه'; }
-  .lecture-table td:nth-child(4)::before { content: 'اليوم'; }
-  .lecture-table td:nth-child(5)::before { content: 'الوقت'; }
-  .lecture-table td:nth-child(6)::before { content: 'تعديل'; }
-  .lecture-table td:nth-child(7)::before { content: 'حذف'; }
-
-  .btn { width: 100%; display: block; margin: 0.35rem 0; }
-
-  /* Modal tweaks */
-  .lecture-modal { min-width: 95vw; padding: 1rem; border-radius: 12px; }
-  .lecture-modal .btn { width: 100%; }
-  .time-row { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 1024px) and (min-width: 801px) {
-  .lecture-table-wrapper { padding: 1rem; }
-  .lecture-modal { max-width: 720px; width: calc(100% - 48px); }
 }

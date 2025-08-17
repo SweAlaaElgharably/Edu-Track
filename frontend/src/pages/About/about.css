@@ -105,7 +105,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.2) 100%);
+  /* Stronger overlay + vignette like Home to make text pop */
+  background:
+    radial-gradient(100% 70% at 50% 35%, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.0) 55%),
+    linear-gradient(to bottom, rgba(10,15,25,0.65) 0%, rgba(10,15,25,0.45) 40%, rgba(10,15,25,0.65) 100%);
   pointer-events: none;
 }
 
@@ -134,7 +137,7 @@
 
 .about-edu-subtitle {
   font-size: 1.6rem;
-  color: rgba(255, 255, 255, 0.95);
+  color: white;
   margin-bottom: 2rem;
   line-height: 1.6;
   animation: about-edu-fadeInUp 1s ease-out 0.2s both;
@@ -179,13 +182,13 @@
 }
 
 .about-edu-lighthouse::after {
-  content: '';
+  content: 'PSU';
   position: absolute;
-  bottom: -10px;
-  left: 50%;
+  bottom: -16px;
+  left: 49.5%;
   transform: translateX(-50%);
   width: 60px;
-  height: 15px;
+  height: 25px;
   background: linear-gradient(135deg, #374151 0%, #6b7280 100%);
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -207,7 +210,8 @@
   background: var(--about-edu-white);
   border-radius: var(--about-edu-border-radius);
   padding: 2rem;
-  box-shadow: var(--about-edu-shadow);
+  /* add secondary-tinted elevation by default */
+  box-shadow: var(--about-edu-shadow), 0 10px 24px rgba(59, 130, 246, 0.14);
   border: 2px solid transparent;
   transition: var(--about-edu-transition);
   position: relative;
@@ -246,16 +250,17 @@
 }
 
 .about-edu-card h3 {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 800;
   color: var(--about-edu-primary);
   margin-bottom: 1rem;
 }
 
 .about-edu-card p {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1.7;
   color: var(--about-edu-gray);
+  font-weight: 500;
 }
 
 /* Goals Section */
@@ -299,6 +304,8 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: var(--about-edu-transition);
+  /* subtle default elevation so chips pop */
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.12);
 }
 
 .about-edu-goal-item:hover {
@@ -322,7 +329,8 @@
 
 .about-edu-goal-item p {
   color: var(--about-edu-white);
-  font-size: 1rem;
+  font-size: 1.05rem;
+  font-weight: 500;
   line-height: 1.6;
   margin: 0;
 }
@@ -336,7 +344,8 @@
   background: var(--about-edu-white);
   border-radius: var(--about-edu-border-radius);
   padding: 3rem;
-  box-shadow: var(--about-edu-shadow);
+  /* stronger default elevation with secondary tint */
+  box-shadow: var(--about-edu-shadow), 0 12px 28px rgba(59, 130, 246, 0.14);
   position: relative;
   overflow: hidden;
 }
@@ -353,10 +362,23 @@
   opacity: 0.1;
 }
 
+/* Add the same top gradient bar used on cards */
+.about-edu-history-content::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--about-edu-gradient-primary);
+  pointer-events: none;
+}
+
 .about-edu-history-text p {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   line-height: 1.8;
   color: var(--about-edu-gray);
+  font-weight: 600;
   margin-bottom: 1.5rem;
   position: relative;
   z-index: 1;
@@ -430,7 +452,8 @@
   border-radius: 12px;
   margin: 0 2rem;
   flex: 1;
-  box-shadow: var(--about-edu-shadow);
+  /* stronger default elevation with secondary tint */
+  box-shadow: var(--about-edu-shadow), 0 10px 24px rgba(59, 130, 246, 0.14);
   border: 2px solid transparent;
   transition: transform 300ms ease, border-color 300ms ease;
   will-change: transform;
@@ -442,14 +465,16 @@
 }
 
 .about-edu-timeline-content h4 {
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.45rem;
+  font-weight: 800;
   color: var(--about-edu-primary);
   margin-bottom: 0.5rem;
 }
 
 .about-edu-timeline-content p {
   color: var(--about-edu-gray);
+  font-size: 1.05rem;
+  font-weight: 500;
   line-height: 1.6;
   margin: 0;
 }
@@ -474,6 +499,12 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  /* Apply hover effect by default */
+  transform: translateY(-5px);
+  box-shadow: var(--about-edu-shadow-hover);
+  /* keep border transparent in normal state; will animate on hover */
+  border-color: transparent;
+  will-change: transform;
 }
 
 .about-edu-center-item::before {
@@ -484,22 +515,55 @@
   right: 0;
   height: 3px;
   background: var(--about-edu-gradient-primary);
-  transform: scaleX(0);
+  /* Show top bar by default */
+  transform: scaleX(1);
   transition: var(--about-edu-transition);
 }
 
 .about-edu-center-item:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--about-edu-shadow-hover);
+  /* smooth lift + scale */
+  transform: translateY(-8px) scale(1.02);
+  /* add a secondary-tinted layer to the elevation */
+  box-shadow: var(--about-edu-shadow-hover), 0 8px 22px rgba(59, 130, 246, 0.18);
   border-color: var(--about-edu-secondary);
+  filter: saturate(1.04);
 }
 
 .about-edu-center-item:hover::before {
   transform: scaleX(1);
 }
 
+/* Keyboard accessibility mirrors hover */
+.about-edu-center-item:focus-visible {
+  outline: none;
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--about-edu-shadow-hover), 0 8px 22px rgba(59, 130, 246, 0.18);
+  border-color: var(--about-edu-secondary);
+}
+
+/* Soft radial highlight for hover/focus */
+/* Animated 1px border (except top) draws smoothly on hover */
+.about-edu-center-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  /* three gradient lines (bottom, left, right) matching the top bar gradient */
+  background:
+    var(--about-edu-gradient-primary) bottom center/0 1px no-repeat,
+    var(--about-edu-gradient-primary) left top/1px 0 no-repeat,
+    var(--about-edu-gradient-primary) right top/1px 0 no-repeat;
+  transition: background-size 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-edu-center-item:hover::after,
+.about-edu-center-item:focus-visible::after {
+  background-size: 100% 1px, 1px 100%, 1px 100%;
+}
+
 .about-edu-center-item h4 {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: var(--about-edu-primary);
   margin: 0;

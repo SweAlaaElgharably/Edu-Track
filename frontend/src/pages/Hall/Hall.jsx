@@ -328,15 +328,20 @@ export default function Hall() {
           <form
             className="hall-modal"
             onSubmit={handleSubmit}
-            style={{ maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}
+            style={{ maxWidth: 520, padding: "0.6rem 0.75rem", gap: "0.5rem" }}
           >
             <button
               type="button"
               className="close-btn"
-              onClick={() => setShowModal(false)}
-            ></button>
-            <h3>
-              {modalType === "create" ? "اضافة قاعة جديدة" : "تعديل القاعة"}
+              onClick={() => {
+                setShowModal(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              ×
+            </button>
+            <h3 style={{ fontSize: "1.15rem", marginBottom: "0.5rem" }}>
+              {modalType === "create" ? "اضافة القاعة" : "تعديل القاعة"}
             </h3>
             <label>
               اسم القاعة:
@@ -423,8 +428,6 @@ export default function Hall() {
             style={{
               maxWidth: 400,
               textAlign: "center",
-              maxHeight: "calc(100vh - 120px)",
-              overflowY: "auto",
             }}
           >
             <button

@@ -34,8 +34,8 @@
 }
 
 .pnf-home-btn {
-  background: #fff;
-  color: #2a314b;
+  background: #2a314b;
+  color: #ffffff;
   font-family: 'Cairo', sans-serif;
   border: none;
   border-radius: 30px;
@@ -48,7 +48,7 @@
   margin-top: 1em;
 }
 .pnf-home-btn:hover {
-  background: #2a314b;
+  background: #596fbf;
   color: #fff;
   transform: translateY(-2px) scale(1.04);
 }
