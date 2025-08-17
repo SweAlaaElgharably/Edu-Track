@@ -35,6 +35,7 @@ export const getLecture = async (id) => {
 export const createLecture = async (payload) => {
   // Client-side time validation
   assertStartBeforeEnd(payload.starttime, payload.endtime);
+  
   const res = await fetch(`${api.baseURL}/lecture/create/`, {
     method: "POST",
     headers: api.getAuthHeaders(),
@@ -51,6 +52,7 @@ export const createLecture = async (payload) => {
 export const updateLecture = async (id, payload) => {
   // Client-side time validation
   assertStartBeforeEnd(payload.starttime, payload.endtime);
+  
   const res = await fetch(`${api.baseURL}/lecture/${id}/update/`, {
     method: "PUT",
     headers: api.getAuthHeaders(),

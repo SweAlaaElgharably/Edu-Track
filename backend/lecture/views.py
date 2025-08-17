@@ -1,33 +1,33 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 from .models import Lecture
-from .serializers import LectureSerializer
-from user.permissions import GroupPermission
+from .serializers import LectureSerializer, LectureCreateUpdateSerializer
 
 # Create your views here.
 class ListLecture(ListAPIView):
     queryset =  Lecture.objects.all()
     serializer_class = LectureSerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'lecture.view_lecture'})]
+    permission_classes = [IsAuthenticated]
 
 
 class CreateLecture(CreateAPIView):
     queryset =  Lecture.objects.all()
-    serializer_class = LectureSerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'lecture.add_lecture'})]
+    serializer_class = LectureCreateUpdateSerializer
+    permission_classes = [IsAuthenticated]
 
 class RetrieveLecture(RetrieveAPIView):
     queryset =  Lecture.objects.all()
     serializer_class = LectureSerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'lecture.view_lecture'})]
+    permission_classes = [IsAuthenticated]
 
 
 class UpdateLecture(UpdateAPIView):
     queryset =  Lecture.objects.all()
-    serializer_class = LectureSerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'lecture.change_lecture'})]
+    serializer_class = LectureCreateUpdateSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class DestoryLecture(DestroyAPIView):
     queryset =  Lecture.objects.all()
     serializer_class = LectureSerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'lecture.delete_lecture'})]
+    permission_classes = [IsAuthenticated]

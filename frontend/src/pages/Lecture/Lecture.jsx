@@ -7,10 +7,14 @@ import {
   deleteLecture,
 } from "../../services/lectureApi";
 import { fetchLocations } from "../../services/locationApi";
+import { fetchCourses } from "../../services/courseApi";
+import { fetchUsers } from "../../services/userApi";
 
 export default function Lecture() {
   const [lectures, setLectures] = useState([]);
   const [locations, setLocations] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -19,19 +23,23 @@ export default function Lecture() {
   const [modalType, setModalType] = useState("create");
   const [selectedLecture, setSelectedLecture] = useState(null);
 
-  // Loaders and CRUD handlers (restored)
+  // Loaders and CRUD handlers
   useEffect(() => {
     loadLectures();
     loadLocations();
+    loadCourses();
+    loadUsers();
   }, []);
 
   const loadLectures = async () => {
     setLoading(true);
     try {
       const data = await fetchLectures();
+      console.log("Lectures loaded:", data);
       setLectures(Array.isArray(data) ? data : []);
       setError(null);
     } catch (err) {
+      console.error("Error loading lectures:", err);
       setLectures([]);
       setError(err?.message || "");
     }
@@ -41,10 +49,33 @@ export default function Lecture() {
   const loadLocations = async () => {
     try {
       const data = await fetchLocations();
+      console.log("Locations loaded:", data);
       setLocations(Array.isArray(data) ? data : []);
     } catch (err) {
+      console.error("Error loading locations:", err);
       setLocations([]);
-      setError(err?.message || "");
+    }
+  };
+
+  const loadCourses = async () => {
+    try {
+      const data = await fetchCourses();
+      console.log("Courses loaded:", data);
+      setCourses(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Error loading courses:", err);
+      setCourses([]);
+    }
+  };
+
+  const loadUsers = async () => {
+    try {
+      const data = await fetchUsers();
+      console.log("Users loaded:", data);
+      setUsers(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Error loading users:", err);
+      setUsers([]);
     }
   };
 
@@ -59,9 +90,9 @@ export default function Lecture() {
     setModalType("update");
     setSelectedLecture(lec);
     setForm({
-      title: lec.title || "",
-      instructor: lec.instructor || "",
-      location: lec.location || lec.location_id || "",
+      course: lec.course?.id || lec.course_id || "",
+      instructor: lec.instructor?.id || lec.instructor_id || "",
+      location: lec.location?.id || lec.location_id || "",
       day: lec.day || "",
       starttime: (lec.starttime || "").slice(0, 5),
       endtime: (lec.endtime || "").slice(0, 5),
@@ -83,9 +114,9 @@ export default function Lecture() {
   };
 
   const [form, setForm] = useState({
-    title: "",
-    instructor: "", // user name
-    location: "", // location id
+    course: "", // course ID
+    instructor: "", // user ID
+    location: "", // location ID
     day: "",
     starttime: "", // HH:MM
     endtime: "", // HH:MM
@@ -106,7 +137,7 @@ export default function Lecture() {
 
   const resetForm = () => {
     setForm({
-      title: "",
+      course: "",
       instructor: "",
       location: "",
       day: "",
@@ -122,18 +153,18 @@ export default function Lecture() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form submitted:", form);
+    
     // Basic client-side validations
-    if (!form.title?.trim()) {
-      setError("عنوان المحاضرة مطلوب");
+    if (!form.course) {
+      setError("المقرر مطلوب");
       return;
     }
-    const instructorId = Number(form.instructor);
-    if (!Number.isFinite(instructorId) || instructorId <= 0) {
-      setError("رقم المٌحاضر (ID) مطلوب ويجب أن يكون رقمًا صحيحًا");
+    if (!form.instructor) {
+      setError("المٌحاضر مطلوب");
       return;
     }
-    const locationId = Number(form.location);
-    if (!Number.isFinite(locationId) || locationId <= 0) {
+    if (!form.location) {
       setError("القاعه مطلوبة");
       return;
     }
@@ -158,13 +189,15 @@ export default function Lecture() {
       }
 
       const payload = {
-        title: form.title.trim(),
-        instructor: instructorId,
-        location: locationId,
+        course: form.course,
+        instructor: form.instructor,
+        location: form.location,
         day: form.day,
         starttime: form.starttime,
         endtime: form.endtime,
       };
+
+      console.log("Sending payload:", payload);
 
       if (modalType === "create") {
         await createLecture(payload);
@@ -176,6 +209,7 @@ export default function Lecture() {
       await loadLectures();
       setError(null);
     } catch (err) {
+      console.error("Error submitting form:", err);
       setError(err?.message);
     }
     setLoading(false);
@@ -192,6 +226,28 @@ export default function Lecture() {
     return loc ? loc.name : lec.location;
   };
 
+  const getCourseTitle = (lec) => {
+    // If backend provides nested object
+    if (lec.course && typeof lec.course === "object")
+      return lec.course.title || lec.course.name;
+    // Try match by id
+    const course = courses.find(
+      (c) => c.id === lec.course || c.slug === lec.course
+    );
+    return course ? course.title : lec.course;
+  };
+
+  const getInstructorName = (lec) => {
+    // If backend provides nested object
+    if (lec.instructor && typeof lec.instructor === "object")
+      return lec.instructor.username || lec.instructor.first_name || lec.instructor.name;
+    // Try match by id
+    const user = users.find(
+      (u) => u.id === lec.instructor
+    );
+    return user ? (user.username || user.first_name || `User ${user.id}`) : lec.instructor;
+  };
+
   return (
     <div className="lecture-page">
       <h2 className="lecture-header">المحاضرات</h2>
@@ -202,6 +258,9 @@ export default function Lecture() {
           {error}
         </div>
       )}
+
+      {/* Debug info */}
+
 
       <div
         style={{
@@ -249,8 +308,8 @@ export default function Lecture() {
           <table className="lecture-table">
             <thead>
               <tr>
-                <th>العنوان</th>
-                <th>المحاضر (ID)</th>
+                <th>المقرر</th>
+                <th>المحاضر</th>
                 <th>القاعة</th>
                 <th>اليوم</th>
                 <th>الوقت</th>
@@ -261,8 +320,8 @@ export default function Lecture() {
             <tbody>
               {lectures.map((lec) => (
                 <tr key={lec.id} className="lecture-row">
-                  <td>{lec.title}</td>
-                  <td>{lec.instructor}</td>
+                  <td>{getCourseTitle(lec)}</td>
+                  <td>{getInstructorName(lec)}</td>
                   <td>{getLocationName(lec)}</td>
                   <td>{lec.day}</td>
                   <td>
@@ -325,26 +384,34 @@ export default function Lecture() {
               {modalType === "create" ? "اضافة محاضرة جديدة" : "تعديل محاضرة"}
             </h3>
             <label>
-              عنوان المحاضرة:
-              <input
-                type="text"
-                value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+              المقرر:
+              <select
+                value={form.course}
+                onChange={(e) => setForm({ ...form, course: e.target.value })}
                 required
-              />
+              >
+                <option value="">اختر المقرر</option>
+                {courses.map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course.title}
+                  </option>
+                ))}
+              </select>
             </label>
             <label>
-              رقم المٌحاضر (ID):
-              <input
-                type="number"
-                min="1"
+              المحاضر:
+              <select
                 value={form.instructor}
-                onChange={(e) =>
-                  setForm({ ...form, instructor: e.target.value })
-                }
-                placeholder="مثال: 5"
+                onChange={(e) => setForm({ ...form, instructor: e.target.value })}
                 required
-              />
+              >
+                <option value="">اختر المحاضر</option>
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.username || user.first_name || `User ${user.id}`}
+                  </option>
+                ))}
+              </select>
             </label>
             <label>
               القاعة:
@@ -473,7 +540,7 @@ export default function Lecture() {
               تأكيد حذف المحاضرة
             </h3>
             <p>
-              هل أنت متأكد من حذف المحاضرة <b>{lectureToDelete.title}</b>؟ لا
+              هل أنت متأكد من حذف المحاضرة <b>{getCourseTitle(lectureToDelete)}</b>؟ لا
               يمكن التراجع عن هذا الإجراء.
             </p>
             <div
