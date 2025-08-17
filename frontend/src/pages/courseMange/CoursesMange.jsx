@@ -280,14 +280,19 @@ export default function CoursesMange() {
           <form
             className="courses-mange-modal"
             onSubmit={handleSubmit}
-            style={{ maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}
+            style={{ maxWidth: 520, padding: "0.6rem 0.75rem", gap: "0.5rem" }}
           >
             <button
               type="button"
               className="close-btn"
-              onClick={() => setShowModal(false)}
-            ></button>
-            <h3>
+              onClick={() => {
+                setShowModal(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              ×
+            </button>
+            <h3 style={{ fontSize: "1.15rem", marginBottom: "0.5rem" }}>
               {modalType === "create" ? "اضافة مقرر جديد" : "تعديل المقرر"}
             </h3>
             <label>
@@ -386,8 +391,6 @@ export default function CoursesMange() {
             style={{
               maxWidth: 400,
               textAlign: "center",
-              maxHeight: "calc(100vh - 120px)",
-              overflowY: "auto",
             }}
           >
             <button
