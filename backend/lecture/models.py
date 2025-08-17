@@ -16,7 +16,7 @@ class Lecture(models.Model):
     day = models.CharField(max_length=10, choices=days)
     starttime = models.TimeField()
     endtime = models.TimeField()
-    students = models.ManyToManyField(User, related_name='lectures_attended')
+    students = models.ManyToManyField(User, related_name='lectures_attended', null=True)
 
     def __str__(self):
         return f"{self.course.title} - {self.location.name}"

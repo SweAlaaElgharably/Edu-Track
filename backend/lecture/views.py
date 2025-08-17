@@ -7,7 +7,7 @@ from user.permissions import GroupPermission
 class ListLecture(ListAPIView):
     queryset =  Lecture.objects.all()
     serializer_class = LectureSerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'lecture.get_lecture'})]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'lecture.view_lecture'})]
 
 
 class CreateLecture(CreateAPIView):
@@ -18,7 +18,7 @@ class CreateLecture(CreateAPIView):
 class RetrieveLecture(RetrieveAPIView):
     queryset =  Lecture.objects.all()
     serializer_class = LectureSerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'lecture.get_lecture'})]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'lecture.view_lecture'})]
 
 
 class UpdateLecture(UpdateAPIView):

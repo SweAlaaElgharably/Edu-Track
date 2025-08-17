@@ -6,7 +6,7 @@ from  user.permissions import GroupPermission
 class ListProgram(ListAPIView):
     queryset =  Program.objects.all()
     serializer_class = ProgramSerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'program.get_program'})]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'program.view_program'})]
 
 class CreateProgram(CreateAPIView):
     queryset =  Program.objects.all()
@@ -17,7 +17,7 @@ class RetrieveProgram(RetrieveAPIView):
     queryset =  Program.objects.all()
     serializer_class = ProgramSerializer
     lookup_field = "slug"
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'program.get_program'})]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'program.view_program'})]
 
 class UpdateProgram(UpdateAPIView):
     queryset =  Program.objects.all()

@@ -7,7 +7,7 @@ from  user.permissions import GroupPermission
 class ListCourse(ListAPIView):
     queryset =  Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'course.get_course'})]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'course.view_course'})]
 
 class CreateCourse(CreateAPIView):
     queryset =  Course.objects.all()
@@ -18,7 +18,7 @@ class RetrieveCourse(RetrieveAPIView):
     queryset =  Course.objects.all()
     serializer_class = CourseSerializer
     lookup_field = "slug"
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'course.get_course'})]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'course.view_course'})]
 
 class UpdateCourse(UpdateAPIView):
     queryset =  Course.objects.all()

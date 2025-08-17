@@ -7,7 +7,7 @@ from user.permissions import GroupPermission
 class ListLocation(ListAPIView):
     queryset =  Location.objects.all()
     serializer_class = LocationSerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'location.get_location'})]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'location.view_location'})]
 
 class CreateLocation(CreateAPIView):
     queryset =  Location.objects.all()
@@ -19,7 +19,7 @@ class RetrieveLocation(RetrieveAPIView):
     queryset =  Location.objects.all()
     serializer_class = LocationSerializer
     lookup_field = "slug"
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'location.get_location'})]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'location.view_location'})]
 
 
 class UpdateLocation(UpdateAPIView):

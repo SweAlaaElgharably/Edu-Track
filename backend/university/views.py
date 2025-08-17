@@ -5,7 +5,7 @@ from  user.permissions import GroupPermission
 class ListUniversity(ListAPIView):
     queryset =  University.objects.all()
     serializer_class = UniversitySerializer
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'university.get_university'})]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'university.view_university'})]
 
 class CreateUniversity(CreateAPIView):
     queryset =  University.objects.all()
@@ -17,7 +17,7 @@ class RetrieveUniversity(RetrieveAPIView):
     queryset =  University.objects.all()
     serializer_class = UniversitySerializer
     lookup_field = "slug"
-    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'university.get_university'})]
+    permission_classes = [type('CustomPerm',(GroupPermission,),{'required_permission': 'university.view_university'})]
 
 class UpdateUniversity(UpdateAPIView):
     queryset =  University.objects.all()
