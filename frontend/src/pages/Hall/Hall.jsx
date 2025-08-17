@@ -26,6 +26,20 @@ export default function Hall() {
     capacity: "",
   });
 
+  // Helpers to work with both shapes coming from API:
+  // hall.faculty could be an object {id, name} (mock) OR just an ID (real API)
+  const getFacultyId = (facultyValue) =>
+    typeof facultyValue === "object" && facultyValue !== null
+      ? facultyValue.id
+      : Number(facultyValue);
+
+  const getFacultyName = (hall) => {
+    const fid = getFacultyId(hall?.faculty);
+    const fac = faculties.find((f) => f.id === fid);
+    // If backend returns nested object, fallback to it; otherwise use looked-up name
+    return fac?.name ?? (typeof hall?.faculty === "object" ? hall?.faculty?.name : "");
+  };
+
   // MOCK DATA FOR DEMO/DEV - REMOVE THIS BLOCK FOR PRODUCTION
   // To show mock data, uncomment the following and comment out the useEffect below
   /*
@@ -143,7 +157,7 @@ export default function Hall() {
     setSelectedHall(hall);
     setForm({
       name: hall.name,
-      faculty: hall.faculty.id,
+      faculty: getFacultyId(hall.faculty),
       slug: hall.slug,
       capacity: hall.capacity,
     });
@@ -284,7 +298,7 @@ export default function Hall() {
               {halls.map((hall) => (
                 <tr key={hall.slug} className="hall-row">
                   <td>{hall.name}</td>
-                  <td>{hall.faculty?.name}</td>
+                  <td>{getFacultyName(hall)}</td>
                   <td>{hall.slug}</td>
                   <td>{hall.capacity}</td>
                   <td>
