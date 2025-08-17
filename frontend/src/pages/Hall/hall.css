@@ -166,7 +166,7 @@
 
 .hall-modal h3 {
   text-align: center;
-  color: #646cff;
+  color: #3182ce;
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
@@ -207,6 +207,6 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #646cff;
+  color: #3182ce;
   cursor: pointer;
 }

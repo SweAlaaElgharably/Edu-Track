@@ -371,7 +371,7 @@
 
 .faculty-modal h3 {
   text-align: center;
-  color: #646cff;
+  color: #3182ce;
   margin-bottom: 0.8rem;
   font-size: 1.15rem;
 }
@@ -395,7 +395,6 @@
   background: #b71c1c;
 }
 .faculty-modal .btn.cancel {
-  background: #f7c7c7; /* match pink cancel from second modal */
   color: #222;
   border: red;
   padding: 0.5rem 1rem;
@@ -404,6 +403,7 @@
 }
 .faculty-modal .btn.cancel:hover {
   filter: brightness(0.95);
+  background-color: #f7c7c7;
 }
 
 .faculty-modal .close-btn {
@@ -413,7 +413,7 @@
   background: none;
   border: none;
   font-size: 1.4rem;
-  color: #646cff;
+  color: #3182ce;
   cursor: pointer;
 }
 
