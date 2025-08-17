@@ -24,6 +24,11 @@ function Dashboard() {
     return () => clearInterval(timer);
   }, []);
 
+  // Ensure we scroll to the top whenever switching dashboard tabs
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [activeTab]);
+
   // Calendar helpers
   const monthNames = [
     "يناير",
