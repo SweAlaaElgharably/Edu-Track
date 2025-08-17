@@ -362,6 +362,18 @@
   opacity: 0.1;
 }
 
+/* Add the same top gradient bar used on cards */
+.about-edu-history-content::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--about-edu-gradient-primary);
+  pointer-events: none;
+}
+
 .about-edu-history-text p {
   font-size: 1.3rem;
   line-height: 1.8;
