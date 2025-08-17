@@ -14,6 +14,7 @@ import ForgotPassword from "../src/pages/ForgotPassword/ForgotPassword";
 import HelpCenter from "../src/pages/HelpCenter/HelpCenter";
 import ChangePassword from "../src/pages/ChangePassword/ChangePassword";
 import About from "../src/pages/About/About";
+import ResetPassword from "../src/pages/ResetPassword/ResetPassword";
 
 // Small helper to set the page title per route
 const Page = ({ title, children }) => {
@@ -35,6 +36,9 @@ const RoutesList = () => {
   <Route path="/" element={<Page title="الرئيسية"><Home /></Page>} />
   <Route path="/login" element={<Page title="تسجيل الدخول"><Login /></Page>} />
   <Route path="/forgot-password" element={<Page title="استعادة كلمة المرور"><ForgotPassword /></Page>} />
+  <Route path="/resetpassword/:uid-:token" element={<Page title="إعادة تعيين كلمة المرور"><ResetPassword /></Page>} />
+  {/* Fallback matcher to capture any dash pattern, e.g., :combo = "<uid>-<token>" */}
+  <Route path="/resetpassword/:combo" element={<Page title="إعادة تعيين كلمة المرور"><ResetPassword /></Page>} />
   <Route path="/register" element={<Page title="إنشاء حساب"><Register /></Page>} />
       <Route
         path="/dashboard"

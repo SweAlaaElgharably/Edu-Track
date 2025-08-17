@@ -5,6 +5,34 @@ class ApiService {
     this.baseURL = API_BASE_URL;
   }
 
+  // Initiate password reset
+  async requestPasswordReset(email) {
+    const resp = await fetch(`${this.baseURL}/auth/users/reset_password/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    if (!resp.ok) {
+      const data = await resp.json().catch(() => ({}));
+      throw new Error(this.translateError(data?.detail || data?.email || 'فشل إرسال رابط الاستعادة'));
+    }
+    return true;
+  }
+
+  // Confirm password reset
+  async confirmPasswordReset({ uid, token, new_password, re_new_password }) {
+    const resp = await fetch(`${this.baseURL}/auth/users/reset_password_confirm/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ uid, token, new_password, re_new_password })
+    });
+    if (!resp.ok) {
+      const data = await resp.json().catch(() => ({}));
+      throw new Error(this.translateError(data?.detail || data?.token || data?.new_password || 'تعذر إعادة التعيين'));
+    }
+    return true;
+  }
+
   // Helper method to get auth headers
   getAuthHeaders() {
     const token = localStorage.getItem('access_token');
