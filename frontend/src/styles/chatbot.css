@@ -51,8 +51,8 @@ input, textarea, select, button {
 
 .chat-message-wrapper {
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
+  flex-direction: row; /* default left-to-right layout */
+  justify-content: flex-start; /* default left alignment */
   align-items: flex-end;
   gap: 10px;
 }
@@ -122,6 +122,33 @@ input, textarea, select, button {
   justify-content: flex-start; /* Aligns the whole wrapper to the left */
   flex-direction: row; /* Puts avatar before the message bubble */
 }
+
+/* Standalone loading row aligned like bot messages */
+.bot-thinking {
+  display: flex;
+  flex-direction: row;           /* avatar before bubble */
+  justify-content: flex-start !important;   /* left side */
+  align-items: flex-start;                 /* align avatar top with bubble */
+  gap: 10px;                     /* same spacing as wrappers */
+  align-self: flex-start !important;        /* pin to left within column */
+  direction: ltr;                          /* ensure flex-start is left even if parent is RTL */
+  margin-right: auto !important;           /* push the row to the left in RTL layouts */
+  margin-left: 0 !important;
+  animation: fadeInUp 280ms cubic-bezier(.4,0,.2,1);
+}
+
+.bot-thinking .chat-message {
+  background-color: #f1f5f9;     /* match bot bubble */
+  color: #0f172a;
+  border: 1px solid #e5e7eb;
+  border-bottom-left-radius: 6px;
+  direction: ltr;                 /* keep text left-aligned for placeholder */
+  text-align: left;
+  margin: 0;                      /* avoid auto margins from other helpers */
+}
+
+/* Loading state: force left alignment like bot messages */
+
 
 
 /* User message bubble */
@@ -195,7 +222,6 @@ input, textarea, select, button {
 }
 
 .chat-input button {
-  font-family: 'Cairo', sans-serif;
   padding: 0.6rem 1.1rem;
   border: none;
   background: linear-gradient(90deg, #3182ce 0%, #2c5282 100%);

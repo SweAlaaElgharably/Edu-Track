@@ -445,7 +445,17 @@
   min-width: 100px;
   text-align: center;
 }
-
+.about-edu-timeline-content::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--about-edu-gradient-primary);
+  transform: scaleX(1);
+  transition: var(--about-edu-transition);
+}
 .about-edu-timeline-content {
   background: var(--about-edu-light);
   padding: 2rem;
