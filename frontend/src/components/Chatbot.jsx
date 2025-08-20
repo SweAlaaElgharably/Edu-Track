@@ -114,9 +114,9 @@ function Chatbot() {
           );
         })}
         {loading && (
-          <div className="chat-message-wrapper bot">
+          <div className="chat-message-wrapper bot bot-thinking">
             <img className="avatar avatar-img" src={logo} alt="Bot" />
-            <div className="chat-message ltr">Thinking...</div>
+            <div className="chat-message thinking-bubble">Thinking...</div>
           </div>
         )}
       </div>
