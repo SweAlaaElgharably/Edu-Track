@@ -23,3 +23,4 @@ class LogSerializer(ModelSerializer):
     class Meta:
         model = LogEntry
         fields = ["id", "action_time", "user", "content_type", "object_repr", "change_message", "action_flag"]
+        depth = 1
