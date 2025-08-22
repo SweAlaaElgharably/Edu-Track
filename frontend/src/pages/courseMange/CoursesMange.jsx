@@ -233,10 +233,12 @@ export default function CoursesMange() {
                   <td>{course.title}</td>
                   <td>{course.slug}</td>
                   <td>
-                    {Array.isArray(course.programs)
-                      ? course.programs
-                          .map((p) => p.name || p.title || p)
-                          .join("، ")
+                    {Array.isArray(course.programs) ? course.programs
+                          .map((p) => {
+                            const program = programs.find((pr) => pr.id === (p.id || p));
+                            return program?.name || p;
+                          })
+                          .join(" - ")
                       : "-"}
                   </td>
                   <td>
