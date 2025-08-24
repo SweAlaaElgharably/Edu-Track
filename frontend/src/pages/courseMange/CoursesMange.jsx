@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./coursesMange.css";
+import Modal from "../../components/ui/Modal";
+import Button from "../../components/ui/Button";
 import {
   fetchCourses,
   createCourse,
@@ -196,7 +198,16 @@ export default function CoursesMange() {
 
   return (
     <div className="courses-mange-page">
-      <h2 className="courses-mange-header">ادارة المقررات</h2>
+      <div className="page-header">
+        <h1>ادارة المقررات</h1>
+        <Button
+          className="courses-mange-add-btn"
+          onClick={handleCreate}
+          disabled={!programsLoaded}
+        >
+          اضافة مقرر جديد
+        </Button>
+      </div>
       {error && (
         <div
           style={{ color: "red", textAlign: "center", marginBottom: "1rem" }}
@@ -204,13 +215,6 @@ export default function CoursesMange() {
           {error}
         </div>
       )}
-      <button
-        className="courses-mange-add-btn"
-        onClick={handleCreate}
-        disabled={!programsLoaded}
-      >
-        اضافة مقرر جديد
-      </button>
       <div className="courses-mange-table-wrapper">
         {loading ? (
           <div style={{ textAlign: "center", color: "#646cff" }}>
@@ -242,16 +246,18 @@ export default function CoursesMange() {
                       : "-"}
                   </td>
                   <td>
-                    <button
+                    <Button
                       className="btn update"
+                      variant="update"
                       onClick={() => handleUpdate(course)}
                     >
                       تعديل
-                    </button>
+                    </Button>
                   </td>
                   <td>
-                    <button
+                    <Button
                       className="btn delete"
+                      variant="delete"
                       onClick={() => openDeleteModal(course)}
                     >
                       <span
@@ -268,7 +274,7 @@ export default function CoursesMange() {
                         </svg>
                       </span>
                       حذف
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -278,25 +284,22 @@ export default function CoursesMange() {
       </div>
       {/* Modal for Create/Update */}
       {showModal && (
-        <div className="courses-mange-modal-bg" style={{ paddingTop: "80px" }}>
+        <Modal
+          isOpen={showModal}
+          onClose={() => {
+            setShowModal(false);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          title={modalType === "create" ? "اضافة مقرر جديد" : "تعديل المقرر"}
+          backdropClass="courses-mange-modal-bg"
+          modalClass="courses-mange-modal"
+          showClose
+          containerStyle={{ paddingTop: "80px" }}
+        >
           <form
-            className="courses-mange-modal"
             onSubmit={handleSubmit}
             style={{ maxWidth: 520, padding: "0.6rem 0.75rem", gap: "0.5rem" }}
           >
-            <button
-              type="button"
-              className="close-btn"
-              onClick={() => {
-                setShowModal(false);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            >
-              ×
-            </button>
-            <h3 style={{ fontSize: "1.15rem", marginBottom: "0.5rem" }}>
-              {modalType === "create" ? "اضافة مقرر جديد" : "تعديل المقرر"}
-            </h3>
             <label>
               اسم المقرر:
               <input
@@ -356,16 +359,18 @@ export default function CoursesMange() {
                   ))}
               </select>
             </label>
-            <button
+            <Button
               type="submit"
               className="btn update"
+              variant="update"
               disabled={!programsLoaded}
             >
               {modalType === "create" ? "اضافة المقرر" : "تحديث المقرر"}
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               className="btn cancel"
+              variant="cancel"
               onClick={() => {
                 setShowModal(false);
                 window.scrollTo({ top: 0, behavior: "smooth" });
@@ -381,101 +386,75 @@ export default function CoursesMange() {
               onMouseLeave={(e) => (e.currentTarget.style.background = "#eee")}
             >
               الغاء
-            </button>
+            </Button>
           </form>
-        </div>
+        </Modal>
       )}
       {/* Custom Delete Confirmation Modal */}
       {showDeleteModal && courseToDelete && (
-        <div className="courses-mange-modal-bg" style={{ paddingTop: "80px" }}>
+        <Modal
+          isOpen={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          title={"تأكيد حذف المقرر"}
+          backdropClass="courses-mange-modal-bg"
+          modalClass="courses-mange-modal"
+          showClose
+          containerStyle={{ paddingTop: "80px" }}
+        >
+          <p>
+            هل أنت متأكد من حذف المقرر <b>{courseToDelete.title}</b>؟ لا يمكن
+            التراجع عن هذا الإجراء.
+          </p>
           <div
-            className="courses-mange-modal"
             style={{
-              maxWidth: 400,
-              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              gap: "1rem",
+              marginTop: "1.5rem",
             }}
           >
-            <button
-              type="button"
-              className="close-btn"
-              onClick={() => setShowDeleteModal(false)}
+            <Button
+              className="btn delete"
+              variant="delete"
+              onClick={() => handleDelete(courseToDelete.slug)}
+              disabled={loading}
             >
-              ×
-            </button>
-            <h3
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.5rem",
-              }}
-            >
-              <span style={{ color: "#d32f2f", fontSize: "1.5rem" }}>
+              <span style={{ verticalAlign: "middle", marginRight: "4px" }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="18"
+                  height="18"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
                 </svg>
               </span>
-              تأكيد حذف المقرر
-            </h3>
-            <p>
-              هل أنت متأكد من حذف المقرر <b>{courseToDelete.title}</b>؟ لا يمكن
-              التراجع عن هذا الإجراء.
-            </p>
-            <div
+              نعم، حذف
+            </Button>
+            <Button
+              className="btn cancel"
+              variant="cancel"
               style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "1rem",
-                marginTop: "1.5rem",
+                background: "#eee",
+                color: "#333",
+                border: "1px solid #bbb",
               }}
+              onClick={() => {
+                setShowDeleteModal(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = "#f5c6cb")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.background = "#eee")
+              }
             >
-              <button
-                className="btn delete"
-                onClick={() => handleDelete(courseToDelete.slug)}
-                disabled={loading}
-              >
-                <span style={{ verticalAlign: "middle", marginRight: "4px" }}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
-                  </svg>
-                </span>
-                نعم، حذف
-              </button>
-              <button
-                className="btn cancel"
-                style={{
-                  background: "#eee",
-                  color: "#333",
-                  border: "1px solid #bbb",
-                }}
-                onClick={() => {
-                  setShowDeleteModal(false);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "#f5c6cb")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = "#eee")
-                }
-              >
-                إلغاء
-              </button>
-            </div>
+              إلغاء
+            </Button>
           </div>
-        </div>
+        </Modal>
       )}
     </div>
   );

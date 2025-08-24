@@ -7,6 +7,8 @@ import {
   deleteProgram,
 } from "../../services/programApi";
 import { fetchFaculties } from "../../services/facultyApi";
+import Modal from "../../components/ui/Modal";
+import Button from "../../components/ui/Button";
 
 export default function Department() {
   const [departments, setDepartments] = useState([]);
@@ -184,21 +186,10 @@ export default function Department() {
 
   return (
     <div className="department-page">
-      <h2 className="department-header">الأقسام</h2>
-      {error && (
-        <div
-          style={{ color: "red", textAlign: "center", marginBottom: "1rem" }}
-        >
-          {error}
-        </div>
-      )}
-      <div
-        style={{
-          marginBottom: "2rem",
-          display: "flex",
-          justifyContent: "flex-start",
-        }}
-      >
+     
+      
+         <div className="page-header">
+         <h1>الأقسام</h1>
         <div
           className="add-department-card"
           onClick={handleCreate}
@@ -226,6 +217,13 @@ export default function Department() {
           </span>
         </div>
       </div>
+      {error && (
+        <div
+          style={{ color: "red", textAlign: "center", marginBottom: "1rem" }}
+        >
+          {error}
+        </div>
+      )}
       <div className="department-grid">
         {/* Department Cards */}
         {loading ? (
@@ -250,15 +248,13 @@ export default function Department() {
                 </div>
               </div>
               <div className="department-actions">
-                <button
-                  className="btn update"
-                  onClick={() => handleUpdate(dept)}
-                >
-                  تعديل{" "}
-                </button>
-                <button
-                  className="btn delete"
+                <Button variant="update" onClick={() => handleUpdate(dept)}>
+                  تعديل
+                </Button>
+                <Button
+                  variant="delete"
                   onClick={() => openDeleteModal(dept)}
+                  className="btn delete"
                 >
                   <span className="btn-icon" aria-hidden="true">
                     <svg
@@ -272,7 +268,7 @@ export default function Department() {
                     </svg>
                   </span>
                   حذف
-                </button>
+                </Button>
               </div>
             </div>
           ))
@@ -281,114 +277,105 @@ export default function Department() {
 
       {/* Modal for Create/Update */}
       {showModal && (
-        <div className="department-modal-bg" style={{ paddingTop: "80px" }}>
-          <form
-            className="department-modal"
-            onSubmit={handleSubmit}
-            style={{ maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}
+        <div style={{ paddingTop: "80px" }}>
+          <Modal
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+            backdropClass="department-modal-bg"
+            modalClass="department-modal"
+            containerStyle={{ maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}
           >
-            <button
-              type="button"
-              className="close-btn"
-              onClick={() => setShowModal(false)}
-            >
-              ×
-            </button>
             <h3>{modalType === "create" ? "اضافة قسم جديد" : "تعديل القسم"}</h3>
-            <label>
-              اسم القسم:
-              <input
-                name="name"
-                type="text"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                required
-              />
-            </label>
-            <label>
-              المعرف (Slug):
-              <input
-                type="text"
-                name="slug"
-                value={form.slug}
-                onChange={(e) => setForm({ ...form, slug: e.target.value })}
-                placeholder="مثال: computer-science"
-                required
-              />
-            </label>
-            <label>
-              الكلية:
-              <select
-                name="faculty"
-                value={form.faculty}
-                onChange={(e) => setForm({ ...form, faculty: e.target.value })}
-                required
-                disabled={!facultiesLoaded}
+            <form onSubmit={handleSubmit}>
+              <label>
+                اسم القسم:
+                <input
+                  name="name"
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  required
+                />
+              </label>
+              <label>
+                المعرف (Slug):
+                <input
+                  type="text"
+                  name="slug"
+                  value={form.slug}
+                  onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                  placeholder="مثال: computer-science"
+                  required
+                />
+              </label>
+              <label>
+                الكلية:
+                <select
+                  name="faculty"
+                  value={form.faculty}
+                  onChange={(e) => setForm({ ...form, faculty: e.target.value })}
+                  required
+                  disabled={!facultiesLoaded}
+                >
+                  <option value="">اختر الكلية</option>
+                  {facultiesLoaded &&
+                    faculties.map((fac) => (
+                      <option key={fac.id} value={fac.id}>
+                        {fac.name}
+                      </option>
+                    ))}
+                </select>
+              </label>
+              <Button
+                type="submit"
+                variant="update"
+                className="btn update"
+                disabled={submitting || !facultiesLoaded}
               >
-                <option value="">اختر الكلية</option>
-                {facultiesLoaded &&
-                  faculties.map((fac) => (
-                    <option key={fac.id} value={fac.id}>
-                      {fac.name}
-                    </option>
-                  ))}
-              </select>
-            </label>
-            <button
-              type="submit"
-              className="btn update"
-              disabled={submitting || !facultiesLoaded}
-            >
-              {submitting
-                ? "جارٍ الحفظ..."
-                : modalType === "create"
-                ? "اضافة القسم"
-                : "تحديث القسم"}
-            </button>
-            <button
-              type="button"
-              className="btn cancel"
-              onClick={() => {
-                setShowModal(false);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              style={{
-                background: "#eee",
-                color: "#333",
-                border: "1px solid #bbb",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.background = "#f5c6cb")
-              }
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#eee")}
-            >
-              الغاء
-            </button>
-          </form>
+                {submitting
+                  ? "جارٍ الحفظ..."
+                  : modalType === "create"
+                  ? "اضافة القسم"
+                  : "تحديث القسم"}
+              </Button>
+              <Button
+                type="button"
+                variant="cancel"
+                className="btn cancel"
+                onClick={() => {
+                  setShowModal(false);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                style={{
+                  background: "#eee",
+                  color: "#333",
+                  border: "1px solid #bbb",
+                }}
+              >
+                الغاء
+              </Button>
+            </form>
+          </Modal>
         </div>
       )}
       {/* Custom Delete Confirmation Modal */}
       {showDeleteModal && deptToDelete && (
-        <div className="department-modal-bg" style={{ paddingTop: "80px" }}>
-          <div
-            className="department-modal"
-            style={{
+        <div style={{ paddingTop: "80px" }}>
+          <Modal
+            isOpen={showDeleteModal}
+            onClose={() => {
+              setShowDeleteModal(false);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            backdropClass="department-modal-bg"
+            modalClass="department-modal"
+            containerStyle={{
               maxWidth: 400,
               textAlign: "center",
               maxHeight: "calc(100vh - 120px)",
               overflowY: "auto",
             }}
           >
-            <button
-              type="button"
-              className="close-btn"
-              onClick={() => {
-                setShowDeleteModal(false);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            >
-              ×
-            </button>
             <h3
               style={{
                 display: "flex",
@@ -422,8 +409,9 @@ export default function Department() {
                 marginTop: "1.5rem",
               }}
             >
-              <button
+              <Button
                 className="btn delete"
+                variant="delete"
                 onClick={() => handleDelete(deptToDelete.slug)}
                 disabled={loading}
               >
@@ -439,9 +427,10 @@ export default function Department() {
                   </svg>
                 </span>
                 نعم، حذف
-              </button>
-              <button
+              </Button>
+              <Button
                 className="btn cancel"
+                variant="cancel"
                 style={{
                   background: "#eee",
                   color: "#333",
@@ -459,9 +448,9 @@ export default function Department() {
                 }
               >
                 إلغاء
-              </button>
+              </Button>
             </div>
-          </div>
+          </Modal>
         </div>
       )}
     </div>

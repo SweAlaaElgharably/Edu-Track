@@ -210,3 +210,56 @@
   color: #3182ce;
   cursor: pointer;
 }
+
+/* === Standardize buttons to FacultyManage styles === */
+/* Add button -> match FacultyManage .add-button */
+.add-hall-btn {
+  font-family: "Cairo", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  padding: 0.75rem 1.5rem !important;
+  background: linear-gradient(90deg, #3182ce 0%, #2c5282 100%) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: auto !important;
+  box-shadow: none !important;
+}
+.add-hall-btn::before { display: none !important; }
+.add-hall-btn:hover {
+  transform: translateY(-1px) !important;
+  scale: 1.2 !important;
+  transition: 0.3s ease-in-out !important;
+  box-shadow: 0 4px 6px 0px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Edit button -> align with FacultyManage edit style */
+.hall-row .btn.update,
+.hall-modal .btn.update {
+  background: #3182ce !important; /* solid blue like FacultyManage edit-button */
+  color: #fff !important;
+  border: none !important;
+  border-radius: 8px !important;
+}
+.hall-row .btn.update:hover,
+.hall-modal .btn.update:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Header section aligned with FacultyManage */
+.hall-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.hall-page .page-header h1 {
+  color: #2c5282;
+  font-size: 3rem;
+  margin: 0;
+  font-family: "Cairo", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}

@@ -8,6 +8,8 @@ import {
   deleteFaculty,
 } from "../../services/facultyApi";
 import "./FacultyManage.css";
+import Modal from "../../components/ui/Modal";
+import Button from "../../components/ui/Button";
 
 const initialForm = { name: "", slug: "", logo: null, university: 1 };
 
@@ -171,9 +173,9 @@ const FacultyList = memo(
       <div className="faculty-list-container">
         <div className="header-actions">
           <h1>إدارة الكليات</h1>
-          <button onClick={onAdd} className="add-button">
+          <Button onClick={onAdd} className="add-button">
             إضافة كلية
-          </button>
+          </Button>
         </div>
         {isLoading ? (
           <div className="loading">جاري التحميل...</div>
@@ -193,15 +195,13 @@ const FacultyList = memo(
                   <p>{faculty.slug}</p>
                 </div>
                 <div className="faculty-actions">
-                  <button
-                    onClick={() => onEdit(faculty)}
-                    className="edit-button"
-                  >
+                  <Button onClick={() => onEdit(faculty)} className="edit-button">
                     تعديل
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() => openDeleteModal(faculty)}
                     className="btn delete"
+                    variant="delete"
                   >
                     <span
                       style={{ verticalAlign: "middle", marginRight: "4px" }}
@@ -217,7 +217,7 @@ const FacultyList = memo(
                       </svg>
                     </span>
                     حذف
-                  </button>
+                  </Button>
                 </div>
               </div>
             ))}
@@ -225,88 +225,83 @@ const FacultyList = memo(
         )}
         {/* Custom Delete Confirmation Modal */}
         {showDeleteModal && facultyToDelete && (
-          <div className="faculty-modal-bg">
-            <div
-              className="faculty-modal"
-              style={{ maxWidth: 400, textAlign: "center" }}
+          <Modal
+            isOpen={showDeleteModal}
+            onClose={() => setShowDeleteModal(false)}
+            backdropClass="faculty-modal-bg"
+            modalClass="faculty-modal"
+            containerStyle={{ maxWidth: 400, textAlign: "center" }}
+          >
+            <h3
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.5rem",
+              }}
             >
-              <button
-                type="button"
-                className="close-btn"
-                onClick={() => setShowDeleteModal(false)}
-              >
-                ×
-              </button>
-              <h3
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.5rem",
-                }}
-              >
-                <span style={{ color: "#d32f2f", fontSize: "1.5rem" }}>
+              <span style={{ color: "#d32f2f", fontSize: "1.5rem" }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
+                </svg>
+              </span>
+              تأكيد حذف الكلية
+            </h3>
+            <p>
+              هل أنت متأكد من حذف الكلية <b>{facultyToDelete.name}</b>؟ لا يمكن
+              التراجع عن هذا الإجراء.
+            </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "1rem",
+                marginTop: "1.5rem",
+              }}
+            >
+              <Button className="btn delete" variant="delete" onClick={confirmDelete}>
+                <span style={{ verticalAlign: "middle", marginRight: "4px" }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
+                    width="18"
+                    height="18"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
                   </svg>
                 </span>
-                تأكيد حذف الكلية
-              </h3>
-              <p>
-                هل أنت متأكد من حذف الكلية <b>{facultyToDelete.name}</b>؟ لا
-                يمكن التراجع عن هذا الإجراء.
-              </p>
-              <div
+                نعم، حذف
+              </Button>
+              <Button
+                className="btn cancel"
+                variant="cancel"
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "1rem",
-                  marginTop: "1.5rem",
+                  background: "#eee",
+                  color: "#333",
+                  border: "1px solid #bbb",
                 }}
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = "#f5c6cb")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = "#eee")
+                }
               >
-                <button className="btn delete" onClick={confirmDelete}>
-                  <span style={{ verticalAlign: "middle", marginRight: "4px" }}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M3 6h18v2H3V6zm2 3h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 2v7h2v-7h-2zm-4 0v7h2v-7H6zm8 0v7h2v-7h-2z" />
-                    </svg>
-                  </span>
-                  نعم، حذف
-                </button>
-                <button
-                  className="btn cancel"
-                  style={{
-                    background: "#eee",
-                    color: "#333",
-                    border: "1px solid #bbb",
-                  }}
-                  onClick={() => {
-                    setShowDeleteModal(false);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = "#f5c6cb")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = "#eee")
-                  }
-                >
-                  إلغاء
-                </button>
-              </div>
+                إلغاء
+              </Button>
             </div>
-          </div>
+          </Modal>
         )}
       </div>
     );
