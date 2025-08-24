@@ -4,10 +4,6 @@ from django.contrib.auth.models import Group
 from django.contrib.admin.models import LogEntry
 
 class UserSerializer(ModelSerializer):
-    university = UniversitySerializer(read_only=True)
-    faculty = FacultySerializer(read_only=True)
-    program = ProgramSerializer(read_only=True)
-
     class Meta:
         model = User
         fields = (
