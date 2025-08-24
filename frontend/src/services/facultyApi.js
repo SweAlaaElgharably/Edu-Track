@@ -11,8 +11,8 @@ export const fetchFaculties = async (universitySlug) => {
 
 export const createFaculty = async (formData) => {
   const headers = { ...api.getAuthHeaders() };
-  // Remove JSON Content-Type so browser sets correct multipart boundary
-  delete headers['Content-Type'];
+  delete headers['Content-Type']; 
+
   const res = await fetch(`${api.baseURL}/faculty/create/`, {
     method: 'POST',
     headers,
@@ -31,7 +31,6 @@ export const createFaculty = async (formData) => {
 
 export const updateFaculty = async ({ slug, formData }) => {
   const headers = { ...api.getAuthHeaders() };
-  // Remove JSON Content-Type so browser sets correct multipart boundary
   delete headers['Content-Type'];
   const res = await fetch(`${api.baseURL}/faculty/${slug}/update/`, {
     method: 'PATCH',

@@ -3,7 +3,7 @@ from faculty.models import Faculty
 
 # Create your models here.
 class Location(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     slug = models.SlugField(unique=True)
     capacity = models.PositiveIntegerField(default=1)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='locations')

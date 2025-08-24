@@ -54,14 +54,18 @@ export default function Department() {
     setLoading(true);
     try {
       const data = await fetchPrograms();
-      setDepartments(data.length ? data : mockDepartments);
+      const patched = data.map(dept => ({
+        ...dept,
+        faculty: typeof dept.faculty === 'object' ? dept.faculty : faculties.find(fac => fac.id === dept.faculty) || dept.faculty,
+      }));
+      setDepartments(patched.length ? patched : mockDepartments);
       setError(null);
     } catch (err) {
       setDepartments(mockDepartments);
       setError(err?.message || null);
     }
     setLoading(false);
-  }, [mockDepartments]);
+  }, [mockDepartments, faculties]);
 
   const loadFacultiesCb = React.useCallback(async () => {
     try {
@@ -79,9 +83,14 @@ export default function Department() {
   }, [mockFaculties]);
 
   useEffect(() => {
-    loadDepartmentsCb();
     loadFacultiesCb();
-  }, [loadDepartmentsCb, loadFacultiesCb]);
+  }, [loadFacultiesCb]);
+
+  useEffect(() => {
+    if (facultiesLoaded) {
+      loadDepartmentsCb();
+    }
+  }, [loadDepartmentsCb, facultiesLoaded]);
   // loaders replaced by useCallbacks above
 
   const handleDelete = async (slug) => {

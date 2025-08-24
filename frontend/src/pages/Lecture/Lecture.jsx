@@ -7,10 +7,14 @@ import {
   deleteLecture,
 } from "../../services/lectureApi";
 import { fetchLocations } from "../../services/locationApi";
+import { fetchCourses } from "../../services/courseApi"
+import { fetchUsers } from "../../services/userApi"
 
 export default function Lecture() {
   const [lectures, setLectures] = useState([]);
   const [locations, setLocations] = useState([]);
+  const [courses, setCourses] = useState([])
+  const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -23,6 +27,8 @@ export default function Lecture() {
   useEffect(() => {
     loadLectures();
     loadLocations();
+    loadCourses();
+    loadUsers();
   }, []);
 
   const loadLectures = async () => {
@@ -48,6 +54,26 @@ export default function Lecture() {
     }
   };
 
+  const loadCourses = async () => {
+    try {
+      const data = await fetchCourses();
+      setCourses(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setCourses([]);
+      setError(err?.message || "");
+    }
+  };
+
+  const loadUsers = async () => {
+    try {
+      const data = await fetchUsers();
+      setUsers(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setUsers([]);
+      setError(err?.message || "");
+    }
+  };
+
   const handleCreate = () => {
     setModalType("create");
     setSelectedLecture(null);
@@ -59,7 +85,7 @@ export default function Lecture() {
     setModalType("update");
     setSelectedLecture(lec);
     setForm({
-      title: lec.title || "",
+      course: lec.course || "",
       instructor: lec.instructor || "",
       location: lec.location || lec.location_id || "",
       day: lec.day || "",
@@ -83,7 +109,7 @@ export default function Lecture() {
   };
 
   const [form, setForm] = useState({
-    title: "",
+    course: "",
     instructor: "", // user name
     location: "", // location id
     day: "",
@@ -106,7 +132,7 @@ export default function Lecture() {
 
   const resetForm = () => {
     setForm({
-      title: "",
+      course: "",
       instructor: "",
       location: "",
       day: "",
@@ -123,13 +149,14 @@ export default function Lecture() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Basic client-side validations
-    if (!form.title?.trim()) {
-      setError("عنوان المحاضرة مطلوب");
+    const courseId = Number(form.course);
+    if (!Number.isFinite(courseId) || courseId <= 0) {
+      setError("المقرر مطلوب");
       return;
     }
     const instructorId = Number(form.instructor);
     if (!Number.isFinite(instructorId) || instructorId <= 0) {
-      setError("رقم المٌحاضر (ID) مطلوب ويجب أن يكون رقمًا صحيحًا");
+      setError("المٌحاضر مطلوب");
       return;
     }
     const locationId = Number(form.location);
@@ -143,22 +170,16 @@ export default function Lecture() {
     }
     setLoading(true);
     try {
-      // Client-side time validation: start must be before end
-      const toMinutes = (t) => {
-        if (!t || typeof t !== "string") return NaN;
-        const [h, m] = t.split(":").map(Number);
-        return h * 60 + m;
-      };
-      const sMin = toMinutes(form.starttime);
-      const eMin = toMinutes(form.endtime);
-      if (!(sMin < eMin)) {
+      const startDate = new Date(`1970-01-01T${form.starttime}:00`);
+      const endDate = new Date(`1970-01-01T${form.endtime}:00`);
+      if (!(startDate < endDate)) {
         setError("وقت البدء يجب أن يكون قبل وقت الانتهاء");
         setLoading(false);
         return;
       }
 
       const payload = {
-        title: form.title.trim(),
+        course: courseId,
         instructor: instructorId,
         location: locationId,
         day: form.day,
@@ -167,6 +188,7 @@ export default function Lecture() {
       };
 
       if (modalType === "create") {
+        console.log("send is ok")
         await createLecture(payload);
       } else if (modalType === "update" && selectedLecture) {
         await updateLecture(selectedLecture.id, payload);
@@ -190,6 +212,20 @@ export default function Lecture() {
       (l) => l.id === lec.location || l.slug === lec.location
     );
     return loc ? loc.name : lec.location;
+  };
+
+  const getCourseName = (lec) => {
+    if (lec.course && typeof lec.course === "object")
+      return lec.course.title || lec.location.slug;
+    const course = courses.find((c) => c.id === lec.course);
+    return course ? course.title : lec.course;
+  };
+
+  const getUserName = (lec) => {
+    if (lec.instructor && typeof lec.instructor === "object")
+      return `${lec.instructor.first_name} ${lec.instructor.last_name}`;
+    const user = users.find((u) => u.id === lec.instructor);
+    return user ? `${user.first_name} ${user.last_name}` : lec.instructor;
   };
 
   return (
@@ -249,8 +285,8 @@ export default function Lecture() {
           <table className="lecture-table">
             <thead>
               <tr>
-                <th>العنوان</th>
-                <th>المحاضر (ID)</th>
+                <th>المقرر</th>
+                <th>المحاضر</th>
                 <th>القاعة</th>
                 <th>اليوم</th>
                 <th>الوقت</th>
@@ -261,8 +297,8 @@ export default function Lecture() {
             <tbody>
               {lectures.map((lec) => (
                 <tr key={lec.id} className="lecture-row">
-                  <td>{lec.title}</td>
-                  <td>{lec.instructor}</td>
+                  <td>{getCourseName(lec)}</td>
+                  <td>{getUserName(lec)}</td>
                   <td>{getLocationName(lec)}</td>
                   <td>{lec.day}</td>
                   <td>
@@ -325,26 +361,34 @@ export default function Lecture() {
               {modalType === "create" ? "اضافة محاضرة جديدة" : "تعديل محاضرة"}
             </h3>
             <label>
-              عنوان المحاضرة:
-              <input
-                type="text"
-                value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+              المقرر:
+              <select
+                value={form.course}
+                onChange={(e) => setForm({ ...form, course: e.target.value })}
                 required
-              />
+              >
+                <option value="">اختر المقرر</option>
+                {courses.map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course.title}
+                  </option>
+                ))}
+              </select>
             </label>
             <label>
-              رقم المٌحاضر (ID):
-              <input
-                type="number"
-                min="1"
+              المٌحاضر:
+              <select
                 value={form.instructor}
-                onChange={(e) =>
-                  setForm({ ...form, instructor: e.target.value })
-                }
-                placeholder="مثال: 5"
+                onChange={(e) => setForm({ ...form, instructor: e.target.value })}
                 required
-              />
+              >
+                <option value="">اختر المحاضر</option>
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.first_name} {user.last_name}
+                  </option>
+                ))}
+              </select>
             </label>
             <label>
               القاعة:

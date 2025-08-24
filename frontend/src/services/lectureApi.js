@@ -34,12 +34,16 @@ export const getLecture = async (id) => {
 
 export const createLecture = async (payload) => {
   // Client-side time validation
+  console.log("start creation")
+  console.log(payload)
   assertStartBeforeEnd(payload.starttime, payload.endtime);
+  console.log("done 1")
   const res = await fetch(`${api.baseURL}/lecture/create/`, {
     method: "POST",
     headers: api.getAuthHeaders(),
     body: JSON.stringify(payload),
   });
+  console.log("done 2")
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     const firstFieldError = err && typeof err === 'object' ? Object.values(err)[0]?.[0] : null;

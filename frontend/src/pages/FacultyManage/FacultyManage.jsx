@@ -9,7 +9,7 @@ import {
 } from "../../services/facultyApi";
 import "./FacultyManage.css";
 
-const initialForm = { name: "", slug: "", logo: null };
+const initialForm = { name: "", slug: "", logo: null, university: 1 };
 
 // Form validation function
 const validateForm = (form) => {
@@ -438,6 +438,7 @@ const FacultyManage = () => {
       formData.append("name", formState.form.name);
       formData.append("slug", formState.form.slug);
       if (formState.form.logo) formData.append("logo", formState.form.logo);
+      formData.append("university", formState.form.university);
 
       try {
         if (formState.editSlug) {
@@ -462,6 +463,7 @@ const FacultyManage = () => {
         name: fac.name,
         slug: fac.slug,
         logo: null,
+        university: 1
       },
       editSlug: fac.slug,
       isOpen: true,
