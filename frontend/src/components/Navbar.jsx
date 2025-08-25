@@ -121,6 +121,16 @@ function Navbar() {
           // Authenticated navigation
           <>
             <Link
+              to="/logs"
+              className="nav-link"
+              onClick={() => {
+                closeMenu();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              السجلات
+            </Link>
+            <Link
               to="/dashboard"
               className="nav-link"
               onClick={() => {

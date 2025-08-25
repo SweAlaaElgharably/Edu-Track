@@ -15,6 +15,7 @@ import HelpCenter from "../src/pages/HelpCenter/HelpCenter";
 import ChangePassword from "../src/pages/ChangePassword/ChangePassword";
 import About from "../src/pages/About/About";
 import ResetPassword from "../src/pages/ResetPassword/ResetPassword";
+import Logs from "../src/pages/Logs/Logs";
 
 // Small helper to set the page title per route
 const Page = ({ title, children }) => {
@@ -78,6 +79,14 @@ const RoutesList = () => {
       <Route path="/help" element={<Page title="مركز المساعدة"><HelpCenter /></Page>} />    
       <Route path="*" element={<Page title="الصفحة غير موجودة"><PageNotFound /></Page>} />
       <Route path="/about" element={<Page title="حول"><About /></Page>} />
+      <Route
+        path="/logs"
+        element={
+          <ProtectedRoute>
+            <Page title="السجلات"><Logs /></Page>
+          </ProtectedRoute>
+        }
+      />
 
     </Routes>
   );
