@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { FiUsers, FiActivity, FiClock, FiAlertCircle, FiBarChart2 } from "react-icons/fi";
+import statsImg from "../assets/stats.jpg";
 
 // Simple error boundary for the hero section
 class HeroErrorBoundary extends React.Component {
@@ -73,11 +74,9 @@ function TypeWriter({ texts = [], speed = 80 }) {
 }
 
 function LogsHero({ stats = {} }) {
-  const bg = 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=15a6c6a9c9ea9b3e6f9a7b8a8f9d3d1a';
-
   return (
     <HeroErrorBoundary>
-      <section className="logs-hero" style={{ backgroundImage: `url(${bg})` }}>
+      <section className="logs-hero" style={{ backgroundImage: `url(${statsImg})` }}>
         <div className="hero-overlay" />
         <div className="hero-header">
           <div className="header-content">
