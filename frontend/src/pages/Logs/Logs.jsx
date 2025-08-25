@@ -227,7 +227,7 @@ const LogsTable = ({ logs, loadMore, hasMore, loadingMore }) => {
     </div>
   );
 };
-
+ 
 // Main Logs Component
 const Logs = () => {
   const [logs, setLogs] = useState([]);
