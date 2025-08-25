@@ -282,21 +282,33 @@ const Logs = () => {
         <div className="stats-grid">
           <StatCard icon={<FiGrid />} title="إجمالي السجلات" value={stats.totalLogs} className="large">
             <div className="stat-foot">
-              <div className="foot-item"><span className={`logs-trend ${extra.pctChange >= 0 ? 'up' : 'down'}`}>{extra.pctChange >= 0 ? <FiArrowUp className="up"/> : <FiArrowDown className="down"/>}</span><span>{Math.abs(extra.pctChange)}% vs yesterday</span></div>
-              <div className="foot-item"><FiClock /><span>آخر: {timeAgo(extra.lastAction?.action_time)}</span></div>
+              <div className="foot-item">
+                <span className={`logs-trend ${extra.pctChange >= 0 ? 'up' : 'down'}`}>
+                  {extra.pctChange >= 0 ? <FiArrowUp className="up" /> : <FiArrowDown className="down" />}
+                </span>
+                <span>{Math.abs(extra.pctChange)}% مقارنة بالأمس</span>
+              </div>
+              <div className="foot-item">
+                <FiClock /><span>آخر نشاط: {timeAgo(extra.lastAction?.action_time)}</span>
+              </div>
             </div>
           </StatCard>
 
-          <StatCard icon={<FiUsers />} title="مستخدمون نشطون" value={stats.uniqueUsers} className="large">
+          <StatCard icon={<FiUsers />} title="المستخدمون النشطون" value={stats.uniqueUsers} className="large">
             <div className="stat-foot">
-              <div className="foot-item"><FiUsers /><span>{extra.uniqueUsersToday} فعال اليوم</span></div>
-              <div className="foot-item"><span className="muted">متوسط/مستخدم:</span><b style={{marginLeft:6}}>{extra.avgPerUser}</b></div>
+              <div className="foot-item"><FiUsers /><span>{extra.uniqueUsersToday} نشط اليوم</span></div>
+              <div className="foot-item"><span className="muted">متوسط لكل مستخدم:</span><b style={{ marginLeft: 6 }}>{extra.avgPerUser}</b></div>
             </div>
           </StatCard>
 
           <StatCard icon={<FiActivity />} title="نشاط اليوم" value={stats.actionsToday} className="large">
             <div className="stat-foot">
-              <div className="foot-item"><span className={`logs-trend ${extra.pctChange >= 0 ? 'up' : 'down'}`}>{extra.pctChange >= 0 ? <FiArrowUp className="up"/> : <FiArrowDown className="down"/>}</span><span>{Math.abs(extra.pctChange)}% vs yesterday</span></div>
+              <div className="foot-item">
+                <span className={`logs-trend ${extra.pctChange >= 0 ? 'up' : 'down'}`}>
+                  {extra.pctChange >= 0 ? <FiArrowUp className="up" /> : <FiArrowDown className="down" />}
+                </span>
+                <span>{Math.abs(extra.pctChange)}% مقارنة بالأمس</span>
+              </div>
               <div className="foot-item"><FiClock /><span>آخر إجراء: {timeAgo(extra.lastAction?.action_time)}</span></div>
             </div>
           </StatCard>

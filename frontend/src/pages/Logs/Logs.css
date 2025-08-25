@@ -313,7 +313,7 @@
 .logs-table.modern thead { background: #f8fafc; }
 .logs-table.modern th, .logs-table.modern td { padding: 12px 14px; text-align: right; border-bottom: 1px solid #e2e8f0; }
 .logs-table.modern th { font-size: 0.8rem; color: #475569; }
-.logs-table.modern tbody tr:hover { background: #f8fafc; }
+.logs-table.modern tbody tr:hover { background: #e9ebee; transition: 0.3s ease-in-out; }
 
 /* Table Cells */
 .user-cell { display: flex; align-items: center; gap: 12px; }
