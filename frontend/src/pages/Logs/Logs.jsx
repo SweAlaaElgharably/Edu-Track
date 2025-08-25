@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { FiUsers, FiUser, FiEdit, FiPlus, FiTrash2, FiBarChart2, FiGrid, FiActivity, FiAlertCircle, FiArrowUp, FiArrowDown, FiClock } from 'react-icons/fi';
 import CountUp from 'react-countup';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
@@ -174,7 +174,7 @@ const TrendChart = ({ logs }) => {
   );
 };
 
-const LogsTable = ({ logs }) => {
+const LogsTable = ({ logs, loadMore, hasMore, loadingMore }) => {
   const getActionIcon = (flag) => {
     switch (flag) {
         case 1: return <FiPlus className="icon-add" />;
@@ -184,10 +184,30 @@ const LogsTable = ({ logs }) => {
     }
   };
 
+  const wrapperRef = useRef(null);
+  const sentinelRef = useRef(null);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    const rootEl = wrapperRef.current;
+    if (!sentinel || !rootEl) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (hasMore && !loadingMore && typeof loadMore === 'function') loadMore();
+        }
+      });
+    }, { root: rootEl, rootMargin: '120px' });
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [hasMore, loadingMore, loadMore]);
+
   return (
     <div className="stat-card light table-card">
       <div className="stat-title">السجلات</div>
-      <div className="table-wrapper">
+      <div className="table-wrapper" ref={wrapperRef}>
         <table className="logs-table light modern">
           <thead><tr><th>المستخدم</th><th>النموذج</th><th>الإجراء</th><th>آخر نشاط</th></tr></thead>
           <tbody>
@@ -201,6 +221,8 @@ const LogsTable = ({ logs }) => {
             ))}
           </tbody>
         </table>
+  <div ref={sentinelRef} className="table-sentinel" />
+  {loadingMore && <div className="loading-more">تحميل المزيد...</div>}
       </div>
     </div>
   );
@@ -211,7 +233,11 @@ const Logs = () => {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const { user, loading: authLoading } = useAuth();
+
+  const PAGE_SIZE = 10;
 
   useEffect(() => {
     if (authLoading) return;
@@ -221,16 +247,27 @@ const Logs = () => {
       return;
     }
 
-    const fetchLogs = async () => {
+    const fetchPage = async (offset = 0) => {
       try {
-        const resp = await fetch(`${api.baseURL}/logs/`, {
+        const resp = await fetch(`${api.baseURL}/logs/?limit=${PAGE_SIZE}&offset=${offset}`, {
           method: 'GET',
           headers: api.getAuthHeaders(),
           cache: 'no-store',
         });
         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
         const data = await resp.json();
-        setLogs(data);
+
+        if (Array.isArray(data)) {
+          setLogs(data);
+          setHasMore(false);
+        } else if (data.results) {
+          setLogs(data.results);
+          setHasMore(Boolean(data.next));
+        } else {
+          const list = data.results || data.data || [];
+          setLogs(list);
+          setHasMore(list.length === PAGE_SIZE);
+        }
       } catch (err) {
         console.error(err);
         setError("Failed to fetch logs.");
@@ -239,7 +276,7 @@ const Logs = () => {
       }
     };
 
-    fetchLogs();
+    fetchPage(0);
   }, [user, authLoading]);
 
   const stats = useMemo(() => {
@@ -270,6 +307,37 @@ const Logs = () => {
 
     return { yesterdayCount, pctChange, avgPerUser, uniqueUsersToday, lastAction };
   }, [logs, stats.actionsToday, stats.totalLogs, stats.uniqueUsers]);
+
+  const loadMore = async () => {
+    if (!hasMore || loadingMore) return;
+    setLoadingMore(true);
+    try {
+      const offset = logs.length;
+      const resp = await fetch(`${api.baseURL}/logs/?limit=${PAGE_SIZE}&offset=${offset}`, {
+        method: 'GET',
+        headers: api.getAuthHeaders(),
+        cache: 'no-store',
+      });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      if (Array.isArray(data)) {
+        setLogs(prev => [...prev, ...data]);
+        setHasMore(false);
+      } else if (data.results) {
+        setLogs(prev => [...prev, ...data.results]);
+        setHasMore(Boolean(data.next));
+      } else {
+        const list = data.results || data.data || [];
+        setLogs(prev => [...prev, ...list]);
+        setHasMore(list.length === PAGE_SIZE);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load more logs.");
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   if (loading) return <div className="loading-container">Loading...</div>;
   if (error) return <div className="error-container">{error}</div>;
@@ -324,7 +392,7 @@ const Logs = () => {
           </div>
         </div>
 
-        <LogsTable logs={logs} />
+  <LogsTable logs={logs} loadMore={loadMore} hasMore={hasMore} loadingMore={loadingMore} />
       </div>
     </div>
   );

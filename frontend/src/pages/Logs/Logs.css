@@ -309,6 +309,16 @@
 .table-card { padding: 0; }
 .table-card .stat-title { padding: 1rem; border-bottom: 1px solid #e2e8f0; }
 .table-wrapper { overflow-x: auto; }
+
+/* Ensure the table area shows space for 10 rows and scrolls when there are more */
+:root { --log-row-height: 48px; }
+.table-wrapper { 
+  overflow-x: auto; 
+  overflow-y: auto; 
+  min-height: calc(var(--log-row-height) * 10 + 56px); /* header + 10 rows */
+  max-height: calc(var(--log-row-height) * 10 + 56px);
+}
+.loading-more { text-align: center; padding: 10px 0; color: #475569; }
 .logs-table.modern { width: 100%; border-collapse: collapse; }
 .logs-table.modern thead { background: #f8fafc; }
 .logs-table.modern th, .logs-table.modern td { padding: 12px 14px; text-align: right; border-bottom: 1px solid #e2e8f0; }
@@ -393,4 +403,54 @@
 
 .trend-item:hover .bar {
   transform: scaleY(1.06);
+}
+
+/* Additional responsive tweaks */
+@media (max-width: 1200px) {
+  .logs-content { padding: 1.75rem 2.5rem; }
+  .hero-headline { font-size: 2.1rem; }
+  .stat-card.large { min-height: 140px; }
+  .table-wrapper { max-height: calc(var(--log-row-height) * 8 + 56px); }
+}
+
+@media (max-width: 1024px) {
+  .logs-content { padding: 1.5rem 2rem; }
+  .hero-headline { font-size: 1.95rem; }
+  .hero-stats-cards { gap: 12px; }
+  .donut-two-col { flex-direction: row; }
+  .donut-left, .donut-right { min-width: 140px; }
+}
+
+@media (max-width: 900px) {
+  .logs-hero { min-height: 360px; padding: 20px 0 40px; }
+  .hero-inner { gap: 20px; padding: 0 18px; }
+  .hero-text { max-width: 100%; }
+  .hero-headline { font-size: 1.6rem; }
+  .hero-sub { font-size: 1rem; }
+  .hero-stats-cards { gap: 12px; }
+  .donut-two-col { flex-direction: column; }
+  .donut-left, .donut-right { width:100%; }
+  .table-wrapper { max-height: calc(var(--log-row-height) * 7 + 56px); }
+}
+
+@media (max-width: 720px) {
+  .stats-grid { gap: 12px; }
+  .stat-card.light { padding: 0.85rem; }
+  .stat-value { font-size: 1.6rem; }
+  .stat-card.large { min-height: 120px; }
+  .hero-badge { font-size: 0.85rem; padding: 6px 12px; }
+  .top-user-item .user-name { font-size: 0.95rem; }
+  .list-card .stat-list li span { font-size: 1.05rem; }
+}
+
+@media (max-width: 480px) {
+  .logs-content { padding: 1rem; }
+  .logs-hero { padding: 16px 0 32px; min-height: 300px; }
+  .hero-headline { font-size: 1.25rem; }
+  .hero-sub { font-size: 0.95rem; }
+  .hero-stats-cards { flex-direction: column; gap: 10px; }
+  .stat-card.light { padding: 0.75rem; }
+  .table-wrapper { max-height: calc(var(--log-row-height) * 6 + 56px); }
+  .logs-table.modern th, .logs-table.modern td { padding: 10px; font-size: 0.85rem; }
+  .avatar { width: 32px; height: 32px; }
 }
